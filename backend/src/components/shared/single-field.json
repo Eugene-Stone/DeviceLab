@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_shared_single_fields",
+  "info": {
+    "displayName": "Single Field"
+  },
+  "options": {},
+  "attributes": {
+    "field": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

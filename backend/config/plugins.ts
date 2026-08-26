@@ -66,14 +66,6 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin =>
 			},
 		},
 	},
-
-	// webbycommerce: {
-	// 	enabled: true,
-	// 	// resolve: require.resolve('@webbycrown/webbycommerce'),
-
-	// 	// If you're developing locally, you can enable it from the local path:
-	// 	resolve: './src/plugins/webbycommerce',
-	// },
 });
 
 export default config;

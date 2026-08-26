@@ -40,10 +40,34 @@ export interface SharedSeo extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedSingleField extends Struct.ComponentSchema {
+  collectionName: 'components_shared_single_fields';
+  info: {
+    displayName: 'Single Field';
+  };
+  attributes: {
+    field: Schema.Attribute.String;
+  };
+}
+
+export interface SharedSocialLink extends Struct.ComponentSchema {
+  collectionName: 'components_shared_social_links';
+  info: {
+    displayName: 'Social Link';
+  };
+  attributes: {
+    icon: Schema.Attribute.Media<'images'>;
+    link: Schema.Attribute.String & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 declare module '@strapi/strapi' {
   export namespace Public {
     export interface ComponentSchemas {
       'shared.seo': SharedSeo;
+      'shared.single-field': SharedSingleField;
+      'shared.social-link': SharedSocialLink;
     }
   }
 }
