@@ -1,0 +1,53 @@
+{
+  "collectionName": "components_products_buyer_details",
+  "info": {
+    "displayName": "Buyer Details"
+  },
+  "options": {},
+  "attributes": {
+    "customerName": {
+      "type": "string"
+    },
+    "customerPhone": {
+      "type": "string"
+    },
+    "customerEmail": {
+      "type": "string"
+    },
+    "deliveryMethod": {
+      "type": "enumeration",
+      "enum": [
+        "courier",
+        "pickup",
+        "postOperator"
+      ]
+    },
+    "deliveryPostOperator": {
+      "type": "text",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "deliveryMethod"
+            },
+            "postOperator"
+          ]
+        }
+      },
+      "default": "Post Office DHL - Victoria Square Branch (Ref: PO-99123)"
+    },
+    "deliveryCity": {
+      "type": "string"
+    },
+    "deliveryStreet": {
+      "type": "string"
+    },
+    "deliveryStreetHouse": {
+      "type": "string"
+    },
+    "orderComments": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

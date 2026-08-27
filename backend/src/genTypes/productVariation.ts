@@ -13,7 +13,7 @@ export interface ProductVariation {
   price?: number;
   priceOld?: number;
   stockStatus?: "inStock" | "outOffStock";
-  color?: string;
+  color?: any;
   storage?: string;
   images?: Media[] | null;
   product?: Product | null;

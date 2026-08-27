@@ -1,14 +1,13 @@
 import { SharedSeo } from './sharedSeo';
 
-export interface Page {
+export interface Homepage {
   id?: number;
   documentId?: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   publishedAt?: Date | string;
   locale?: string | null;
-  title: string;
-  slug: string;
+  title?: string;
   sections?: any;
   seo?: SharedSeo | null;
 };

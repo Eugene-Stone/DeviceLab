@@ -1,6 +1,7 @@
 import { Media } from './media';
 import { SharedSingleField } from './sharedSingleField';
 import { SharedSocialLink } from './sharedSocialLink';
+import { SharedSeo } from './sharedSeo';
 
 export interface Global {
   id?: number;
@@ -15,4 +16,5 @@ export interface Global {
   contacts?: SharedSingleField[] | null;
   socials?: SharedSocialLink[] | null;
   copyright?: string;
+  seo?: SharedSeo | null;
 };

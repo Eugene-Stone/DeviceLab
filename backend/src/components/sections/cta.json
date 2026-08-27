@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_sections_ctas",
+  "info": {
+    "displayName": "CTA"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "text": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "buttons": {
+      "type": "component",
+      "component": "ui.button",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

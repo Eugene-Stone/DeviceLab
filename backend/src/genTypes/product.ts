@@ -1,6 +1,7 @@
 import { Media } from './media';
 import { ProductVariation } from './productVariation';
 import { ProductCategory } from './productCategory';
+import { SharedSeo } from './sharedSeo';
 
 export interface Product {
   id?: number;
@@ -21,6 +22,7 @@ export interface Product {
   product_categories?: ProductCategory[] | null;
   overview?: string;
   deliveryNotice?: string;
-  badge?: "new" | "sale";
   slug?: string;
+  badge?: any;
+  seo?: SharedSeo | null;
 };

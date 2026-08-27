@@ -1,4 +1,4 @@
-
+import { SharedSeo } from './sharedSeo';
 
 export interface Catalog {
   id?: number;
@@ -9,4 +9,5 @@ export interface Catalog {
   locale?: string | null;
   title: string;
   slug: string;
+  seo?: SharedSeo | null;
 };

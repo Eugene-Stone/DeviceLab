@@ -38,6 +38,11 @@
       "options": {
         "apiUrl": "/api/article-tags?fields[0]=title"
       }
+    },
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
     }
   }
 }

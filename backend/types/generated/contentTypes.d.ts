@@ -493,6 +493,7 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'>;
     tags: Schema.Attribute.JSON &
       Schema.Attribute.CustomField<
@@ -533,6 +534,7 @@ export interface ApiBlogBlog extends Struct.SingleTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::blog.blog'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
@@ -564,6 +566,7 @@ export interface ApiCatalogCatalog extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
@@ -599,10 +602,43 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     logoFooter: Schema.Attribute.Media<'images'>;
     logoHeader: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     socials: Schema.Attribute.Component<'shared.social-link', true>;
     title: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'Global data'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
+  collectionName: 'homepages';
+  info: {
+    displayName: 'Homepage';
+    pluralName: 'homepages';
+    singularName: 'homepage';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::homepage.homepage'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    sections: Schema.Attribute.DynamicZone<
+      ['sections.hero', 'sections.features', 'sections.cta']
+    >;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Homepage'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -627,6 +663,10 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::page.page'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    sections: Schema.Attribute.DynamicZone<
+      ['sections.hero', 'sections.features', 'sections.cta']
+    >;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
@@ -668,6 +708,47 @@ export interface ApiProductCategoryProductCategory
   };
 }
 
+export interface ApiProductOrderProductOrder
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'product_orders';
+  info: {
+    displayName: 'Product Orders';
+    pluralName: 'product-orders';
+    singularName: 'product-order';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    buyerDetails: Schema.Attribute.Component<'products.buyer-details', false>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    items: Schema.Attribute.JSON;
+    itemsDefault: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'[   {     "productId": 2,     "productTitle": "iPhone 15 Pro",     "variationId": 12,     "sku": "APL-IP15P-256-BLK",     "color": "Space Grey",     "storage": "256GB",     "priceAtPurchase": 799,     "quantity": 1   } ]'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::product-order.product-order'
+    > &
+      Schema.Attribute.Private;
+    orderNumber: Schema.Attribute.String & Schema.Attribute.Unique;
+    orderStatus: Schema.Attribute.Enumeration<
+      ['pending', 'processing', 'completed', 'cancelled']
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    totalAmount: Schema.Attribute.Decimal;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiProductVariationProductVariation
   extends Struct.CollectionTypeSchema {
   collectionName: 'product_variations';
@@ -680,7 +761,8 @@ export interface ApiProductVariationProductVariation
     draftAndPublish: true;
   };
   attributes: {
-    color: Schema.Attribute.String;
+    color: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -725,8 +807,12 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
           preset: 'defaultHtml';
         }
       >;
-    badge: Schema.Attribute.Enumeration<['new', 'sale']> &
-      Schema.Attribute.DefaultTo<'new'>;
+    badge: Schema.Attribute.JSON &
+      Schema.Attribute.CustomField<
+        'plugin::multi-select.multi-select',
+        ['new', 'sale']
+      > &
+      Schema.Attribute.DefaultTo<'[]'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -757,6 +843,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       'api::product-variation.product-variation'
     >;
     publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false>;
     sku: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
@@ -1386,7 +1473,6 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
@@ -1400,6 +1486,8 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    firstName: Schema.Attribute.String;
+    lastName: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1411,6 +1499,11 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    phoneNumber: Schema.Attribute.String;
+    product_orders: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::product-order.product-order'
+    >;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;
@@ -1446,8 +1539,10 @@ declare module '@strapi/strapi' {
       'api::blog.blog': ApiBlogBlog;
       'api::catalog.catalog': ApiCatalogCatalog;
       'api::global.global': ApiGlobalGlobal;
+      'api::homepage.homepage': ApiHomepageHomepage;
       'api::page.page': ApiPagePage;
       'api::product-category.product-category': ApiProductCategoryProductCategory;
+      'api::product-order.product-order': ApiProductOrderProductOrder;
       'api::product-variation.product-variation': ApiProductVariationProductVariation;
       'api::product.product': ApiProductProduct;
       'plugin::content-releases.release': PluginContentReleasesRelease;

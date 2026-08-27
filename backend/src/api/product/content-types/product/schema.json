@@ -73,17 +73,23 @@
     "deliveryNotice": {
       "type": "text"
     },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
     "badge": {
-      "type": "enumeration",
-      "default": "new",
-      "enum": [
+      "type": "customField",
+      "customField": "plugin::multi-select.multi-select",
+      "default": "[]",
+      "options": [
         "new",
         "sale"
       ]
     },
-    "slug": {
-      "type": "uid",
-      "targetField": "title"
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
     }
   }
 }
