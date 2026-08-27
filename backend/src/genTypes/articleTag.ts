@@ -1,6 +1,6 @@
-import { Media } from './media';
 
-export interface Article {
+
+export interface ArticleTag {
   id?: number;
   documentId?: string;
   createdAt?: Date | string;
@@ -8,8 +8,4 @@ export interface Article {
   publishedAt?: Date | string;
   locale?: string | null;
   title?: string;
-  slug?: string;
-  image?: Media | null;
-  text?: any;
-  tags?: any;
 };

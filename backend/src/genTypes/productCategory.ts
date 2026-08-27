@@ -1,6 +1,7 @@
 import { Media } from './media';
+import { Product } from './product';
 
-export interface Article {
+export interface ProductCategory {
   id?: number;
   documentId?: string;
   createdAt?: Date | string;
@@ -10,6 +11,6 @@ export interface Article {
   title?: string;
   slug?: string;
   image?: Media | null;
-  text?: any;
-  tags?: any;
+  description?: string;
+  products?: Product[] | null;
 };
