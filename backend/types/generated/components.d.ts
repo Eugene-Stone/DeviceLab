@@ -21,6 +21,34 @@ export interface ProductsBuyerDetails extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsBestProducts extends Struct.ComponentSchema {
+  collectionName: 'components_sections_best_products';
+  info: {
+    displayName: 'Best Products';
+  };
+  attributes: {
+    buttons: Schema.Attribute.Component<'ui.button', true>;
+    products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface SectionsCategories extends Struct.ComponentSchema {
+  collectionName: 'components_sections_categories';
+  info: {
+    displayName: 'Categories';
+  };
+  attributes: {
+    product_categories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::product-category.product-category'
+    >;
+    showAllCategories: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<true>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface SectionsCta extends Struct.ComponentSchema {
   collectionName: 'components_sections_ctas';
   info: {
@@ -63,6 +91,19 @@ export interface SectionsHero extends Struct.ComponentSchema {
   };
 }
 
+export interface SectionsLatestArticles extends Struct.ComponentSchema {
+  collectionName: 'components_sections_latest_articles';
+  info: {
+    displayName: 'Latest Articles';
+  };
+  attributes: {
+    counts: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<3>;
+    title: Schema.Attribute.String;
+  };
+}
+
 export interface SharedSeo extends Struct.ComponentSchema {
   collectionName: 'components_shared_seos';
   info: {
@@ -71,11 +112,13 @@ export interface SharedSeo extends Struct.ComponentSchema {
   };
   attributes: {
     canonicalUrl: Schema.Attribute.String;
-    keywords: Schema.Attribute.Text;
+    keywords: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'electronics store, gadgets shop, smartphones UK, laptops, wireless headphones, smartwatches, smart home devices, audio equipment, gaming gear, DeviceLab, buy electronics online'>;
     metaDescription: Schema.Attribute.Text &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 160;
-      }>;
+      }> &
+      Schema.Attribute.DefaultTo<'Discover the latest premium electronics at DeviceLab. Shop smartphones, laptops, wireless audio, wearables, and smart home devices.'>;
     metaRobots: Schema.Attribute.Enumeration<
       ['index,follow', 'noindex,follow', 'index,nofollow', 'noindex,nofollow']
     > &
@@ -83,23 +126,30 @@ export interface SharedSeo extends Struct.ComponentSchema {
     metaTitle: Schema.Attribute.String &
       Schema.Attribute.SetMinMaxLength<{
         maxLength: 60;
-      }>;
-    metaViewport: Schema.Attribute.String;
-    ogDescription: Schema.Attribute.Text;
+      }> &
+      Schema.Attribute.DefaultTo<'DeviceLab - Premium Gadgets Store | Smartphones, Laptops'>;
+    metaViewport: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'width=device-width, initial-scale=1.0'>;
+    ogDescription: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Discover the latest premium electronics at DeviceLab. Shop smartphones, laptops, wireless audio, wearables, and smart home devices. Free UK delivery on orders over \u00A350. 2-year warranty on all products.'>;
     ogImage: Schema.Attribute.Media<'images'>;
-    ogTitle: Schema.Attribute.String;
+    ogTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'DeviceLab - Premium Electronics & Gadgets Store'>;
     ogType: Schema.Attribute.String & Schema.Attribute.DefaultTo<'website'>;
     ogUrl: Schema.Attribute.String;
     preventIndexing: Schema.Attribute.Boolean &
       Schema.Attribute.DefaultTo<false>;
-    structuredData: Schema.Attribute.Text;
+    structuredData: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'{ \t\t"@context": "https://schema.org", \t\t"@type": "Organization", \t\t"name": "DeviceLab", \t\t"url": "https://devicelab.com", \t\t"logo": "https://devicelab.com/images/logo.png", \t\t"description": "Premium electronics and gadgets store offering the latest smartphones, laptops, audio equipment, and smart home devices with free UK delivery.", \t\t"address": { \t\t\t\t"@type": "PostalAddress", \t\t\t\t"streetAddress": "123 Oxford Street", \t\t\t\t"addressLocality": "London", \t\t\t\t"addressRegion": "Greater London", \t\t\t\t"postalCode": "W1D 2HG", \t\t\t\t"addressCountry": "GB" \t\t}, \t\t"contactPoint": { \t\t\t\t"@type": "ContactPoint", \t\t\t\t"telephone": "+555-20-123-4567", \t\t\t\t"contactType": "customer service", \t\t\t\t"email": "info@devicelab.com", \t\t\t\t"availableLanguage": ["English"] \t\t}, \t\t"sameAs": [ \t\t\t\t"https://facebook.com/devicelab", \t\t\t\t"https://twitter.com/devicelab", \t\t\t\t"https://instagram.com/devicelab", \t\t\t\t"https://youtube.com/devicelab" \t\t], \t\t"openingHoursSpecification": { \t\t\t\t"@type": "OpeningHoursSpecification", \t\t\t\t"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], \t\t\t\t"opens": "09:00", \t\t\t\t"closes": "18:00" \t\t} }'>;
     twitterCard: Schema.Attribute.Enumeration<
       ['summary', 'summary_large_image', 'app', 'player']
     > &
       Schema.Attribute.DefaultTo<'summary_large_image'>;
-    twitterDescription: Schema.Attribute.Text;
+    twitterDescription: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Discover the latest tech innovations. Smartphones, laptops, audio, wearables & smart home. Free UK delivery on orders over \u00A350.'>;
     twitterImage: Schema.Attribute.Media<'images'>;
-    twitterTitle: Schema.Attribute.String;
+    twitterTitle: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'DeviceLab - Premium Electronics & Gadgets Store'>;
   };
 }
 
@@ -169,9 +219,12 @@ declare module '@strapi/strapi' {
   export namespace Public {
     export interface ComponentSchemas {
       'products.buyer-details': ProductsBuyerDetails;
+      'sections.best-products': SectionsBestProducts;
+      'sections.categories': SectionsCategories;
       'sections.cta': SectionsCta;
       'sections.features': SectionsFeatures;
       'sections.hero': SectionsHero;
+      'sections.latest-articles': SectionsLatestArticles;
       'shared.seo': SharedSeo;
       'shared.single-field': SharedSingleField;
       'shared.social-link': SharedSocialLink;

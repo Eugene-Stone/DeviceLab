@@ -66,6 +66,19 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin =>
 			},
 		},
 	},
+
+	// Настройка экспорта типов
+	'gen-types': {
+		enabled: true,
+		config: {
+			// /Users/yevhen/Learning/React/DeviceLab/backend/types/generated
+			outputLocation: 'types/genTypes',
+			clearOutput: false,
+			extendTypes: {
+				User: 'firstName?: string;\n  lastName?: string;\n  phoneNumber?: string;\n  product_orders?: any[];',
+			},
+		},
+	},
 });
 
 export default config;

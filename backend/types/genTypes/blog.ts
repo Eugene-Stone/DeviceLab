@@ -1,17 +1,14 @@
-import { Media } from './media';
 import { SharedSeo } from './sharedSeo';
 
-export interface Article {
+export interface Blog {
   id?: number;
   documentId?: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   publishedAt?: Date | string;
   locale?: string | null;
-  title?: string;
-  slug?: string;
-  image?: Media | null;
-  text?: any;
-  tags?: any;
+  title: string;
+  slug: string;
+  description?: string;
   seo?: SharedSeo | null;
 };

@@ -9,4 +9,8 @@ export interface User {
   createdAt?: Date | string;
   updatedAt?: Date | string;
   role: Role | null | number;
+  firstName?: string;
+  lastName?: string;
+  phoneNumber?: string;
+  product_orders?: any[];
 };

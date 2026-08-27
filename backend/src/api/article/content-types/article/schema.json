@@ -43,6 +43,11 @@
       "type": "component",
       "component": "shared.seo",
       "repeatable": false
+    },
+    "author": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "admin::user"
     }
   }
 }

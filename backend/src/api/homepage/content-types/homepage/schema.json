@@ -20,7 +20,10 @@
       "components": [
         "sections.hero",
         "sections.features",
-        "sections.cta"
+        "sections.cta",
+        "sections.latest-articles",
+        "sections.categories",
+        "sections.best-products"
       ]
     },
     "seo": {

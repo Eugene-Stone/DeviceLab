@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2026-08-27T09:29:27.368Z"
+    "x-generation-date": "2026-08-27T11:03:27.898Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -6467,6 +6467,17 @@
               "seo": {
                 "$ref": "#/components/schemas/SharedSeoComponent"
               },
+              "author": {
+                "oneOf": [
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ],
+                "example": "string or id"
+              },
               "locale": {
                 "type": "string"
               },
@@ -7670,6 +7681,24 @@
           "seo": {
             "$ref": "#/components/schemas/SharedSeoComponent"
           },
+          "author": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  }
+                ]
+              },
+              "documentId": {
+                "type": "string"
+              }
+            }
+          },
           "createdAt": {
             "type": "string",
             "format": "date-time"
@@ -7923,6 +7952,24 @@
                 "tags": {},
                 "seo": {
                   "$ref": "#/components/schemas/SharedSeoComponent"
+                },
+                "author": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "oneOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ]
+                    },
+                    "documentId": {
+                      "type": "string"
+                    }
+                  }
                 },
                 "createdAt": {
                   "type": "string",
@@ -9345,6 +9392,9 @@
               "slug": {
                 "type": "string"
               },
+              "description": {
+                "type": "string"
+              },
               "seo": {
                 "$ref": "#/components/schemas/SharedSeoComponent"
               },
@@ -9430,6 +9480,9 @@
           "slug": {
             "type": "string"
           },
+          "description": {
+            "type": "string"
+          },
           "seo": {
             "$ref": "#/components/schemas/SharedSeoComponent"
           },
@@ -9506,6 +9559,9 @@
                   "type": "string"
                 },
                 "slug": {
+                  "type": "string"
+                },
+                "description": {
                   "type": "string"
                 },
                 "seo": {
@@ -12072,6 +12128,15 @@
                     },
                     {
                       "$ref": "#/components/schemas/SectionsCtaComponent"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SectionsLatestArticlesComponent"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SectionsCategoriesComponent"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SectionsBestProductsComponent"
                     }
                   ]
                 },
@@ -12080,7 +12145,10 @@
                   "mapping": {
                     "sections.hero": "#/components/schemas/SectionsHeroComponent",
                     "sections.features": "#/components/schemas/SectionsFeaturesComponent",
-                    "sections.cta": "#/components/schemas/SectionsCtaComponent"
+                    "sections.cta": "#/components/schemas/SectionsCtaComponent",
+                    "sections.latest-articles": "#/components/schemas/SectionsLatestArticlesComponent",
+                    "sections.categories": "#/components/schemas/SectionsCategoriesComponent",
+                    "sections.best-products": "#/components/schemas/SectionsBestProductsComponent"
                   }
                 }
               },
@@ -12174,6 +12242,15 @@
                 },
                 {
                   "$ref": "#/components/schemas/SectionsCtaComponent"
+                },
+                {
+                  "$ref": "#/components/schemas/SectionsLatestArticlesComponent"
+                },
+                {
+                  "$ref": "#/components/schemas/SectionsCategoriesComponent"
+                },
+                {
+                  "$ref": "#/components/schemas/SectionsBestProductsComponent"
                 }
               ]
             },
@@ -12182,7 +12259,10 @@
               "mapping": {
                 "sections.hero": "#/components/schemas/SectionsHeroComponent",
                 "sections.features": "#/components/schemas/SectionsFeaturesComponent",
-                "sections.cta": "#/components/schemas/SectionsCtaComponent"
+                "sections.cta": "#/components/schemas/SectionsCtaComponent",
+                "sections.latest-articles": "#/components/schemas/SectionsLatestArticlesComponent",
+                "sections.categories": "#/components/schemas/SectionsCategoriesComponent",
+                "sections.best-products": "#/components/schemas/SectionsBestProductsComponent"
               }
             }
           },
@@ -12273,6 +12353,15 @@
                       },
                       {
                         "$ref": "#/components/schemas/SectionsCtaComponent"
+                      },
+                      {
+                        "$ref": "#/components/schemas/SectionsLatestArticlesComponent"
+                      },
+                      {
+                        "$ref": "#/components/schemas/SectionsCategoriesComponent"
+                      },
+                      {
+                        "$ref": "#/components/schemas/SectionsBestProductsComponent"
                       }
                     ]
                   },
@@ -12281,7 +12370,10 @@
                     "mapping": {
                       "sections.hero": "#/components/schemas/SectionsHeroComponent",
                       "sections.features": "#/components/schemas/SectionsFeaturesComponent",
-                      "sections.cta": "#/components/schemas/SectionsCtaComponent"
+                      "sections.cta": "#/components/schemas/SectionsCtaComponent",
+                      "sections.latest-articles": "#/components/schemas/SectionsLatestArticlesComponent",
+                      "sections.categories": "#/components/schemas/SectionsCategoriesComponent",
+                      "sections.best-products": "#/components/schemas/SectionsBestProductsComponent"
                     }
                   }
                 },
@@ -12889,6 +12981,132 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/UiButtonComponent"
+            }
+          }
+        }
+      },
+      "SectionsLatestArticlesComponent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "__component": {
+            "type": "string",
+            "enum": [
+              "sections.latest-articles"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "counts": {
+            "type": "integer"
+          }
+        }
+      },
+      "SectionsCategoriesComponent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "__component": {
+            "type": "string",
+            "enum": [
+              "sections.categories"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "showAllCategories": {
+            "type": "boolean"
+          },
+          "product_categories": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                },
+                "documentId": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "SectionsBestProductsComponent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "__component": {
+            "type": "string",
+            "enum": [
+              "sections.best-products"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "buttons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UiButtonComponent"
+            }
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    }
+                  ]
+                },
+                "documentId": {
+                  "type": "string"
+                }
+              }
             }
           }
         }

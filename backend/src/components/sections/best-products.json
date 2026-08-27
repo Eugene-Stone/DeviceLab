@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_sections_best_products",
+  "info": {
+    "displayName": "Best Products"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "buttons": {
+      "type": "component",
+      "component": "ui.button",
+      "repeatable": true
+    },
+    "products": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::product.product"
+    }
+  },
+  "config": {}
+}
