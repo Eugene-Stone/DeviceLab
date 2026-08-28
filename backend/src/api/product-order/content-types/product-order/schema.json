@@ -17,6 +17,7 @@
     },
     "orderStatus": {
       "type": "enumeration",
+      "default": "pending",
       "enum": [
         "pending",
         "processing",

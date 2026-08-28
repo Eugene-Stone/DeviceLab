@@ -14,11 +14,51 @@
     "customerEmail": {
       "type": "string"
     },
+    "deliveryCity": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "deliveryMethod"
+            },
+            "courier"
+          ]
+        }
+      }
+    },
+    "deliveryStreet": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "deliveryMethod"
+            },
+            "courier"
+          ]
+        }
+      }
+    },
+    "deliveryStreetHouse": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "deliveryMethod"
+            },
+            "courier"
+          ]
+        }
+      }
+    },
     "deliveryMethod": {
       "type": "enumeration",
+      "default": "pickup",
       "enum": [
-        "courier",
         "pickup",
+        "courier",
         "postOperator"
       ]
     },
@@ -35,15 +75,6 @@
         }
       },
       "default": "Post Office DHL - Victoria Square Branch (Ref: PO-99123)"
-    },
-    "deliveryCity": {
-      "type": "string"
-    },
-    "deliveryStreet": {
-      "type": "string"
-    },
-    "deliveryStreetHouse": {
-      "type": "string"
     },
     "orderComments": {
       "type": "text"

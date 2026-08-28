@@ -28,6 +28,11 @@
     "description": {
       "type": "text"
     },
+    "parent_category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::product-category.product-category"
+    },
     "products": {
       "type": "relation",
       "relation": "manyToMany",

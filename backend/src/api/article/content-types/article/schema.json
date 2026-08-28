@@ -39,15 +39,20 @@
         "apiUrl": "/api/article-tags?fields[0]=title"
       }
     },
-    "seo": {
-      "type": "component",
-      "component": "shared.seo",
-      "repeatable": false
+    "related_articles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::article.article"
     },
     "author": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "admin::user"
+    },
+    "seo": {
+      "type": "component",
+      "component": "shared.seo",
+      "repeatable": false
     }
   }
 }

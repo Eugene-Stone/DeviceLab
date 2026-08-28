@@ -1,5 +1,4 @@
 import { Media } from './media';
-import { Product } from './product';
 
 export interface ProductVariation {
   id?: number;
@@ -16,5 +15,4 @@ export interface ProductVariation {
   color?: any;
   storage?: string;
   images?: Media[] | null;
-  product?: Product | null;
 };

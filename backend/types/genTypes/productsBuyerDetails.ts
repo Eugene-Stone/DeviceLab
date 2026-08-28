@@ -5,10 +5,10 @@ export interface ProductsBuyerDetails {
   customerName?: string;
   customerPhone?: string;
   customerEmail?: string;
-  deliveryMethod?: "courier" | "pickup" | "postOperator";
-  deliveryPostOperator?: string;
   deliveryCity?: string;
   deliveryStreet?: string;
   deliveryStreetHouse?: string;
+  deliveryMethod?: "pickup" | "courier" | "postOperator";
+  deliveryPostOperator?: string;
   orderComments?: string;
 };

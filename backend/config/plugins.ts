@@ -12,7 +12,8 @@ const allowedMediaTypes = [
 ];
 
 const deniedTypes = [
-	'image/svg+xml',
+	// Убрать эту строчку чтобы разрешить загрузку SVG
+	// 'image/svg+xml',
 	'application/vnd.microsoft.portable-executable',
 	'application/x-msdownload',
 	'application/x-msdos-program',

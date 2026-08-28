@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_sections_hero_titles",
+  "info": {
+    "displayName": "Hero Title"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    }
+  },
+  "config": {}
+}

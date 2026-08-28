@@ -15,10 +15,17 @@
       "type": "string",
       "required": true
     },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
     "sku": {
       "type": "string",
-      "required": true,
+      "required": false,
       "unique": true
+    },
+    "groupId": {
+      "type": "string"
     },
     "price": {
       "type": "decimal",
@@ -29,6 +36,7 @@
     },
     "stockStatus": {
       "type": "enumeration",
+      "default": "inStock",
       "enum": [
         "inStock",
         "outOffStock"
@@ -55,27 +63,13 @@
         "images"
       ]
     },
-    "product_variations": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::product-variation.product-variation",
-      "mappedBy": "product"
-    },
-    "product_categories": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::product-category.product-category",
-      "inversedBy": "products"
-    },
     "overview": {
-      "type": "text"
+      "type": "text",
+      "default": "Discover superior performance, modern design, and advanced technology engineered for your daily needs. Experience the next level of quality and reliability."
     },
     "deliveryNotice": {
-      "type": "text"
-    },
-    "slug": {
-      "type": "uid",
-      "targetField": "title"
+      "type": "text",
+      "default": "Free next-day delivery available"
     },
     "badge": {
       "type": "customField",
@@ -85,6 +79,17 @@
         "new",
         "sale"
       ]
+    },
+    "variations": {
+      "type": "component",
+      "component": "products.product-variations",
+      "repeatable": true
+    },
+    "product_categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product-category.product-category",
+      "inversedBy": "products"
     },
     "seo": {
       "type": "component",

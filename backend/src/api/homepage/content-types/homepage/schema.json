@@ -23,7 +23,12 @@
         "sections.cta",
         "sections.latest-articles",
         "sections.categories",
-        "sections.best-products"
+        "sections.best-products",
+        "sections.team",
+        "sections.our-story",
+        "sections.hero-title",
+        "sections.faq",
+        "sections.contacts"
       ]
     },
     "seo": {

@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_forms_form_agrees",
+  "info": {
+    "displayName": "Form Agree"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "config": {}
+}

@@ -1,5 +1,5 @@
 import { Media } from './media';
-import { ProductVariation } from './productVariation';
+import { ProductsProductVariations } from './productsProductVariations';
 import { ProductCategory } from './productCategory';
 import { SharedSeo } from './sharedSeo';
 
@@ -11,18 +11,19 @@ export interface Product {
   publishedAt?: Date | string;
   locale?: string | null;
   title: string;
-  sku: string;
+  slug?: string;
+  sku?: string;
+  groupId?: string;
   price: number;
   priceOld?: number;
   stockStatus?: "inStock" | "outOffStock";
   description?: any;
   attributes?: any;
   images?: Media[] | null;
-  product_variations?: ProductVariation[] | null;
-  product_categories?: ProductCategory[] | null;
   overview?: string;
   deliveryNotice?: string;
-  slug?: string;
   badge?: any;
+  variations?: ProductsProductVariations[] | null;
+  product_categories?: ProductCategory[] | null;
   seo?: SharedSeo | null;
 };

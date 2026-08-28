@@ -25,7 +25,16 @@
       "components": [
         "sections.hero",
         "sections.features",
-        "sections.cta"
+        "sections.cta",
+        "sections.team",
+        "sections.our-story",
+        "sections.latest-articles",
+        "sections.hero-title",
+        "sections.faq",
+        "sections.contacts",
+        "sections.categories",
+        "sections.best-products",
+        "sections.text-section"
       ]
     },
     "seo": {

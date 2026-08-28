@@ -1,0 +1,55 @@
+{
+  "kind": "singleType",
+  "collectionName": "form_contacts",
+  "info": {
+    "singularName": "form-contact",
+    "pluralName": "form-contacts",
+    "displayName": "Form Contact"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "name": {
+      "type": "component",
+      "component": "forms.form-input",
+      "repeatable": false
+    },
+    "email": {
+      "type": "component",
+      "component": "forms.form-input",
+      "repeatable": false
+    },
+    "subject": {
+      "type": "component",
+      "component": "forms.form-select",
+      "repeatable": false
+    },
+    "message": {
+      "type": "component",
+      "component": "forms.form-textarea",
+      "repeatable": false
+    },
+    "submit": {
+      "type": "component",
+      "component": "forms.form-submit",
+      "repeatable": false
+    },
+    "submitUrl": {
+      "type": "string"
+    },
+    "successMessage": {
+      "type": "text"
+    },
+    "errorMessage": {
+      "type": "text"
+    }
+  }
+}

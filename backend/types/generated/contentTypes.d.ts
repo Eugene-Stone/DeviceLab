@@ -494,6 +494,10 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    related_articles: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::article.article'
+    >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'>;
     tags: Schema.Attribute.JSON &
@@ -579,6 +583,72 @@ export interface ApiCatalogCatalog extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiFormContactFormContact extends Struct.SingleTypeSchema {
+  collectionName: 'form_contacts';
+  info: {
+    displayName: 'Form Contact';
+    pluralName: 'form-contacts';
+    singularName: 'form-contact';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    email: Schema.Attribute.Component<'forms.form-input', false>;
+    errorMessage: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::form-contact.form-contact'
+    > &
+      Schema.Attribute.Private;
+    message: Schema.Attribute.Component<'forms.form-textarea', false>;
+    name: Schema.Attribute.Component<'forms.form-input', false>;
+    publishedAt: Schema.Attribute.DateTime;
+    subject: Schema.Attribute.Component<'forms.form-select', false>;
+    submit: Schema.Attribute.Component<'forms.form-submit', false>;
+    submitUrl: Schema.Attribute.String;
+    successMessage: Schema.Attribute.Text;
+    title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiFormRequestFormRequest extends Struct.CollectionTypeSchema {
+  collectionName: 'form_requests';
+  info: {
+    displayName: 'Form Requests';
+    pluralName: 'form-requests';
+    singularName: 'form-request';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    formData: Schema.Attribute.Text;
+    formTitle: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::form-request.form-request'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -644,6 +714,11 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
         'sections.latest-articles',
         'sections.categories',
         'sections.best-products',
+        'sections.team',
+        'sections.our-story',
+        'sections.hero-title',
+        'sections.faq',
+        'sections.contacts',
       ]
     >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
@@ -673,7 +748,20 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
     sections: Schema.Attribute.DynamicZone<
-      ['sections.hero', 'sections.features', 'sections.cta']
+      [
+        'sections.hero',
+        'sections.features',
+        'sections.cta',
+        'sections.team',
+        'sections.our-story',
+        'sections.latest-articles',
+        'sections.hero-title',
+        'sections.faq',
+        'sections.contacts',
+        'sections.categories',
+        'sections.best-products',
+        'sections.text-section',
+      ]
     >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
@@ -707,6 +795,10 @@ export interface ApiProductCategoryProductCategory
       'api::product-category.product-category'
     > &
       Schema.Attribute.Private;
+    parent_category: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::product-category.product-category'
+    >;
     products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'title'>;
@@ -745,7 +837,8 @@ export interface ApiProductOrderProductOrder
     orderNumber: Schema.Attribute.String & Schema.Attribute.Unique;
     orderStatus: Schema.Attribute.Enumeration<
       ['pending', 'processing', 'completed', 'cancelled']
-    >;
+    > &
+      Schema.Attribute.DefaultTo<'pending'>;
     publishedAt: Schema.Attribute.DateTime;
     totalAmount: Schema.Attribute.Decimal;
     updatedAt: Schema.Attribute.DateTime;
@@ -755,46 +848,6 @@ export interface ApiProductOrderProductOrder
       'manyToOne',
       'plugin::users-permissions.user'
     >;
-  };
-}
-
-export interface ApiProductVariationProductVariation
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'product_variations';
-  info: {
-    displayName: 'Product Variations';
-    pluralName: 'product-variations';
-    singularName: 'product-variation';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    color: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    images: Schema.Attribute.Media<'images', true>;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::product-variation.product-variation'
-    > &
-      Schema.Attribute.Private;
-    price: Schema.Attribute.Decimal;
-    priceOld: Schema.Attribute.Decimal;
-    product: Schema.Attribute.Relation<'manyToOne', 'api::product.product'>;
-    publishedAt: Schema.Attribute.DateTime;
-    sku: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
-    stockStatus: Schema.Attribute.Enumeration<['inStock', 'outOffStock']>;
-    storage: Schema.Attribute.String;
-    title: Schema.Attribute.String;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
   };
 }
 
@@ -825,7 +878,8 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    deliveryNotice: Schema.Attribute.Text;
+    deliveryNotice: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Free next-day delivery available'>;
     description: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
         'plugin::ckeditor5.CKEditor',
@@ -833,6 +887,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
           preset: 'defaultHtml';
         }
       >;
+    groupId: Schema.Attribute.String;
     images: Schema.Attribute.Media<'images', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -840,28 +895,25 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       'api::product.product'
     > &
       Schema.Attribute.Private;
-    overview: Schema.Attribute.Text;
+    overview: Schema.Attribute.Text &
+      Schema.Attribute.DefaultTo<'Discover superior performance, modern design, and advanced technology engineered for your daily needs. Experience the next level of quality and reliability.'>;
     price: Schema.Attribute.Decimal & Schema.Attribute.Required;
     priceOld: Schema.Attribute.Decimal;
     product_categories: Schema.Attribute.Relation<
       'manyToMany',
       'api::product-category.product-category'
     >;
-    product_variations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::product-variation.product-variation'
-    >;
     publishedAt: Schema.Attribute.DateTime;
     seo: Schema.Attribute.Component<'shared.seo', false>;
-    sku: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
+    sku: Schema.Attribute.String & Schema.Attribute.Unique;
     slug: Schema.Attribute.UID<'title'>;
-    stockStatus: Schema.Attribute.Enumeration<['inStock', 'outOffStock']>;
+    stockStatus: Schema.Attribute.Enumeration<['inStock', 'outOffStock']> &
+      Schema.Attribute.DefaultTo<'inStock'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    variations: Schema.Attribute.Component<'products.product-variations', true>;
   };
 }
 
@@ -1547,12 +1599,13 @@ declare module '@strapi/strapi' {
       'api::article.article': ApiArticleArticle;
       'api::blog.blog': ApiBlogBlog;
       'api::catalog.catalog': ApiCatalogCatalog;
+      'api::form-contact.form-contact': ApiFormContactFormContact;
+      'api::form-request.form-request': ApiFormRequestFormRequest;
       'api::global.global': ApiGlobalGlobal;
       'api::homepage.homepage': ApiHomepageHomepage;
       'api::page.page': ApiPagePage;
       'api::product-category.product-category': ApiProductCategoryProductCategory;
       'api::product-order.product-order': ApiProductOrderProductOrder;
-      'api::product-variation.product-variation': ApiProductVariationProductVariation;
       'api::product.product': ApiProductProduct;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

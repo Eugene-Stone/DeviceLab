@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_sections_contacts",
+  "info": {
+    "displayName": "Contacts"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "location": {
+      "type": "component",
+      "component": "ui.card-location",
+      "repeatable": false
+    },
+    "hours": {
+      "type": "component",
+      "component": "ui.card-hours",
+      "repeatable": false
+    },
+    "socials": {
+      "type": "component",
+      "component": "ui.card-connect",
+      "repeatable": false
+    }
+  },
+  "config": {}
+}

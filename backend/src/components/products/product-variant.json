@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_products_product_variants",
+  "info": {
+    "displayName": "Product Variant"
+  },
+  "options": {},
+  "attributes": {
+    "value": {
+      "type": "string"
+    },
+    "isColor": {
+      "type": "boolean",
+      "default": false
+    },
+    "color": {
+      "type": "customField",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "isColor"
+            },
+            true
+          ]
+        }
+      },
+      "customField": "plugin::color-picker.color",
+      "regex": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "form_requests",
+  "info": {
+    "singularName": "form-request",
+    "pluralName": "form-requests",
+    "displayName": "Form Requests"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "formTitle": {
+      "type": "string"
+    },
+    "formData": {
+      "type": "text"
+    }
+  }
+}

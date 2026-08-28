@@ -5,12 +5,25 @@ import { Event } from '@strapi/database/dist/lifecycles';
 
 export default {
 	async beforeCreate(event: Event) {
+		await addedAuthor(event);
+
 		await handleTags(event);
 	},
 	async beforeUpdate(event: Event) {
 		await handleTags(event);
 	},
 };
+
+// Функция автоматического добавления автора к статье
+async function addedAuthor(event: Event) {
+	const { data } = event.params;
+	const ctx = strapi.requestContext.get();
+
+	// Check if author is not filled manually and request comes from logged-in admin user
+	if (!data.author && ctx?.state?.user) {
+		data.author = ctx.state.user.id;
+	}
+}
 
 async function handleTags(event: Event) {
 	const data = event.params.data as Record<string, any>;

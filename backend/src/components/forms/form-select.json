@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_forms_form_selects",
+  "info": {
+    "displayName": "Form Select"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "placeholder": {
+      "type": "string"
+    },
+    "isRequired": {
+      "type": "boolean",
+      "default": false
+    },
+    "options": {
+      "type": "component",
+      "component": "forms.form-select-options",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

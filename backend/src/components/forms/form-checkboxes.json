@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_forms_form_checkboxes",
+  "info": {
+    "displayName": "Form Checkboxes"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "type": {
+      "type": "enumeration",
+      "default": "checkbox",
+      "enum": [
+        "checkbox",
+        "radio"
+      ]
+    },
+    "items": {
+      "type": "component",
+      "component": "forms.form-checkbox",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

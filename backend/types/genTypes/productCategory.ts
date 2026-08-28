@@ -12,5 +12,6 @@ export interface ProductCategory {
   slug?: string;
   image?: Media | null;
   description?: string;
+  parent_category?: ProductCategory | null;
   products?: Product[] | null;
 };

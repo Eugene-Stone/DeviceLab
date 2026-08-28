@@ -1,6 +1,6 @@
 import { Media } from './media';
-import { SharedSeo } from './sharedSeo';
 import { AdminUser } from './adminUser';
+import { SharedSeo } from './sharedSeo';
 
 export interface Article {
   id?: number;
@@ -14,6 +14,7 @@ export interface Article {
   image?: Media | null;
   text?: any;
   tags?: any;
-  seo?: SharedSeo | null;
+  related_articles?: Article[] | null;
   author?: AdminUser | null;
+  seo?: SharedSeo | null;
 };
