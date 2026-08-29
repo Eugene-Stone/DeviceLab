@@ -41,6 +41,9 @@
       "component": "shared.social-link",
       "repeatable": true
     },
+    "footerSlogan": {
+      "type": "text"
+    },
     "copyright": {
       "type": "text"
     },

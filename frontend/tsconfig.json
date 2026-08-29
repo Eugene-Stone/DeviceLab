@@ -19,10 +19,13 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+		/* Импорт типов из бекенда */
+		"@backend-types/*": ["../backend/types/genTypes/*"]
     }
   },
   "include": [
+	"../backend/types/genTypes/*",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",

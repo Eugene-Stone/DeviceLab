@@ -1,0 +1,89 @@
+/* css/vars.css */
+:root {
+    /* Modern Color Palette */
+    --primary-color: #6366F1;
+    --primary-dark: #4F46E5;
+    --primary-light: #818CF8;
+    --secondary-color: #10B981;
+    --secondary-dark: #059669;
+    --accent-color: #F59E0B;
+    --danger-color: #EF4444;
+    
+    /* Neutral Colors */
+    --text-primary: #1F2937;
+    --text-secondary: #4B5563;
+    --text-muted: #9CA3AF;
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F9FAFB;
+    --bg-accent: #EEF2FF;
+    --bg-page-start: #F8FAFC;
+    --bg-gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+    --bg-brand-gradient: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+    --bg-brand-gradient-hover: linear-gradient(135deg, #5A67D8 0%, #6B46C1 100%);
+    --bg-brand-gradient-line: linear-gradient(90deg, #667EEA 0%, #764BA2 100%);
+    --bg-brand-gradient-line-accent: linear-gradient(90deg, #667EEA 0%, #764BA2 50%, var(--accent-color) 100%);
+    --bg-brand-gradient-soft: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    --bg-secondary-gradient: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-dark) 100%);
+    --bg-secondary-gradient-hover: linear-gradient(135deg, #0EA271 0%, #047857 100%);
+    --bg-danger-gradient: linear-gradient(135deg, var(--danger-color) 0%, #DC2626 100%);
+    --bg-dark-gradient: linear-gradient(135deg, var(--text-primary) 0%, #111827 100%);
+    --bg-text-accent-gradient: linear-gradient(135deg, var(--primary-light) 0%, var(--accent-color) 100%);
+    
+    /* Borders & Shadows */
+    --border-color: #E5E7EB;
+    --color-white: #FFFFFF;
+    --color-transparent: transparent;
+    --color-gray-500: #6B7280;
+    --color-gray-300: #D1D5DB;
+    --color-success-bg: #D1FAE5;
+    --color-success-text: #065F46;
+    --color-info-bg: #DBEAFE;
+    --color-info-text: #1E40AF;
+    --color-purple-bg: #F3E8FF;
+    --color-purple-text: #6B21A8;
+    --color-danger-bg: #FEE2E2;
+    --overlay-white-95: rgba(255, 255, 255, 0.95);
+    --overlay-white-30: rgba(255, 255, 255, 0.3);
+    --overlay-white-20: rgba(255, 255, 255, 0.2);
+    --overlay-white-10: rgba(255, 255, 255, 0.1);
+    --overlay-border-light: rgba(229, 231, 235, 0.5);
+    --overlay-dark-60: rgba(0, 0, 0, 0.6);
+    --overlay-dark-30: rgba(0, 0, 0, 0.3);
+    --shadow-header: 0 2px 10px rgba(0, 0, 0, 0.05);
+    --shadow-primary-sm: 0 4px 6px rgba(99, 102, 241, 0.2);
+    --shadow-primary-md: 0 6px 12px rgba(99, 102, 241, 0.3);
+    --shadow-primary-lg: 0 4px 12px rgba(99, 102, 241, 0.4);
+    --shadow-secondary-sm: 0 4px 6px rgba(16, 185, 129, 0.2);
+    --shadow-secondary-md: 0 6px 12px rgba(16, 185, 129, 0.3);
+    --shadow-danger-sm: 0 2px 4px rgba(239, 68, 68, 0.3);
+    --shadow-neutral-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-primary-focus: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    --shadow-primary-focus-strong: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    --outline-primary-focus: rgba(99, 102, 241, 0.3);
+    --logo-shadow: drop-shadow(0 2px 4px rgba(99, 102, 241, 0.3));
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.07);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+    --shadow-xl: 0 20px 25px rgba(0,0,0,0.15);
+    
+    /* Border Radius */
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-full: 9999px;
+    
+    /* Transitions */
+    --transition-fast: all 0.2s ease;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    --spacing-2xl: 4rem;
+    --spacing-3xl: 6rem;
+}

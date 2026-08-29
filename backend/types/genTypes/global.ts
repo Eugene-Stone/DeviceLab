@@ -15,6 +15,7 @@ export interface Global {
   logoFooter?: Media | null;
   contacts?: SharedSingleField[] | null;
   socials?: SharedSocialLink[] | null;
+  footerSlogan?: string;
   copyright?: string;
   seo?: SharedSeo | null;
 };
