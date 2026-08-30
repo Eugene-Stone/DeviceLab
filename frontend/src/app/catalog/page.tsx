@@ -1,6 +1,7 @@
 export default async function Catalog() {
-	// Задержка для проверки loading.tsx
-	await new Promise((resolve) => setTimeout(resolve, 500));
-
-	return <h1>Blog 111</h1>;
+	return (
+		<main id="main-content" data-page-is={'currentPage'}>
+			<h1>Catalog page</h1>
+		</main>
+	);
 }

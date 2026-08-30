@@ -17,6 +17,7 @@ body {
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+	//  background-color: red;
 }
 
 .container {
@@ -94,6 +95,138 @@ body {
 	min-height: 200px;
 	width: 100%;
 }
+
+.skeleton-text {
+	margin-left: 200px;
+	margin-right: 200px;
+
+	/* Переменная коэффициента высоты строки */
+	--line-height: 1.6;
+	
+	/* Делаем сам текст прозрачным */
+	color: transparent;
+
+	/* Задаем фоновый градиент: 
+		первое значение — высота полосы (например, 70% от высоты строки),
+		остальное — прозрачный зазор между строками 
+	*/
+	background: linear-gradient(
+			to bottom,
+			#e0e0e0 0%,
+			#e0e0e0 70%,
+			transparent 70%,
+			transparent 100%
+	);
+
+	/* Высота фона равна ровно 1 высоте строки, а ширина — 100% */
+	background-size: 100% 1lh;
+	/* или */
+	// /* Умножаем размер шрифта (1em) на коэффициент высоты строки */
+	// background-size: 100% calc(1em * var(--line-height));
+
+	/* Закругляем углы на стыках строк (работает в современных браузерах) */
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
+	border-radius: 4px;
+}
+
+section {
+	&.skeleton {
+		* {
+			color: transparent !important;
+			pointer-events: none !important;
+			user-select: none !important;
+		}
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		p,
+		li {
+			/* Делаем сам текст прозрачным */
+			color: transparent;
+
+			/* Задаем фоновый градиент: 
+				первое значение — высота полосы (например, 70% от высоты строки),
+				остальное — прозрачный зазор между строками 
+			*/
+			/* 1-й слой — движущийся блик, 2-й слой — базовая полоса текста */
+			background-image:
+				linear-gradient(90deg,
+					transparent 0%,
+					rgba(255, 255, 255, 0.6) 50%,
+					transparent 100%),
+				linear-gradient(to bottom,
+					#e0e0e0 0%,
+					#e0e0e0 70%,
+					transparent 70%,
+					transparent 100%);
+
+			// /* Высота фона равна ровно 1 высоте строки, а ширина — 100% */
+			// background-size: 100% 1lh;
+			/* или */
+			// /* Умножаем размер шрифта (1em) на коэффициент высоты строки */
+			// background-size: 100% calc(1em * var(--line-height));
+
+			/* Закругляем углы на стыках строк (работает в современных браузерах) */
+			box-decoration-break: clone;
+			-webkit-box-decoration-break: clone;
+			border-radius: 4px;
+
+			background-repeat: repeat-x, repeat;
+			background-size: 200% 1lh, 100% 1lh;
+			animation: skeleton-shimmer 1.5s infinite linear;
+		}
+
+		img,
+		.btn {
+			background-image: 
+				linear-gradient(
+					90deg, 
+					transparent 0%, 
+					rgba(255, 255, 255, 0.6) 50%, 
+					transparent 100%
+				),
+				linear-gradient(
+					#e0e0e0 0%, 
+					#e0e0e0 100%
+				);
+
+			background-repeat: repeat-x, no-repeat;
+			background-size: 200% 100%, 100% 100%;
+
+			animation: skeleton-shimmer 1.5s infinite linear;
+		}
+	}
+}
+
+@keyframes skeleton-shimmer {
+	0% {
+		background-position-x: 150%, 0;
+	}
+
+	100% {
+		background-position-x: -50%, 0;
+	}
+}
+
+// img {
+// 	&.skeleton {
+
+// 	}
+// }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -182,10 +315,12 @@ body {
     transform: translateY(-7px) rotate(-45deg);
 }
 
-.main-nav {
+.main-nav,
+.main-nav__wrapper {
     flex: 1;
     min-width: 0;
 }
+
 
 .nav-list {
     display: flex;
@@ -364,13 +499,14 @@ body {
     
     .mobile-menu-toggle {
         display: flex;
-        order: 1;
+        order: 10;
+		  margin-left: 10px;
     }
     
-    .logo {
-        order: 2;
-        margin-right: auto;
-    }
+   //  .logo {
+   //      order: 2;
+   //      margin-right: auto;
+   //  }
     
     .logo img {
         width: 120px;
@@ -380,6 +516,9 @@ body {
         order: 3;
         gap: var(--spacing-xs);
     }
+	 .user-actions {
+		gap: 0
+	 }
     
     .user-text {
         display: none; /* Скрываем текст на мобильных */
@@ -391,10 +530,10 @@ body {
     }
     
     .search-form {
-        order: 4;
+      //   order: 4;
         width: 100%;
         flex: 1 1 100%;
-        margin-top: var(--spacing-xs);
+      //   margin-top: var(--spacing-xs);
         border-radius: var(--radius-md);
     }
     
@@ -413,6 +552,7 @@ body {
         box-shadow: var(--shadow-lg);
         margin-top: var(--spacing-xs);
 		  position: absolute;
+		  left: 0;
 		  top: 100%;
     }
 
@@ -679,6 +819,9 @@ body {
         display: block;
         animation: slideDown 0.3s ease;
     }
+    .main-nav.open {
+        display: block;
+    }
     
     @keyframes slideDown {
         from {
@@ -704,7 +847,8 @@ body {
     
     .header-actions {
         width: 100%;
-        justify-content: space-between;
+      //   justify-content: space-between;
+		justify-content: flex-end;
         order: 5;
     }
     
@@ -717,4 +861,9 @@ body {
         min-width: 0;
         width: 100%;
     }
+}
+
+
+@media (max-width: 576px) {
+
 }

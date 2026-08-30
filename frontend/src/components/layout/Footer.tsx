@@ -45,7 +45,6 @@ export default function Footer({ data }: Props) {
 					{globalData.socials && (
 						<div className="social-links">
 							{globalData.socials.map((socButton, i) => {
-								console.log(socButton.icon);
 								return (
 									<a
 										key={i}
