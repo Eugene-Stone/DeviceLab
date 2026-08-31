@@ -12,6 +12,7 @@ import { SharedSeo } from '@backend-types/sharedSeo';
 import { notFound } from 'next/navigation';
 
 import NextTopLoader from 'nextjs-toploader';
+import ReloadToTop from '@/components/_layout/ReloadToTop';
 
 // export const metadata: Metadata = {
 // 	title: 'Create Next App',
@@ -109,6 +110,7 @@ export default async function RootLayout({ children }: LayoutProps<'/'>) {
 	return (
 		<html lang="en">
 			<body>
+				{/* <ReloadToTop /> */}
 				<NextTopLoader
 					color="orange"
 					initialPosition={0.08}

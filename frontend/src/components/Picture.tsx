@@ -15,7 +15,7 @@ export default function Picture({ className, image, sizes, alt, priority }: Prop
 
 	return (
 		<picture className={className}>
-			{sizes && <source srcSet={srcSetString} sizes={sizes} />}
+			{srcSetString && sizes && <source srcSet={srcSetString} sizes={sizes} />}
 
 			{priority ? (
 				<Image

@@ -1,7 +1,8 @@
-import Hero from '../Hero';
-import Categories from '../Categories';
-import BestProducts from '../BestProducts';
-import Features from '../Features';
+import Hero from './Hero';
+import Categories from './Categories';
+import BestProducts from './BestProducts';
+import Features from './Features';
+import LatestArticles from './LatestArticles';
 
 type Props = {
 	// eslint-disable-next-line
@@ -19,6 +20,8 @@ export default function DynamicSections({ sections }: Props) {
 				return <Features key={i} data={sect} />;
 			case 'sections.hero':
 				return <Hero key={i} data={sect} />;
+			case 'sections.latest-articles':
+				return <LatestArticles key={i} data={sect} />;
 
 			default:
 				return null;

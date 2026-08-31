@@ -1,6 +1,7 @@
 import { BACKEND_URL } from '@/CONSTANTS';
-import { TreeNavigationItem } from '@/TYPES';
+import { StrapiResponse, TreeNavigationItem } from '@/TYPES';
 import { buildQuery } from '@/utils/buildQuery';
+import { Article } from '@backend-types/article';
 import { Global } from '@backend-types/global';
 import { notFound } from 'next/navigation';
 
@@ -207,5 +208,49 @@ export async function getPageData({ page, slug }: PageType) {
 		console.error(error);
 
 		throw new Error('Backend unavailable');
+	}
+}
+
+export async function getLatestArticles(count: number) {
+	const query = buildQuery({
+		sort: ['createdAt:desc'],
+		pagination: {
+			page: '1',
+			pageSize: count,
+		},
+		populate: {
+			image: {
+				populate: '*',
+			},
+		},
+	});
+
+	try {
+		const response = await fetch(
+			// `${BACKEND_URL}/api/articles?[sort]=createdAt:desc&pagination[page]=1&pagination[pageSize]=${count}`,
+			`${BACKEND_URL}/api/articles?${query}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			},
+		);
+
+		if (!response.ok) {
+			const errorData = await response.json();
+			throw new Error(errorData.error?.message ?? 'Failed to fetch comment');
+		}
+
+		const responseData: StrapiResponse<Article> = await response.json();
+		return responseData;
+	} catch (error) {
+		if (error instanceof Error) {
+			console.error(error.message);
+		} else {
+			console.error(error);
+		}
+
+		throw new Error('Articles unavailable');
 	}
 }

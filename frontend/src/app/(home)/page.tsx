@@ -14,7 +14,7 @@ export default async function Home() {
 
 	// console.log('currentPage', currentPage);
 	// console.log('homeData', homeData);
-	console.log('sections', sections);
+	// console.log('sections', sections);
 
 	return (
 		<main id="main-content" data-page-is={currentPage}>

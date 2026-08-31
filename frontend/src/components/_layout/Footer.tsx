@@ -6,6 +6,7 @@ import { Global } from '@backend-types/global';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import ButtonScrollTop from './ButtonScrollTop';
 
 type Props = {
 	data: {
@@ -141,6 +142,8 @@ export default function Footer({ data }: Props) {
 					<p>{globalData.copyright}</p>
 				</div>
 			</div>
+
+			<ButtonScrollTop />
 		</footer>
 	);
 }
