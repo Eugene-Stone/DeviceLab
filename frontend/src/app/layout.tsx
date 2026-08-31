@@ -100,6 +100,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({ children }: LayoutProps<'/'>) {
 	const { globalData, menuPrimary, menuFooter } = await getGlobalData();
+	const global = { globalData, menuPrimary, menuFooter };
+	const providerTwoData = 'Hello provider';
 	// console.log('globalData', globalData);
 	// console.log('menuPrimary', menuPrimary);
 	// console.log('menuFooter', menuFooter);
@@ -123,9 +125,8 @@ export default async function RootLayout({ children }: LayoutProps<'/'>) {
 					showAtBottom={false}
 				/>
 
-				<Providers data={{ globalData, menuPrimary, menuFooter }}>
+				<Providers data={{ global, providerTwoData }}>
 					<Header data={{ globalData, menuPrimary }} />
-					{/* <main id="main-content">{children}</main> */}
 					{children}
 					<Footer data={{ globalData, menuPrimary, menuFooter }} />
 				</Providers>

@@ -1,12 +1,18 @@
-'use client';
+// 'use client';
+
 import { ReactNode } from 'react';
-import { GlobalDataProvider, GlobalContextType } from './GlobalDataContext';
+import { GlobalContextProvider, GlobalContextType } from './GlobalContext';
 
 interface ProvidersProps {
 	children: ReactNode;
-	data: GlobalContextType;
+	data: {
+		global: GlobalContextType;
+		providerTwoData: string;
+	};
 }
 
 export default function Providers({ children, data }: ProvidersProps) {
-	return <GlobalDataProvider value={data}>{children}</GlobalDataProvider>;
+	// console.log(data.global);
+	// console.log(data.providerTwoData);
+	return <GlobalContextProvider value={data.global}>{children}</GlobalContextProvider>;
 }

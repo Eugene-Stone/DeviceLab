@@ -1,4 +1,7 @@
+import Buttons from '@/components/Buttons';
+import Picture from '@/components/Picture';
 import { BACKEND_URL } from '@/CONSTANTS';
+import { imageSrcSet } from '@/utils/imageSrcSet';
 import { SectionsHero } from '@backend-types/sectionsHero';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -15,15 +18,23 @@ export default function Hero({ data }: Props) {
 			<div className="hero-slider">
 				{slides &&
 					slides.map((item, i) => {
+						const { srcSetString } = imageSrcSet(item.image);
 						return (
 							<div key={i} className="hero-slide">
 								{item.image && (
-									<Image
+									<Picture
 										className="hero-slide__image"
-										src={BACKEND_URL + item.image.url}
-										alt={item.title || ''}
-										width={item.image.width}
-										height={item.image.height}
+										image={item.image}
+										srcSet={srcSetString}
+										sizes="
+											(min-width: 1400px) 100vw,
+											(min-width: 1200px) 1140px,
+											(min-width: 992px) 950px,
+											(min-width: 768px) 720px,
+											100vw
+										"
+										alt={item.title}
+										priority
 									/>
 								)}
 
@@ -32,20 +43,7 @@ export default function Hero({ data }: Props) {
 										<div className="hero-content">
 											<h1 className="hero-title">{item.title}</h1>
 											<p className="hero-subtitle">{item.text}</p>
-											{item.buttons &&
-												item.buttons.map((item, i) => {
-													return (
-														<Link
-															key={i}
-															href={item.href || ''}
-															className={`btn ${item.style} btn-lg`}
-															target={
-																item.isExternal ? '_blank' : '_self'
-															}>
-															{item.title}
-														</Link>
-													);
-												})}
+											{item.buttons && <Buttons buttons={item.buttons} />}
 										</div>
 									</div>
 								</div>

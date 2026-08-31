@@ -3,7 +3,7 @@ import { TreeNavigationItem } from '@/TYPES';
 import { Global } from '@backend-types/global';
 
 import { BACKEND_URL, SITE_TITLE } from '@/CONSTANTS';
-import { useGlobalData } from '@/context/GlobalDataContext';
+import { useGlobalContext } from '@/context/GlobalContext';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -19,8 +19,8 @@ export default function Header({ data }: Props) {
 	const { globalData, menuPrimary } = data;
 	const pathname = usePathname();
 
-	// const { globalData, menuFooter, menuPrimary } = useGlobalData();
-	// console.log('globalData', globalData);
+	// const { globalData, menuFooter, menuPrimary } = useGlobalContext();
+	// console.log('globalDataContext', globalData);
 
 	return (
 		<header className="site-header">
