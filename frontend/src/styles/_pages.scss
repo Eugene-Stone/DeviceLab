@@ -827,6 +827,10 @@
     margin: var(--spacing-sm) 0;
     padding-left: var(--spacing-lg);
 }
+.blog-post-content ol {
+    margin: var(--spacing-sm) 0;
+    padding-left: var(--spacing-lg);
+}
 
 .blog-post-content blockquote {
     border-left: 4px solid var(--primary-color);
@@ -846,6 +850,10 @@
     left: 10px;
     color: var(--primary-light);
     opacity: 0.3;
+}
+
+.text-content {
+	@extend .blog-post-content
 }
 
 .blog-post-tags {
@@ -1662,6 +1670,53 @@
         order: -1;
     }
 }
+
+
+
+
+.text-section {
+	&:first-child {
+		margin-top: 50px;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

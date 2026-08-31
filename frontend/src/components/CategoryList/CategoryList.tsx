@@ -1,7 +1,7 @@
 'use client';
 
 import { BACKEND_URL } from '@/CONSTANTS';
-import { StrapiResponse } from '@/TYPES';
+import { StrapiResponseCollection } from '@/TYPES';
 import { buildQuery } from '@/utils/buildQuery';
 import { ProductCategory } from '@backend-types/productCategory';
 import { useEffect, useState } from 'react';
@@ -35,7 +35,8 @@ export default function CategoryList() {
 					throw new Error(errorData.error?.message ?? 'Failed to fetch comment');
 				}
 
-				const responseData: StrapiResponse<ProductCategory> = await response.json();
+				const responseData: StrapiResponseCollection<ProductCategory> =
+					await response.json();
 
 				setCategories(responseData.data);
 			} catch (error) {

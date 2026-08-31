@@ -1,5 +1,10 @@
 import { BACKEND_URL } from '@/CONSTANTS';
-import { StrapiResponse, TreeNavigationItem } from '@/TYPES';
+import {
+	PageType,
+	StrapiResponseCollection,
+	StrapiResponseSingle,
+	TreeNavigationItem,
+} from '@/TYPES';
 import { buildQuery } from '@/utils/buildQuery';
 import { Article } from '@backend-types/article';
 import { Global } from '@backend-types/global';
@@ -105,25 +110,25 @@ const SECTIONS_POPULATE = {
 	},
 };
 
-const queryGlobal = buildQuery({
-	populate: {
-		seo: SEO_POPULATE,
-		logoHeader: {
-			populate: '*',
-		},
-		logoFooter: {
-			populate: '*',
-		},
-		contacts: {
-			populate: '*',
-		},
-		socials: {
-			populate: '*',
-		},
-	},
-});
-
 export async function getGlobalData() {
+	const queryGlobal = buildQuery({
+		populate: {
+			seo: SEO_POPULATE,
+			logoHeader: {
+				populate: '*',
+			},
+			logoFooter: {
+				populate: '*',
+			},
+			contacts: {
+				populate: '*',
+			},
+			socials: {
+				populate: '*',
+			},
+		},
+	});
+
 	try {
 		const headers = { 'Content-Type': 'application/json' };
 		const [globalDataRes, menuPrimaryRes, menuFooterRes] = await Promise.all([
@@ -163,49 +168,62 @@ export async function getGlobalData() {
 	}
 }
 
-const queryPage = buildQuery({
-	populate: {
-		seo: SEO_POPULATE,
-		sections: SECTIONS_POPULATE,
-	},
-});
+export async function getPageData<T>({ home, pageType, slug }: PageType) {
+	const queryPage = buildQuery({
+		populate: {
+			seo: SEO_POPULATE,
+			sections: SECTIONS_POPULATE,
+		},
+	});
 
-type PageType = {
-	page: 'home' | 'page';
-	slug?: string;
-};
-export async function getPageData({ page, slug }: PageType) {
-	let apiUrl;
+	let apiUrl = '';
 	let query;
+	query = queryPage;
 
-	if (page === 'home') {
-		query = queryPage;
+	if (home) {
 		apiUrl = `${BACKEND_URL}/api/homepage?${query}`;
-	} else if (page === 'page') {
-		query = queryPage;
-		apiUrl = `${BACKEND_URL}/api/pages?filters[slug][$eq]=${slug}`;
+	} else if (pageType === 'single') {
+		apiUrl = `${BACKEND_URL}/api/${slug}?${query}`;
+	} else if (pageType === 'collection') {
+		apiUrl = `${BACKEND_URL}/api/pages?filters[slug][$eq]=${slug}&${query}`;
 	} else {
-		throw new Error(`Unsupported page type: ${page}`);
+		throw new Error(`Unsupported page type: ${pageType}`);
 	}
 
 	try {
-		const response = await fetch(apiUrl);
+		const response = await fetch(apiUrl, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
 
 		if (response.status === 404) {
 			notFound();
 		}
 
 		if (!response.ok) {
-			throw new Error('Failed to fetch page data');
+			const errorData = await response.json();
+			throw new Error(errorData.error?.message ?? 'Failed to fetch page data');
 		}
 
-		const currentPage = page === 'home' ? page : slug;
+		const currentPage = home ? 'home' : slug;
 		const responseData = await response.json();
-		// return response.json();
 
-		return { currentPage, data: responseData.data };
+		if (home || pageType === 'single') {
+			const singleData: StrapiResponseSingle<T> = responseData;
+			return { currentPage, data: singleData.data };
+		} else {
+			const collectionData: StrapiResponseCollection<T> = responseData;
+			// Берем первый элемент из массива фильтрации Strapi
+			return { currentPage, data: collectionData.data[0] ?? null };
+		}
 	} catch (error) {
-		console.error(error);
+		if (error instanceof Error) {
+			console.error(error.message);
+		} else {
+			console.error(error);
+		}
 
 		throw new Error('Backend unavailable');
 	}
@@ -239,10 +257,10 @@ export async function getLatestArticles(count: number) {
 
 		if (!response.ok) {
 			const errorData = await response.json();
-			throw new Error(errorData.error?.message ?? 'Failed to fetch comment');
+			throw new Error(errorData.error?.message ?? 'Failed to fetch latest articles');
 		}
 
-		const responseData: StrapiResponse<Article> = await response.json();
+		const responseData: StrapiResponseCollection<Article> = await response.json();
 		return responseData;
 	} catch (error) {
 		if (error instanceof Error) {

@@ -8,12 +8,12 @@ export default async function Home() {
 	// Задержка для проверки loading.tsx
 	await new Promise((resolve) => setTimeout(resolve, 500));
 
-	const { currentPage, data } = await getPageData({ page: 'home' });
-	const homeData = data as Homepage;
-	const sections = homeData.sections;
+	const { currentPage, data } = await getPageData<Homepage>({ home: true, pageType: 'single' });
+	const homeData = data;
+	const sections = homeData?.sections;
 
-	// console.log('currentPage', currentPage);
-	// console.log('homeData', homeData);
+	console.log('currentPage', currentPage);
+	console.log('homeData', homeData);
 	// console.log('sections', sections);
 
 	return (
