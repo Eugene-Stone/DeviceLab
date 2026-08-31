@@ -1,19 +1,21 @@
 import { BACKEND_URL } from '@/CONSTANTS';
+import { imageSrcSet } from '@/utils/imageSrcSet';
 import { Media } from '@backend-types/media';
 import Image from 'next/image';
 
 type Props = {
 	className?: string;
 	image: Media;
-	srcSet?: string;
 	sizes?: string;
 	alt?: string;
 	priority?: boolean;
 };
-export default function Picture({ className, image, srcSet, sizes, alt, priority }: Props) {
+export default function Picture({ className, image, sizes, alt, priority }: Props) {
+	const { srcSetString } = imageSrcSet(image);
+
 	return (
 		<picture className={className}>
-			{srcSet && <source srcSet={srcSet} sizes={sizes} />}
+			{sizes && <source srcSet={srcSetString} sizes={sizes} />}
 
 			{priority ? (
 				<Image

@@ -720,6 +720,7 @@ export interface ApiHomepageHomepage extends Struct.SingleTypeSchema {
         'sections.hero-title',
         'sections.faq',
         'sections.contacts',
+        'sections.text-section',
       ]
     >;
     seo: Schema.Attribute.Component<'shared.seo', false>;

@@ -13,9 +13,89 @@ const SEO_POPULATE = {
 
 const SECTIONS_POPULATE = {
 	on: {
+		'sections.best-products': {
+			populate: {
+				buttons: {
+					populate: '*',
+				},
+				products: {
+					populate: '*',
+				},
+			},
+		},
+		'sections.categories': {
+			populate: {
+				product_categories: {
+					populate: {
+						image: true,
+						parent_category: true,
+						products: true,
+					},
+				},
+			},
+		},
+		'sections.contacts': {
+			populate: {
+				location: {
+					populate: '*',
+				},
+				hours: {
+					populate: {
+						hours: {
+							populate: '*',
+						},
+					},
+				},
+				socials: {
+					populate: '*',
+				},
+			},
+		},
+		'sections.cta': {
+			populate: {
+				buttons: {
+					populate: '*',
+				},
+			},
+		},
+		'sections.faq': {
+			populate: {
+				accordion: {
+					populate: '*',
+				},
+			},
+		},
+		'sections.features': {
+			populate: {
+				cards: {
+					populate: {
+						icon: true,
+					},
+				},
+			},
+		},
+		'sections.hero-title': { populate: '*' },
 		'sections.hero': {
 			populate: {
 				slides: {
+					populate: '*',
+				},
+			},
+		},
+		'sections.latest-articles': {
+			populate: '*',
+		},
+		'sections.our-story': {
+			populate: {
+				image: true,
+				stats: {
+					populate: '*',
+				},
+			},
+		},
+		'sections.team': {
+			populate: {
+				cards: {
 					populate: '*',
 				},
 			},

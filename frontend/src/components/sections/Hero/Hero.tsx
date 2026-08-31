@@ -1,10 +1,6 @@
 import Buttons from '@/components/Buttons';
 import Picture from '@/components/Picture';
-import { BACKEND_URL } from '@/CONSTANTS';
-import { imageSrcSet } from '@/utils/imageSrcSet';
 import { SectionsHero } from '@backend-types/sectionsHero';
-import Image from 'next/image';
-import Link from 'next/link';
 
 type Props = {
 	data: SectionsHero;
@@ -18,14 +14,12 @@ export default function Hero({ data }: Props) {
 			<div className="hero-slider">
 				{slides &&
 					slides.map((item, i) => {
-						const { srcSetString } = imageSrcSet(item.image);
 						return (
 							<div key={i} className="hero-slide">
 								{item.image && (
 									<Picture
 										className="hero-slide__image"
 										image={item.image}
-										srcSet={srcSetString}
 										sizes="
 											(min-width: 1400px) 100vw,
 											(min-width: 1200px) 1140px,

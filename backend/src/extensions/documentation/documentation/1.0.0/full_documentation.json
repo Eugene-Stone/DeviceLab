@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2026-08-31T07:17:10.847Z"
+    "x-generation-date": "2026-08-31T08:52:49.897Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -14744,6 +14744,9 @@
                     },
                     {
                       "$ref": "#/components/schemas/SectionsContactsComponent"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SectionsTextSectionComponent"
                     }
                   ]
                 },
@@ -14760,7 +14763,8 @@
                     "sections.our-story": "#/components/schemas/SectionsOurStoryComponent",
                     "sections.hero-title": "#/components/schemas/SectionsHeroTitleComponent",
                     "sections.faq": "#/components/schemas/SectionsFaqComponent",
-                    "sections.contacts": "#/components/schemas/SectionsContactsComponent"
+                    "sections.contacts": "#/components/schemas/SectionsContactsComponent",
+                    "sections.text-section": "#/components/schemas/SectionsTextSectionComponent"
                   }
                 }
               },
@@ -14878,6 +14882,9 @@
                 },
                 {
                   "$ref": "#/components/schemas/SectionsContactsComponent"
+                },
+                {
+                  "$ref": "#/components/schemas/SectionsTextSectionComponent"
                 }
               ]
             },
@@ -14894,7 +14901,8 @@
                 "sections.our-story": "#/components/schemas/SectionsOurStoryComponent",
                 "sections.hero-title": "#/components/schemas/SectionsHeroTitleComponent",
                 "sections.faq": "#/components/schemas/SectionsFaqComponent",
-                "sections.contacts": "#/components/schemas/SectionsContactsComponent"
+                "sections.contacts": "#/components/schemas/SectionsContactsComponent",
+                "sections.text-section": "#/components/schemas/SectionsTextSectionComponent"
               }
             }
           },
@@ -15009,6 +15017,9 @@
                       },
                       {
                         "$ref": "#/components/schemas/SectionsContactsComponent"
+                      },
+                      {
+                        "$ref": "#/components/schemas/SectionsTextSectionComponent"
                       }
                     ]
                   },
@@ -15025,7 +15036,8 @@
                       "sections.our-story": "#/components/schemas/SectionsOurStoryComponent",
                       "sections.hero-title": "#/components/schemas/SectionsHeroTitleComponent",
                       "sections.faq": "#/components/schemas/SectionsFaqComponent",
-                      "sections.contacts": "#/components/schemas/SectionsContactsComponent"
+                      "sections.contacts": "#/components/schemas/SectionsContactsComponent",
+                      "sections.text-section": "#/components/schemas/SectionsTextSectionComponent"
                     }
                   }
                 },
@@ -16561,6 +16573,44 @@
           }
         }
       },
+      "SectionsTextSectionComponent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ]
+          },
+          "__component": {
+            "type": "string",
+            "enum": [
+              "sections.text-section"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "titleTag": {
+            "type": "string",
+            "enum": [
+              "h1",
+              "h2",
+              "h3",
+              "h4",
+              "h5",
+              "h6"
+            ]
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      },
       "ProductsProductVariationsComponent": {
         "type": "object",
         "properties": {
@@ -17038,44 +17088,6 @@
           },
           "meta": {
             "type": "object"
-          }
-        }
-      },
-      "SectionsTextSectionComponent": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "oneOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "number"
-              }
-            ]
-          },
-          "__component": {
-            "type": "string",
-            "enum": [
-              "sections.text-section"
-            ]
-          },
-          "title": {
-            "type": "string"
-          },
-          "titleTag": {
-            "type": "string",
-            "enum": [
-              "h1",
-              "h2",
-              "h3",
-              "h4",
-              "h5",
-              "h6"
-            ]
-          },
-          "text": {
-            "type": "string"
           }
         }
       },

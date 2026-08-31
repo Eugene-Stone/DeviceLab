@@ -28,7 +28,8 @@
         "sections.our-story",
         "sections.hero-title",
         "sections.faq",
-        "sections.contacts"
+        "sections.contacts",
+        "sections.text-section"
       ]
     },
     "seo": {

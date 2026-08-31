@@ -1,5 +1,6 @@
 import { getPageData } from '@/api/api-server';
 import PageToLocalstorage from '@/components/layout/PageToLocalstorage';
+import Categories from '@/components/sections/Categories';
 import Hero from '@/components/sections/Hero';
 import HeroSkeleton from '@/components/sections/Hero/HeroSkeleton';
 import { TodoList } from '@/components/TodoList';
@@ -15,11 +16,22 @@ export default async function Home() {
 
 	// console.log('currentPage', currentPage);
 	// console.log('homeData', homeData);
+	// console.log('sections', sections);
 
 	return (
 		<main id="main-content" data-page-is={currentPage}>
 			<Hero data={sections[0]} />
+			<Categories data={sections[1]} />
 
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
 			{/* <TodoList /> */}
 			<PageToLocalstorage page={currentPage} data={homeData} />
 		</main>

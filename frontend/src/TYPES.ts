@@ -42,7 +42,19 @@ export type StrapiNavigationResponse<T extends 'FLAT' | 'TREE'> = T extends 'TRE
 	? TreeNavigationItem[]
 	: FlatNavigationItem[];
 
+//
+//
+//
+//
+//
+//
+//
+//
 // API response types
+export type StrapiResponse<T> = {
+	data: T[];
+	meta: Meta;
+};
 export type Pagination = {
 	page: number;
 	pageCount: number;
