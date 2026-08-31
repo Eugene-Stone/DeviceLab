@@ -1,9 +1,6 @@
 import { getPageData } from '@/api/api-server';
-import PageToLocalstorage from '@/components/layout/PageToLocalstorage';
-import Categories from '@/components/sections/Categories';
-import DynamicSections from '@/components/sections/DynamicSections';
-import Hero from '@/components/sections/Hero';
-import HeroSkeleton from '@/components/sections/Hero/HeroSkeleton';
+import PageToLocalstorage from '@/components/_layout/PageToLocalstorage';
+import DynamicSections from '@/sections/DynamicSections';
 import { TodoList } from '@/components/TodoList';
 import { Homepage } from '@backend-types/homepage';
 

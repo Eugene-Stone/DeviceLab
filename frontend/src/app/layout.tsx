@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
 import { getGlobalData } from '@/api/api-server';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
+import Header from '@/components/_layout/Header';
+import Footer from '@/components/_layout/Footer';
 import Providers from '@/context/Providers';
 
 import '@/styles/main.scss';

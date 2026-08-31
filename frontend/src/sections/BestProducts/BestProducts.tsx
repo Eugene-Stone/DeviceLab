@@ -11,7 +11,7 @@ type Props = {
 
 export default function BestProducts({ data }: Props) {
 	const { title, buttons, products } = data;
-	console.log('products', products);
+	// console.log('products', products);
 
 	return (
 		<section className="products-section" aria-label="Best selling products">

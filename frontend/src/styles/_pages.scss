@@ -213,6 +213,11 @@
     margin-bottom: var(--spacing-sm);
     display: inline-block;
     animation: float 3s ease-in-out infinite;
+	 width: 50px;
+	 >img {
+		width: 100%;
+		height: auto;
+	 }
 }
 
 @keyframes float {
