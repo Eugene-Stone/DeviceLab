@@ -76,3 +76,9 @@ export type Pagination = {
 export type Meta = {
 	pagination: Pagination;
 };
+
+export type AccordionType = {
+	id: number;
+	title: string;
+	text: string;
+};

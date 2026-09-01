@@ -2,11 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import ContactsFormSkeleton from './ContactsFormSkeleton';
-import { BACKEND_URL } from '@/CONSTANTS';
-import { buildQuery } from '@/utils/buildQuery';
+
 import { FormContact } from '@backend-types/formContact';
-import { StrapiResponseSingle } from '@/TYPES';
-import { getContactsForm } from '@/api/api-server';
 
 type Props = {
 	form: FormContact;

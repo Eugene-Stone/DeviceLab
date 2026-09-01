@@ -10,7 +10,7 @@ export default function Features({ data }: Props) {
 	return (
 		<section className="features-section" aria-label="Our advantages">
 			<div className="container">
-				<h2 className="section-title">{title}</h2>
+				{title && <h2 className="section-title">{title}</h2>}
 
 				{cards && cards.length > 0 && (
 					<div className="features-grid">

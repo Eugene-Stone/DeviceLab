@@ -5,6 +5,9 @@ import BestProducts from './BestProducts';
 import Features from './Features';
 import LatestArticles from './LatestArticles';
 import TextSection from './TextSection';
+import HeroTitle from './HeroTitle';
+import Cta from './Cta';
+import Faq from './Faq';
 
 type Props = {
 	// eslint-disable-next-line
@@ -20,8 +23,14 @@ export default function DynamicSections({ sections }: Props) {
 				return <Categories key={i} data={sect} />;
 			case 'sections.contacts':
 				return <Contacts key={i} data={sect} />;
+			case 'sections.cta':
+				return <Cta key={i} data={sect} />;
+			case 'sections.faq':
+				return <Faq key={i} data={sect} />;
 			case 'sections.features':
 				return <Features key={i} data={sect} />;
+			case 'sections.hero-title':
+				return <HeroTitle key={i} data={sect} />;
 			case 'sections.hero':
 				return <Hero key={i} data={sect} />;
 			case 'sections.latest-articles':
