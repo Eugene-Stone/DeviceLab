@@ -11,7 +11,7 @@ export default function Category({ category }: Props) {
 			? `/catalog?category=${category.slug}`
 			: `/catalog`;
 	return (
-		<Link href={targetLink} className="category-card">
+		<Link href={targetLink} className="category-card" aria-label={category.title}>
 			{category.image && <Picture image={category.image} alt={category.title} />}
 
 			<h3 className="category-title">{category.title}</h3>

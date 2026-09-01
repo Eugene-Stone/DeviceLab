@@ -26,7 +26,7 @@ export default function ProductCard({ product }: Props) {
 						})}
 					</div>
 				)}
-				<Link href={`/catalog/${product.slug}`}>
+				<Link href={`/catalog/${product.slug}`} aria-label={product.title}>
 					{product.images && product.images.length > 0 ? (
 						<Picture
 							image={product.images[0]}
@@ -36,6 +36,7 @@ export default function ProductCard({ product }: Props) {
 								(min-width: 768px) 420px,
 								100vw
 							"
+							alt={product.title}
 						/>
 					) : (
 						<Image

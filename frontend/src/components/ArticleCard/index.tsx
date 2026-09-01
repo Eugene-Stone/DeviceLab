@@ -14,7 +14,7 @@ export default function ArticleCard({ article }: Props) {
 	return (
 		<article className="blog-card">
 			{article.image && (
-				<Link href={`/blog/${article.slug}`}>
+				<Link href={`/blog/${article.slug}`} aria-label={article.title}>
 					<Picture
 						image={article.image}
 						sizes="
@@ -23,6 +23,7 @@ export default function ArticleCard({ article }: Props) {
 						(min-width: 768px) 420px,
 						100vw
 					"
+						alt={article.title}
 					/>
 				</Link>
 			)}
