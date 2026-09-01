@@ -17,27 +17,27 @@
     "description": {
       "type": "text"
     },
-    "name": {
+    "nameInput": {
       "type": "component",
       "component": "forms.form-input",
       "repeatable": false
     },
-    "email": {
+    "emailInput": {
       "type": "component",
       "component": "forms.form-input",
       "repeatable": false
     },
-    "subject": {
+    "subjectSelect": {
       "type": "component",
       "component": "forms.form-select",
       "repeatable": false
     },
-    "message": {
+    "messageTextarea": {
       "type": "component",
       "component": "forms.form-textarea",
       "repeatable": false
     },
-    "submit": {
+    "submitButton": {
       "type": "component",
       "component": "forms.form-submit",
       "repeatable": false

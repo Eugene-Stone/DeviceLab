@@ -12,11 +12,11 @@ export interface FormContact {
   locale?: string | null;
   title?: string;
   description?: string;
-  name?: FormsFormInput | null;
-  email?: FormsFormInput | null;
-  subject?: FormsFormSelect | null;
-  message?: FormsFormTextarea | null;
-  submit?: FormsFormSubmit | null;
+  nameInput?: FormsFormInput | null;
+  emailInput?: FormsFormInput | null;
+  subjectSelect?: FormsFormSelect | null;
+  messageTextarea?: FormsFormTextarea | null;
+  submitButton?: FormsFormSubmit | null;
   submitUrl?: string;
   successMessage?: string;
   errorMessage?: string;

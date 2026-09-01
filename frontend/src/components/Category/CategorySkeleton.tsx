@@ -8,7 +8,7 @@ export default function CategorySkeleton() {
 				height={300}
 			/>
 			<h3 className="category-title">Smartphones</h3>
-			<p className="category-count">24 products</p>
+			<p className="category-count">99 products</p>
 		</div>
 	);
 }

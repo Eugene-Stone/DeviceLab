@@ -75,13 +75,10 @@ select:focus-visible {
 }
 
 #main-content {
-	> .container {
+	>.blog-section,
+	>.container:first-child>.page-title {
 		&:first-child {
-			> .page-title {
-				&:first-child {
-					margin-top: 30px;
-				}
-			}
+			margin-top: 30px;
 		}
 	}
 }
@@ -553,15 +550,18 @@ body {
     color: var(--color-gray-300);
     margin-top: var(--spacing-3xl);
     position: relative;
-	 .svg-icon,
-	 .img-icon {
-		display: inline-flex;
-		width: 20px;
-		height: 20px;
-	 }
 	 .svg-icon {
 		filter: brightness(0) invert(100%)
 	 }
+}
+
+.social-link {
+	.svg-icon,
+	.img-icon {
+		display: inline-flex;
+		width: 20px;
+		height: 20px;
+	}
 }
 
 .site-footer::before {

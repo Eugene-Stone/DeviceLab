@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import ButtonScrollTop from './ButtonScrollTop';
+import SocialLinks from '../SocialLinks';
 
 type Props = {
 	data: {
@@ -43,31 +44,7 @@ export default function Footer({ data }: Props) {
 						{globalData.footerSlogan}
 					</p>
 
-					{globalData.socials && (
-						<div className="social-links">
-							{globalData.socials.map((socButton, i) => {
-								return (
-									<a
-										key={i}
-										href={socButton.link}
-										aria-label={socButton.title}
-										className="social-link">
-										<Image
-											className={
-												socButton.icon?.ext === '.svg'
-													? 'svg-icon'
-													: 'img-icon'
-											}
-											src={BACKEND_URL + socButton.icon?.url || 'asd'}
-											alt={socButton.title}
-											width={socButton.icon?.width || 24}
-											height={socButton.icon?.height || 24}
-										/>
-									</a>
-								);
-							})}
-						</div>
-					)}
+					{globalData.socials && <SocialLinks socials={globalData.socials} />}
 				</div>
 				<div className="footer-column">
 					<h4 className="footer-heading">Quick Links</h4>

@@ -1517,7 +1517,8 @@
 }
 
 .map-placeholder {
-    padding: var(--spacing-sm);
+	display: block;
+    padding: 0 var(--spacing-sm) var(--spacing-sm);
 }
 
 .map-placeholder img {
@@ -1587,7 +1588,7 @@
 }
 
 .social-connect .social-link:hover {
-    background: var(--primary-color);
+   //  background: var(--primary-color);
     color: var(--color-white);
 }
 
@@ -1797,7 +1798,8 @@ section {
 		h5,
 		h6,
 		p,
-		li {
+		li,
+		label {
 			/* Делаем сам текст прозрачным */
 			color: transparent;
 
@@ -1834,7 +1836,11 @@ section {
 		}
 
 		img,
-		.btn {
+		.btn,
+		input,
+		select,
+		textarea {
+			color: transparent !important;
 			background-image: 
 				linear-gradient(
 					90deg, 
@@ -1851,6 +1857,10 @@ section {
 			background-size: 200% 100%, 100% 100%;
 
 			animation: skeleton-shimmer 1.5s infinite linear;
+
+			&::placeholder {
+				color: inherit;
+			}
 		}
 	}
 }

@@ -5,6 +5,7 @@ import DynamicSections from '@/sections/DynamicSections';
 import LatestArticles from '@/sections/LatestArticles';
 import RelatedArticles from '@/sections/RelatedArticles';
 import { Article as ArticleType } from '@backend-types/article';
+import { notFound } from 'next/navigation';
 
 export default async function ArticleBySlug({ params }: { params: Promise<{ slug: string }> }) {
 	// Задержка для проверки loading.tsx
@@ -18,12 +19,14 @@ export default async function ArticleBySlug({ params }: { params: Promise<{ slug
 		pageType: 'collection',
 		slug: slug,
 	});
+	if (!data) notFound();
+
 	const pageData = data;
 	const sections = pageData?.sections;
 	const related_articles = pageData?.related_articles;
 
-	console.log('currentPage', currentPage);
-	console.log('pageData', pageData);
+	// console.log('currentPage', currentPage);
+	// console.log('pageData', pageData);
 	// console.log('sections', sections);
 
 	const articleSection = {

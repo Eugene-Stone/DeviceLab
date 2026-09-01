@@ -3,6 +3,7 @@ import PageToLocalstorage from '@/components/_layout/PageToLocalstorage';
 import DynamicSections from '@/sections/DynamicSections';
 import { TodoList } from '@/components/TodoList';
 import { Homepage } from '@backend-types/homepage';
+import { notFound } from 'next/navigation';
 
 export default async function Home() {
 	// Задержка для проверки loading.tsx
@@ -13,6 +14,9 @@ export default async function Home() {
 		pageName: 'home',
 		pageType: 'single',
 	});
+
+	if (!data) notFound();
+
 	const homeData = data;
 	const sections = homeData?.sections;
 

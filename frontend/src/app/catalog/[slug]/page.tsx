@@ -3,6 +3,7 @@ import PageToLocalstorage from '@/components/_layout/PageToLocalstorage';
 import DynamicSections from '@/sections/DynamicSections';
 import { Article as ArticleType } from '@backend-types/article';
 import { Product } from '@backend-types/product';
+import { notFound } from 'next/navigation';
 
 export default async function ProductBySlug({ params }: { params: Promise<{ slug: string }> }) {
 	// Задержка для проверки loading.tsx
@@ -16,6 +17,8 @@ export default async function ProductBySlug({ params }: { params: Promise<{ slug
 		pageType: 'collection',
 		slug: slug,
 	});
+	if (!data) notFound();
+
 	const pageData = data;
 	// const sections = pageData?.sections;
 

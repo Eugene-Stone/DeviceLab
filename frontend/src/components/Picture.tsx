@@ -13,6 +13,13 @@ type Props = {
 export default function Picture({ className, image, sizes, alt, priority }: Props) {
 	const { srcSetString } = imageSrcSet(image);
 
+	// sizes="
+	// 	(min-width: 1200px) 550px,
+	// 	(min-width: 992px) 450px,
+	// 	(min-width: 768px) 350px,
+	// 	100vw
+	// "
+
 	return (
 		<picture className={className}>
 			{srcSetString && sizes && <source srcSet={srcSetString} sizes={sizes} />}

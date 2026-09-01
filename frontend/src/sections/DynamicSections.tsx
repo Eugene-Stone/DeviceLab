@@ -1,5 +1,6 @@
 import Hero from './Hero';
 import Categories from './Categories';
+import Contacts from './Contacts';
 import BestProducts from './BestProducts';
 import Features from './Features';
 import LatestArticles from './LatestArticles';
@@ -17,6 +18,8 @@ export default function DynamicSections({ sections }: Props) {
 				return <BestProducts key={i} data={sect} />;
 			case 'sections.categories':
 				return <Categories key={i} data={sect} />;
+			case 'sections.contacts':
+				return <Contacts key={i} data={sect} />;
 			case 'sections.features':
 				return <Features key={i} data={sect} />;
 			case 'sections.hero':

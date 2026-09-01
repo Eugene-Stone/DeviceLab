@@ -676,7 +676,7 @@ export interface ApiFormContactFormContact extends Struct.SingleTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
-    email: Schema.Attribute.Component<'forms.form-input', false>;
+    emailInput: Schema.Attribute.Component<'forms.form-input', false>;
     errorMessage: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -684,11 +684,11 @@ export interface ApiFormContactFormContact extends Struct.SingleTypeSchema {
       'api::form-contact.form-contact'
     > &
       Schema.Attribute.Private;
-    message: Schema.Attribute.Component<'forms.form-textarea', false>;
-    name: Schema.Attribute.Component<'forms.form-input', false>;
+    messageTextarea: Schema.Attribute.Component<'forms.form-textarea', false>;
+    nameInput: Schema.Attribute.Component<'forms.form-input', false>;
     publishedAt: Schema.Attribute.DateTime;
-    subject: Schema.Attribute.Component<'forms.form-select', false>;
-    submit: Schema.Attribute.Component<'forms.form-submit', false>;
+    subjectSelect: Schema.Attribute.Component<'forms.form-select', false>;
+    submitButton: Schema.Attribute.Component<'forms.form-submit', false>;
     submitUrl: Schema.Attribute.String;
     successMessage: Schema.Attribute.Text;
     title: Schema.Attribute.String;

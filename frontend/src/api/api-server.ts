@@ -7,6 +7,7 @@ import {
 } from '@/TYPES';
 import { buildQuery } from '@/utils/buildQuery';
 import { Article } from '@backend-types/article';
+import { FormContact } from '@backend-types/formContact';
 import { Global } from '@backend-types/global';
 import { notFound } from 'next/navigation';
 
@@ -329,5 +330,46 @@ export async function getLatestArticles(count: number) {
 		}
 
 		throw new Error('Articles unavailable');
+	}
+}
+
+export async function getContactsForm() {
+	const query = buildQuery({
+		populate: {
+			// 'forms.form-submit': { populate: '*' },
+			nameInput: { populate: '*' },
+			emailInput: { populate: '*' },
+			subjectSelect: { populate: '*' },
+			messageTextarea: { populate: '*' },
+			submitButton: { populate: '*' },
+		},
+	});
+
+	try {
+		const response = await fetch(`${BACKEND_URL}/api/form-contact?${query}`, {
+			// const response = await fetch(`${BACKEND_URL}/api/form-contact`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+		if (!response.ok) {
+			const errorData = await response.json();
+			console.error('Strapi Error Detail:', JSON.stringify(errorData, null, 2));
+			throw new Error(errorData.error?.message ?? 'Failed to fetch form');
+		}
+
+		const responseData: StrapiResponseSingle<FormContact> = await response.json();
+
+		return responseData.data;
+	} catch (error) {
+		if (error instanceof Error) {
+			console.error(error.message);
+		} else {
+			console.error(error);
+		}
+
+		throw new Error('Form contacts unavailable');
 	}
 }

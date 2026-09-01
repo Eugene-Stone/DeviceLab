@@ -2,6 +2,7 @@ import { getPageData } from '@/api/api-server';
 import PageToLocalstorage from '@/components/_layout/PageToLocalstorage';
 import DynamicSections from '@/sections/DynamicSections';
 import { Catalog } from '@backend-types/catalog';
+import { notFound } from 'next/navigation';
 
 export default async function CatalogPage({ params }: { params: Promise<{ slug: string }> }) {
 	// Задержка для проверки loading.tsx
@@ -15,6 +16,8 @@ export default async function CatalogPage({ params }: { params: Promise<{ slug: 
 		pageType: 'single',
 		slug: slug,
 	});
+	if (!data) notFound();
+
 	const pageData = data;
 	const sections = pageData?.sections;
 
