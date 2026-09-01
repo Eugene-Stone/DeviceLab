@@ -9,8 +9,6 @@ type Props = {
 export default async function Faq({ data }: Props) {
 	const { title, accordion } = data;
 
-	console.log('accordion', accordion);
-
 	return (
 		<section className="faq-section">
 			<div className="container">

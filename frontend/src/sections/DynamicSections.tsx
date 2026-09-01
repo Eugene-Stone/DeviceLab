@@ -8,6 +8,8 @@ import TextSection from './TextSection';
 import HeroTitle from './HeroTitle';
 import Cta from './Cta';
 import Faq from './Faq';
+import OurStory from './OurStory';
+import Team from './Team';
 
 type Props = {
 	// eslint-disable-next-line
@@ -35,6 +37,10 @@ export default function DynamicSections({ sections }: Props) {
 				return <Hero key={i} data={sect} />;
 			case 'sections.latest-articles':
 				return <LatestArticles key={i} data={sect} />;
+			case 'sections.our-story':
+				return <OurStory key={i} data={sect} />;
+			case 'sections.team':
+				return <Team key={i} data={sect} />;
 
 			case 'sections.text-section':
 				return <TextSection key={i} data={sect} />;

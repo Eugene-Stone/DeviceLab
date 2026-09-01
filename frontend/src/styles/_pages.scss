@@ -1174,6 +1174,10 @@
 .story-content .section-title {
     text-align: left;
     margin-bottom: var(--spacing-md);
+	 &::after {
+		left: 0;
+		transform: none;
+	 }
 }
 
 .story-text {

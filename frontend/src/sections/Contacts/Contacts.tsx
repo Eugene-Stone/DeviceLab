@@ -18,9 +18,10 @@ export default async function Categories({ data }: Props) {
 		<section className="contact-main">
 			<div className="container">
 				<div className="contact-grid">
-					{/* Contact Form */}
 					<ContactsForm form={form} />
+
 					{/* <ContactsFormSkeleton /> */}
+
 					<div className="contact-sidebar">
 						{location && (
 							<div className="map-container">
@@ -70,7 +71,7 @@ export default async function Categories({ data }: Props) {
 						)}
 						{socials && (
 							<div className="social-connect">
-								<h3 className="sidebar-title">Connect With Us</h3>
+								<h3 className="sidebar-title">{socials.title}</h3>
 								<SocialLinks />
 							</div>
 						)}

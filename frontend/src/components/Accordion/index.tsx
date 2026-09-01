@@ -6,7 +6,6 @@ type Props = {
 	accordion: AccordionType[];
 };
 export default function Accordion({ accordion }: Props) {
-	const {} = accordion;
 	return (
 		accordion && (
 			<AccordionRadix.Root
