@@ -25,5 +25,6 @@ export interface Product {
   badge?: any;
   variations?: ProductsProductVariations[] | null;
   product_categories?: ProductCategory[] | null;
+  sections?: any;
   seo?: SharedSeo | null;
 };

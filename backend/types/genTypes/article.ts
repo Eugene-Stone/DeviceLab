@@ -1,5 +1,5 @@
 import { Media } from './media';
-import { AdminUser } from './adminUser';
+import { Author } from './author';
 import { SharedSeo } from './sharedSeo';
 
 export interface Article {
@@ -15,6 +15,7 @@ export interface Article {
   text?: any;
   tags?: any;
   related_articles?: Article[] | null;
-  author?: AdminUser | null;
+  author?: Author | null;
+  sections?: any;
   seo?: SharedSeo | null;
 };

@@ -1,14 +1,13 @@
-import { SharedSeo } from './sharedSeo';
+import { Article } from './article';
 
-export interface Catalog {
+export interface Author {
   id?: number;
   documentId?: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
   publishedAt?: Date | string;
   locale?: string | null;
-  title: string;
-  slug: string;
-  sections?: any;
-  seo?: SharedSeo | null;
+  firstName?: string;
+  lastName?: string;
+  articles?: Article[] | null;
 };

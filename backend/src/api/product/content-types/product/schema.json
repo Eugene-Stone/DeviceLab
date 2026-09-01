@@ -91,6 +91,23 @@
       "target": "api::product-category.product-category",
       "inversedBy": "products"
     },
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.text-section",
+        "sections.team",
+        "sections.our-story",
+        "sections.latest-articles",
+        "sections.hero",
+        "sections.hero-title",
+        "sections.features",
+        "sections.faq",
+        "sections.cta",
+        "sections.contacts",
+        "sections.categories",
+        "sections.best-products"
+      ]
+    },
     "seo": {
       "type": "component",
       "component": "shared.seo",

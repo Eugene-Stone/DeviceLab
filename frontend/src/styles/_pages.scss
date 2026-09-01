@@ -783,6 +783,8 @@
     margin-bottom: var(--spacing-md);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
+	 display: block;
+	 overflow: hidden;
 }
 
 .blog-post-title {
@@ -871,10 +873,10 @@
     transition: var(--transition);
 }
 
-.tag:hover {
-    background: var(--primary-color);
-    color: var(--color-white);
-}
+// .tag:hover {
+//     background: var(--primary-color);
+//     color: var(--color-white);
+// }
 
 /* Auth Page */
 .auth-container {
@@ -1680,6 +1682,11 @@
 	}
 }
 
+section {
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
 
 
 

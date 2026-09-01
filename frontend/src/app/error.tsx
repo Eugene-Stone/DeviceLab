@@ -9,7 +9,7 @@ type Props = {
 };
 export default function Error({ error, reset }: Props) {
 	return (
-		<>
+		<main id="main-content" data-page-is={'error'}>
 			<title>{SITE_TITLE}</title>
 
 			<section className="sect-404">
@@ -35,6 +35,6 @@ export default function Error({ error, reset }: Props) {
 					<br />
 				</div>
 			</section>
-		</>
+		</main>
 	);
 }

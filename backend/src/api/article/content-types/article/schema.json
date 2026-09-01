@@ -46,8 +46,26 @@
     },
     "author": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "admin::user"
+      "relation": "manyToOne",
+      "target": "api::author.author",
+      "inversedBy": "articles"
+    },
+    "sections": {
+      "type": "dynamiczone",
+      "components": [
+        "sections.text-section",
+        "sections.team",
+        "sections.our-story",
+        "sections.latest-articles",
+        "sections.hero",
+        "sections.hero-title",
+        "sections.features",
+        "sections.faq",
+        "sections.cta",
+        "sections.contacts",
+        "sections.categories",
+        "sections.best-products"
+      ]
     },
     "seo": {
       "type": "component",

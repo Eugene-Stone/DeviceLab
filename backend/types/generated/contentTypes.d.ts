@@ -482,7 +482,7 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    author: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    author: Schema.Attribute.Relation<'manyToOne', 'api::author.author'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -497,6 +497,22 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     related_articles: Schema.Attribute.Relation<
       'oneToMany',
       'api::article.article'
+    >;
+    sections: Schema.Attribute.DynamicZone<
+      [
+        'sections.text-section',
+        'sections.team',
+        'sections.our-story',
+        'sections.latest-articles',
+        'sections.hero',
+        'sections.hero-title',
+        'sections.features',
+        'sections.faq',
+        'sections.cta',
+        'sections.contacts',
+        'sections.categories',
+        'sections.best-products',
+      ]
     >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'>;
@@ -515,6 +531,36 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
         }
       >;
     title: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiAuthorAuthor extends Struct.CollectionTypeSchema {
+  collectionName: 'authors';
+  info: {
+    displayName: 'Authors';
+    pluralName: 'authors';
+    singularName: 'author';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    articles: Schema.Attribute.Relation<'oneToMany', 'api::article.article'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    firstName: Schema.Attribute.String;
+    lastName: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::author.author'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -540,6 +586,22 @@ export interface ApiBlogBlog extends Struct.SingleTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::blog.blog'> &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    sections: Schema.Attribute.DynamicZone<
+      [
+        'sections.text-section',
+        'sections.team',
+        'sections.our-story',
+        'sections.latest-articles',
+        'sections.hero',
+        'sections.hero-title',
+        'sections.features',
+        'sections.faq',
+        'sections.cta',
+        'sections.contacts',
+        'sections.categories',
+        'sections.best-products',
+      ]
+    >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String &
@@ -572,6 +634,22 @@ export interface ApiCatalogCatalog extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    sections: Schema.Attribute.DynamicZone<
+      [
+        'sections.text-section',
+        'sections.team',
+        'sections.our-story',
+        'sections.latest-articles',
+        'sections.hero',
+        'sections.hero-title',
+        'sections.features',
+        'sections.faq',
+        'sections.cta',
+        'sections.contacts',
+        'sections.categories',
+        'sections.best-products',
+      ]
+    >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
     title: Schema.Attribute.String &
@@ -906,6 +984,22 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       'api::product-category.product-category'
     >;
     publishedAt: Schema.Attribute.DateTime;
+    sections: Schema.Attribute.DynamicZone<
+      [
+        'sections.text-section',
+        'sections.team',
+        'sections.our-story',
+        'sections.latest-articles',
+        'sections.hero',
+        'sections.hero-title',
+        'sections.features',
+        'sections.faq',
+        'sections.cta',
+        'sections.contacts',
+        'sections.categories',
+        'sections.best-products',
+      ]
+    >;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     sku: Schema.Attribute.String & Schema.Attribute.Unique;
     slug: Schema.Attribute.UID<'title'>;
@@ -1599,6 +1693,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::article-tag.article-tag': ApiArticleTagArticleTag;
       'api::article.article': ApiArticleArticle;
+      'api::author.author': ApiAuthorAuthor;
       'api::blog.blog': ApiBlogBlog;
       'api::catalog.catalog': ApiCatalogCatalog;
       'api::form-contact.form-contact': ApiFormContactFormContact;

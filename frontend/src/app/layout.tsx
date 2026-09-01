@@ -108,7 +108,7 @@ export default async function RootLayout({ children }: LayoutProps<'/'>) {
 	// console.log('menuFooter', menuFooter);
 
 	return (
-		<html lang="en">
+		<html lang="en" data-scroll-behavior="smooth">
 			<body>
 				{/* <ReloadToTop /> */}
 				<NextTopLoader

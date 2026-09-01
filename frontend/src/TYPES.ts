@@ -51,8 +51,9 @@ export type StrapiNavigationResponse<T extends 'FLAT' | 'TREE'> = T extends 'TRE
 //
 //
 // API response types
-export type PageType = {
-	home?: boolean;
+export type PageDataType = {
+	url: string;
+	pageName?: 'home' | 'page' | 'blog' | 'article' | 'catalog' | 'product';
 	pageType?: 'single' | 'collection';
 	slug?: string;
 };

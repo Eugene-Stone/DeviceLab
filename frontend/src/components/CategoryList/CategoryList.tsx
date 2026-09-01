@@ -32,7 +32,8 @@ export default function CategoryList() {
 
 				if (!response.ok) {
 					const errorData = await response.json();
-					throw new Error(errorData.error?.message ?? 'Failed to fetch comment');
+					console.error('Strapi Error Detail:', JSON.stringify(errorData, null, 2));
+					throw new Error(errorData.error?.message ?? 'Failed to fetch category list');
 				}
 
 				const responseData: StrapiResponseCollection<ProductCategory> =

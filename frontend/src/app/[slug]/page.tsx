@@ -9,13 +9,18 @@ export default async function PageBySlug({ params }: { params: Promise<{ slug: s
 
 	const { slug } = await params;
 
-	const { currentPage, data } = await getPageData<Page>({ pageType: 'collection', slug: slug });
+	const { currentPage, data } = await getPageData<Page>({
+		url: '/api/pages',
+		pageName: 'page',
+		pageType: 'collection',
+		slug: slug,
+	});
 	const pageData = data;
 	const sections = pageData?.sections;
 
-	console.log('currentPage', currentPage);
-	console.log('pageData', pageData);
-	console.log('sections', sections);
+	// console.log('currentPage', currentPage);
+	// console.log('pageData', pageData);
+	// console.log('sections', sections);
 
 	return (
 		<main id="main-content" data-page-is={currentPage}>

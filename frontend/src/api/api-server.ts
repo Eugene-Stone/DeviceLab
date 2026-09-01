@@ -1,6 +1,6 @@
 import { BACKEND_URL } from '@/CONSTANTS';
 import {
-	PageType,
+	PageDataType,
 	StrapiResponseCollection,
 	StrapiResponseSingle,
 	TreeNavigationItem,
@@ -168,7 +168,7 @@ export async function getGlobalData() {
 	}
 }
 
-export async function getPageData<T>({ home, pageType, slug }: PageType) {
+export async function getPageData<T>({ url, pageName, pageType, slug }: PageDataType) {
 	const queryPage = buildQuery({
 		populate: {
 			seo: SEO_POPULATE,
@@ -176,19 +176,57 @@ export async function getPageData<T>({ home, pageType, slug }: PageType) {
 		},
 	});
 
+	let query = queryPage;
 	let apiUrl = '';
-	let query;
-	query = queryPage;
+	// let apiUrl = `${BACKEND_URL}${url}?${query}`;
 
-	if (home) {
-		apiUrl = `${BACKEND_URL}/api/homepage?${query}`;
-	} else if (pageType === 'single') {
-		apiUrl = `${BACKEND_URL}/api/${slug}?${query}`;
+	console.log('slug', slug);
+
+	if (pageType === 'single') {
+		apiUrl = `${BACKEND_URL}${url}?${query}`;
 	} else if (pageType === 'collection') {
-		apiUrl = `${BACKEND_URL}/api/pages?filters[slug][$eq]=${slug}&${query}`;
+		if (pageName === 'article') {
+			query = buildQuery({
+				populate: {
+					seo: SEO_POPULATE,
+					sections: SECTIONS_POPULATE,
+					image: {
+						populate: '*',
+					},
+					related_articles: {
+						populate: '*',
+					},
+					author: true,
+				},
+			});
+			// console.log(query);
+			apiUrl = `${BACKEND_URL}${url}?filters[slug][$eq]=${slug}&${query}`;
+		} else if (pageName === 'product') {
+			apiUrl = `${BACKEND_URL}${url}?filters[slug][$eq]=${slug}&${query}`;
+		} else {
+			apiUrl = `${BACKEND_URL}${url}?filters[slug][$eq]=${slug}&${query}`;
+		}
 	} else {
 		throw new Error(`Unsupported page type: ${pageType}`);
 	}
+
+	// if (pageName === 'home') {
+	// 	apiUrl = `${BACKEND_URL}/api/homepage?${query}`;
+	// } else if (pageName === 'blog') {
+	// 	apiUrl = `${BACKEND_URL}/api/blog?${query}`;
+	// } else if (pageName === 'catalog') {
+	// 	apiUrl = `${BACKEND_URL}/api/catalog?${query}`;
+	// } else if (pageType === 'collection') {
+	// 	if (pageName === 'article') {
+	// 		apiUrl = `${BACKEND_URL}/api/articles?filters[slug][$eq]=${slug}&${query}`;
+	// 	} else if (pageName === 'product') {
+	// 		apiUrl = `${BACKEND_URL}/api/products?filters[slug][$eq]=${slug}&${query}`;
+	// 	} else {
+	// 		apiUrl = `${BACKEND_URL}/api/pages?filters[slug][$eq]=${slug}&${query}`;
+	// 	}
+	// } else {
+	// 	throw new Error(`Unsupported page type: ${pageType}`);
+	// }
 
 	try {
 		const response = await fetch(apiUrl, {
@@ -204,17 +242,37 @@ export async function getPageData<T>({ home, pageType, slug }: PageType) {
 
 		if (!response.ok) {
 			const errorData = await response.json();
+			console.error('Strapi Error Detail:', JSON.stringify(errorData, null, 2));
 			throw new Error(errorData.error?.message ?? 'Failed to fetch page data');
 		}
 
-		const currentPage = home ? 'home' : slug;
+		// const currentPage = home ? 'home' : slug;
+		const currentPage = (() => {
+			switch (pageName) {
+				case 'home':
+					return 'home';
+				case 'blog':
+					return 'blog';
+				case 'catalog':
+					return 'catalog';
+				default:
+					return slug ?? '';
+			}
+		})();
+
 		const responseData = await response.json();
 
-		if (home || pageType === 'single') {
+		if (pageType === 'single') {
 			const singleData: StrapiResponseSingle<T> = responseData;
 			return { currentPage, data: singleData.data };
 		} else {
 			const collectionData: StrapiResponseCollection<T> = responseData;
+
+			// // Если по фильтру slug ничего не найдено
+			// if (!collectionData.data || collectionData.data.length === 0) {
+			// 	notFound();
+			// }
+
 			// Берем первый элемент из массива фильтрации Strapi
 			return { currentPage, data: collectionData.data[0] ?? null };
 		}
@@ -257,6 +315,7 @@ export async function getLatestArticles(count: number) {
 
 		if (!response.ok) {
 			const errorData = await response.json();
+			console.error('Strapi Error Detail:', JSON.stringify(errorData, null, 2));
 			throw new Error(errorData.error?.message ?? 'Failed to fetch latest articles');
 		}
 

@@ -309,7 +309,7 @@ export interface SectionsTextSection extends Struct.ComponentSchema {
           preset: 'defaultHtml';
         }
       >;
-    title: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Text section'>;
     titleTag: Schema.Attribute.Enumeration<
       ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
     > &
