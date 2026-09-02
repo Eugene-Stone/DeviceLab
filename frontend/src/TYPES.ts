@@ -90,6 +90,8 @@ export type ProductsParamsType = {
 	category?: string | string[];
 	color?: string | string[];
 	storage?: string | string[];
+	min_price: string;
+	max_price: string;
 };
 export type ProductsFetchType = {
 	params?: ProductsParamsType;

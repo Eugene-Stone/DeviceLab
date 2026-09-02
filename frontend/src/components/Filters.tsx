@@ -3,22 +3,24 @@ import { useRouter } from 'nextjs-toploader/app';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { ChangeEvent, useTransition } from 'react';
 
-type FilterItem = {
-	value: string;
+type FilterListItem = {
+	key: string;
 	title: string;
+	isColor?: boolean;
+	color?: string | null;
 };
 
-type FilterGroup = {
-	filtersGroupKey: string;
-	filtersGroupTitle: string;
-	filtersList: FilterItem[];
+type FilterGroupItem = {
+	filtersGroup: {
+		filtersGroupKey: string;
+		filtersGroupTitle: string;
+		filtersList: FilterListItem[];
+	};
 };
 
 type FilterData = {
 	isPriceRange: boolean;
-	filters: {
-		filtersGroup: FilterGroup;
-	}[];
+	filters: FilterGroupItem[];
 };
 
 type Props = {
@@ -129,14 +131,14 @@ export default function Filters({ filterData }: Props) {
 						<div className="filter-group" key={group.filtersGroupKey}>
 							<h3 className="filter-heading">{group.filtersGroupTitle}</h3>
 							{group.filtersList.map((item) => {
-								const isChecked = activeValues.includes(item.value);
+								const isChecked = activeValues.includes(item.key);
 
 								return (
-									<label className="checkbox-label" key={item.value}>
+									<label className="checkbox-label" key={item.key}>
 										<input
 											type="checkbox"
 											name={group.filtersGroupKey}
-											value={item.value}
+											value={item.key}
 											checked={isChecked}
 											onChange={(e) =>
 												handleCheckboxChange(e, group.filtersGroupKey)

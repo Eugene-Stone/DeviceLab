@@ -10,7 +10,7 @@ export default function ProductCard({ product }: Props) {
 	return (
 		<article
 			className="product-card"
-			data-category={product?.product_categories?.[0].title}
+			data-category={product?.product_category?.title}
 			data-price={product.price}
 			// data-date="2026-01-15"
 			data-date={product.publishedAt}>

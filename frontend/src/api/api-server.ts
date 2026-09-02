@@ -12,6 +12,7 @@ import { Article } from '@backend-types/article';
 import { FormContact } from '@backend-types/formContact';
 import { Global } from '@backend-types/global';
 import { Product } from '@backend-types/product';
+import { ProductCategory } from '@backend-types/productCategory';
 import { notFound } from 'next/navigation';
 
 const SEO_POPULATE = {
@@ -411,6 +412,10 @@ export async function getProducts({ params }: ProductsFetchType) {
 	const pageCurrent = params?.page || '1';
 	const pageSize = 3;
 
+	// Парсим цены из Query-параметров
+	const minPrice = params?.min_price ? Number(params.min_price) : null;
+	const maxPrice = params?.max_price ? Number(params.max_price) : null;
+
 	const filterCategory = Array.isArray(params?.category)
 		? params?.category
 		: params?.category
@@ -437,9 +442,7 @@ export async function getProducts({ params }: ProductsFetchType) {
 	http://localhost:1337/api/products?filters[level][slug][$in][0]=first_level&filters[level][slug][$in][1]=two_level
 	*/
 
-	/* 
-		Для одновременной фильтрации по нескольким вариациям одного компонента в Strapi нужно оборачивать их в $and
-	*/
+	// Для одновременной фильтрации по нескольким вариациям одного компонента в Strapi нужно оборачивать их в $and
 	const variationFilters = [];
 
 	if (filterStorage.length > 0) {
@@ -509,12 +512,19 @@ export async function getProducts({ params }: ProductsFetchType) {
 			...(variationFilters.length > 0 && {
 				$and: variationFilters,
 			}),
+			// Фильтрация по диапазону цен
+			...((minPrice !== null || maxPrice !== null) && {
+				price: {
+					...(minPrice !== null && { $gte: minPrice }),
+					...(maxPrice !== null && { $lte: maxPrice }),
+				},
+			}),
 		},
 		// populate: PRODUCT_POPULATE,
 		populate: '*',
 	});
 
-	console.log('queryProduct', query);
+	// console.log('queryProduct', query);
 
 	try {
 		const response = await fetch(
@@ -544,5 +554,80 @@ export async function getProducts({ params }: ProductsFetchType) {
 		}
 
 		throw new Error('Products unavailable');
+	}
+}
+
+export async function getProductVariations() {
+	const query = buildQuery({
+		// Ограничиваем запрос, запрашиваем только поля id и variations
+		fields: ['id'],
+		populate: {
+			variations: true,
+		},
+		pagination: {
+			pageSize: 1000, // Запрашиваем достаточное количество товаров для вытягивания всех уникальных вариаций
+		},
+	});
+
+	try {
+		const response = await fetch(`${BACKEND_URL}/api/products?${query}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+		if (!response.ok) {
+			const errorData = await response.json();
+			console.error('Strapi Error Detail:', JSON.stringify(errorData, null, 2));
+			throw new Error(errorData.error?.message ?? 'Failed to fetch product variations');
+		}
+
+		const responseData: StrapiResponseCollection<Product> = await response.json();
+		return responseData.data || [];
+	} catch (error) {
+		if (error instanceof Error) {
+			console.error(error.message);
+		} else {
+			console.error(error);
+		}
+
+		throw new Error('Error fetching product variations:');
+	}
+}
+
+export async function getProductsCategories() {
+	const query = buildQuery({
+		populate: {
+			image: true,
+			parent_category: true,
+			products: true,
+		},
+	});
+
+	try {
+		const response = await fetch(`${BACKEND_URL}/api/product-categories?${query}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+		if (!response.ok) {
+			const errorData = await response.json();
+			console.error('Strapi Error Detail:', JSON.stringify(errorData, null, 2));
+			throw new Error(errorData.error?.message ?? 'Failed to fetch category list');
+		}
+
+		const responseData: StrapiResponseCollection<ProductCategory> = await response.json();
+		return responseData;
+	} catch (error) {
+		if (error instanceof Error) {
+			console.error(error.message);
+		} else {
+			console.error(error);
+		}
+
+		throw new Error('Categories unavailable');
 	}
 }

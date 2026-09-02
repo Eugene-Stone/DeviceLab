@@ -5,7 +5,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
 
 type Props = {
-	sortList: { value: string; title: string }[];
+	sortList: { key: string; title: string }[];
 };
 
 export default function Sorting({ sortList }: Props) {
@@ -15,11 +15,11 @@ export default function Sorting({ sortList }: Props) {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
-	const sorting = searchParams.get('sort') || sortList[0].value;
+	const sorting = searchParams.get('sort') || sortList[0].key;
 
-	function reloadParamsSorting(value: string) {
+	function reloadParamsSorting(key: string) {
 		const params = new URLSearchParams(searchParams);
-		params.set('sort', value);
+		params.set('sort', key);
 
 		// Оборачиваем в startTransition для отслеживания состояния перехода
 		startTransition(() => {
@@ -54,7 +54,7 @@ export default function Sorting({ sortList }: Props) {
 				onChange={(e) => reloadParamsSorting(e.target.value)}>
 				{sortList.map((item, i) => {
 					return (
-						<option key={i} value={item.value}>
+						<option key={i} value={item.key}>
 							{item.title}
 						</option>
 					);

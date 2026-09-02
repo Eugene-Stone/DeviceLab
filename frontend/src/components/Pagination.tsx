@@ -90,7 +90,8 @@ export default function Pagination({ meta }: Props) {
 	const [isPending, startTransition] = useTransition();
 	const pagination = meta.pagination;
 	const { page, pageCount, pageSize, total } = pagination;
-	console.log(pagination);
+
+	// console.log(pagination);
 
 	const pathname = usePathname();
 	const router = useRouter();

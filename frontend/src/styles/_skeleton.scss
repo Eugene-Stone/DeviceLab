@@ -99,7 +99,8 @@ html.nprogress-busy {
 	.blog-section:has(.sort-select.is-pending) .blog-grid,
 	.blog-section:has(.pagination.is-pending) .blog-grid,
 	.catalog-section:has(.sort-select.is-pending) .product-grid,
-	.catalog-section:has(.pagination.is-pending) .product-grid {
+	.catalog-section:has(.pagination.is-pending) .product-grid,
+	.catalog-section:has(.sidebar-filters.is-pending) .product-grid {
 		* {
 			color: transparent !important;
 			pointer-events: none !important;

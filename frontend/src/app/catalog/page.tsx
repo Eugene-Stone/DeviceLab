@@ -1,4 +1,9 @@
-import { getPageData, getProducts } from '@/api/api-server';
+import {
+	getPageData,
+	getProducts,
+	getProductsCategories,
+	getProductVariations,
+} from '@/api/api-server';
 import PageToLocalstorage from '@/components/_layout/PageToLocalstorage';
 import Filters from '@/components/Filters';
 import Pagination from '@/components/Pagination';
@@ -7,6 +12,7 @@ import Sorting from '@/components/Sorting';
 import { BACKEND_URL, FRONTEND_URL, SITE_TITLE } from '@/CONSTANTS';
 import DynamicSections from '@/sections/DynamicSections';
 import { ProductsParamsType } from '@/TYPES';
+import { buildDynamicVariationFilters } from '@/utils/buildDynamicVariationFilters';
 import { Catalog } from '@backend-types/catalog';
 import { Media } from '@backend-types/media';
 import { SharedSeo } from '@backend-types/sharedSeo';
@@ -124,18 +130,37 @@ export default async function CatalogPage({
 	const { data: products, meta } = await getProducts({ params });
 	const { page, pageCount, pageSize, total } = meta.pagination;
 
+	const { data: product_categoriesAll } = await getProductsCategories();
+	const productsForVariations = await getProductVariations();
+
+	// Генерируем динамические группы для (color, storage и любых других новых вариаций)
+	const dynamicVariationFilters = buildDynamicVariationFilters(productsForVariations);
+
 	// console.log('currentPage', currentPage);
 	// console.log('pageData', pageData);
 	// console.log('sections', sections);
-	console.log('products', products);
+	// console.log('products', products);
 	// console.log('meta', meta);
 	// console.log('params', params);
+	// console.log('product_categoriesAll', product_categoriesAll);
+	// console.log('productsForVariations', productsForVariations);
+	// console.log('dynamicVariationFilters', dynamicVariationFilters);
+
+	const categoryAside = product_categoriesAll
+		.filter((category) => category.products && category.products.length > 0)
+		.map((category) => {
+			return {
+				key: category.slug || '',
+				title: category.title || '',
+			};
+		});
+	// console.log('categoryAside', categoryAside);
 
 	const productSortingList = [
-		{ value: 'createdAt:desc', title: 'Newest Arrivals' },
-		{ value: 'stockStatus:asc', title: 'In Stock' },
-		{ value: 'price:asc', title: 'Price: Low to High' },
-		{ value: 'price:desc', title: 'Price: High to Low' },
+		{ key: 'createdAt:desc', title: 'Newest Arrivals' },
+		{ key: 'stockStatus:asc', title: 'In Stock' },
+		{ key: 'price:asc', title: 'Price: Low to High' },
+		{ key: 'price:desc', title: 'Price: High to Low' },
 	];
 
 	const productFilterList = {
@@ -145,36 +170,31 @@ export default async function CatalogPage({
 				filtersGroup: {
 					filtersGroupKey: 'category',
 					filtersGroupTitle: 'Categories',
-					filtersList: [
-						{ value: 'smartphones', title: 'Smartphones' },
-						{ value: 'laptops', title: 'Laptops' },
-						{ value: 'audio', title: 'Audio' },
-						{ value: 'wearables', title: 'Wearables' },
-						{ value: 'smart-home', title: 'Smart Home' },
-						{ value: 'gaming', title: 'Gaming' },
-					],
+					filtersList: categoryAside,
 				},
 			},
-			{
-				filtersGroup: {
-					filtersGroupKey: 'color',
-					filtersGroupTitle: 'Colors',
-					filtersList: [
-						{ value: 'pink', title: 'Pink' },
-						{ value: 'violet', title: 'Violet' },
-					],
-				},
-			},
-			{
-				filtersGroup: {
-					filtersGroupKey: 'storage',
-					filtersGroupTitle: 'Storage',
-					filtersList: [
-						{ value: '256 GB', title: '256 GB' },
-						{ value: '512 GB', title: '512 GB' },
-					],
-				},
-			},
+			// Формируем итоговый объект фильтров
+			...dynamicVariationFilters,
+			// {
+			// 	filtersGroup: {
+			// 		filtersGroupKey: 'color',
+			// 		filtersGroupTitle: 'Colors',
+			// 		filtersList: [
+			// 			{ value: 'pink', title: 'Pink' },
+			// 			{ value: 'violet', title: 'Violet' },
+			// 		],
+			// 	},
+			// },
+			// {
+			// 	filtersGroup: {
+			// 		filtersGroupKey: 'storage',
+			// 		filtersGroupTitle: 'Storage',
+			// 		filtersList: [
+			// 			{ value: '256 GB', title: '256 GB' },
+			// 			{ value: '512 GB', title: '512 GB' },
+			// 		],
+			// 	},
+			// },
 		],
 	};
 
@@ -182,7 +202,8 @@ export default async function CatalogPage({
 		<main id="main-content" data-page-is={currentPage}>
 			<section className="catalog-section" aria-label="Catalog">
 				<div className="container catalog-container">
-					{/* Sidebar with filters */}
+					{/* При вызове useSearchParams() в клиентском компоненте Next.js может потребовать обернуть этот компонент в <Suspense></Suspense> */}
+					{/* <Suspense fallback={null}></Suspense> */}
 					<Filters filterData={productFilterList} />
 
 					{/* Main content */}
