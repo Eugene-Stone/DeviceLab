@@ -879,7 +879,7 @@ export interface ApiProductCategoryProductCategory
       'oneToOne',
       'api::product-category.product-category'
     >;
-    products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
+    products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.UID<'title'>;
     title: Schema.Attribute.String;
@@ -979,8 +979,8 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       Schema.Attribute.DefaultTo<'Discover superior performance, modern design, and advanced technology engineered for your daily needs. Experience the next level of quality and reliability.'>;
     price: Schema.Attribute.Decimal & Schema.Attribute.Required;
     priceOld: Schema.Attribute.Decimal;
-    product_categories: Schema.Attribute.Relation<
-      'manyToMany',
+    product_category: Schema.Attribute.Relation<
+      'manyToOne',
       'api::product-category.product-category'
     >;
     publishedAt: Schema.Attribute.DateTime;

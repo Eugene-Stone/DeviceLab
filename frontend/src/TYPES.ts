@@ -87,6 +87,9 @@ export type ProductsParamsType = {
 	search?: string;
 	sort?: string;
 	page?: string;
+	category?: string | string[];
+	color?: string | string[];
+	storage?: string | string[];
 };
 export type ProductsFetchType = {
 	params?: ProductsParamsType;

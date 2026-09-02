@@ -24,7 +24,7 @@ export interface Product {
   deliveryNotice?: string;
   badge?: any;
   variations?: ProductsProductVariations[] | null;
-  product_categories?: ProductCategory[] | null;
+  product_category?: ProductCategory | null;
   sections?: any;
   seo?: SharedSeo | null;
 };

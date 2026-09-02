@@ -411,6 +411,24 @@ export async function getProducts({ params }: ProductsFetchType) {
 	const pageCurrent = params?.page || '1';
 	const pageSize = 3;
 
+	const filterCategory = Array.isArray(params?.category)
+		? params?.category
+		: params?.category
+			? [params?.category]
+			: [];
+
+	const filterColor = Array.isArray(params?.color)
+		? params?.color
+		: params?.color
+			? [params?.color]
+			: [];
+
+	const filterStorage = Array.isArray(params?.storage)
+		? params?.storage
+		: params?.storage
+			? [params?.storage]
+			: [];
+
 	/* 
 	Строка такого вида сохраняется в params
 	http://localhost:3000/products?level=first_level&level=two_level
@@ -418,6 +436,29 @@ export async function getProducts({ params }: ProductsFetchType) {
 	В таком виде отправляется в бекенд запрос
 	http://localhost:1337/api/products?filters[level][slug][$in][0]=first_level&filters[level][slug][$in][1]=two_level
 	*/
+
+	/* 
+		Для одновременной фильтрации по нескольким вариациям одного компонента в Strapi нужно оборачивать их в $and
+	*/
+	const variationFilters = [];
+
+	if (filterStorage.length > 0) {
+		variationFilters.push({
+			variations: {
+				key: { $eq: 'storage' },
+				value: { $containsi: filterStorage },
+			},
+		});
+	}
+
+	if (filterColor.length > 0) {
+		variationFilters.push({
+			variations: {
+				key: { $eq: 'color' },
+				value: { $containsi: filterColor },
+			},
+		});
+	}
 
 	const query = buildQuery({
 		sort: [sorting],
@@ -430,6 +471,43 @@ export async function getProducts({ params }: ProductsFetchType) {
 				title: {
 					$containsi: searchQuery,
 				},
+			}),
+			...(filterCategory.length > 0 && {
+				product_category: {
+					slug: {
+						// Множество фильтров в массиве
+						$in: filterCategory,
+					},
+				},
+			}),
+			// // Фильтрация по повторяемому компоненту variations
+			// ...(filterStorage.length > 0 && {
+			// 	variations: {
+			// 		key: {
+			// 			$eq: 'storage',
+			// 		},
+			// 		value: {
+			// 			// Оператор $containsi в Strapi игнорирует регистр символов
+			// 			$containsi: filterStorage,
+			// 		},
+			// 	},
+			// }),
+			// // Фильтрация по повторяемому компоненту variations
+			// ...(filterColor.length > 0 && {
+			// 	variations: {
+			// 		key: {
+			// 			$eq: 'color',
+			// 		},
+			// 		value: {
+			// 			// Оператор $containsi в Strapi игнорирует регистр символов
+			// 			$containsi: filterColor,
+			// 		},
+			// 	},
+			// }),
+
+			// Для одновременной фильтрации по нескольким вариациям одного компонента в Strapi нужно оборачивать их в $and
+			...(variationFilters.length > 0 && {
+				$and: variationFilters,
 			}),
 		},
 		// populate: PRODUCT_POPULATE,

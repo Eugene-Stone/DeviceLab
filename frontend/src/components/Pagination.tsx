@@ -90,6 +90,7 @@ export default function Pagination({ meta }: Props) {
 	const [isPending, startTransition] = useTransition();
 	const pagination = meta.pagination;
 	const { page, pageCount, pageSize, total } = pagination;
+	console.log(pagination);
 
 	const pathname = usePathname();
 	const router = useRouter();
@@ -131,35 +132,37 @@ export default function Pagination({ meta }: Props) {
 
 	const paginationRange = getPaginationRange(page, pageCount);
 
-	return (
-		<nav className={`pagination ${isPending ? 'is-pending' : ''}`} aria-label="Pagination">
-			<button className="page-link" onClick={prevPage} disabled={page === 1}>
-				← Prev
-			</button>
+	if (pageCount > 1) {
+		return (
+			<nav className={`pagination ${isPending ? 'is-pending' : ''}`} aria-label="Pagination">
+				<button className="page-link" onClick={prevPage} disabled={page === 1}>
+					← Prev
+				</button>
 
-			{paginationRange.map((pageNumber, i) => {
-				if (pageNumber === '...') {
+				{paginationRange.map((pageNumber, i) => {
+					if (pageNumber === '...') {
+						return (
+							<span key={`dots-${i}`} className="page-link dots">
+								&#8230;
+							</span>
+						);
+					}
+
 					return (
-						<span key={`dots-${i}`} className="page-link dots">
-							&#8230;
-						</span>
+						<button
+							key={pageNumber}
+							className={page === pageNumber ? 'page-link active' : 'page-link'}
+							onClick={() => handleCurrent(Number(pageNumber))}
+							disabled={isPending}>
+							{pageNumber}
+						</button>
 					);
-				}
+				})}
 
-				return (
-					<button
-						key={pageNumber}
-						className={page === pageNumber ? 'page-link active' : 'page-link'}
-						onClick={() => handleCurrent(Number(pageNumber))}
-						disabled={isPending}>
-						{pageNumber}
-					</button>
-				);
-			})}
-
-			<button className="page-link" onClick={nextPage} disabled={page === pageCount}>
-				Next →
-			</button>
-		</nav>
-	);
+				<button className="page-link" onClick={nextPage} disabled={page === pageCount}>
+					Next →
+				</button>
+			</nav>
+		);
+	}
 }

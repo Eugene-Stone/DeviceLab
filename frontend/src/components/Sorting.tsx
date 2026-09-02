@@ -37,8 +37,8 @@ export default function Sorting({ sortList }: Props) {
 		// router.push(`${pathname}?${params}`);
 	}
 
-	// function handleCurrent(value: number) {
-	// 	reloadParamsPagination(String(value));
+	// function handleCurrent(value: string) {
+	// 	reloadParamsSorting(String(value));
 	// }
 
 	return (

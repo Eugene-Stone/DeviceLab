@@ -1,5 +1,6 @@
 import { getPageData, getProducts } from '@/api/api-server';
 import PageToLocalstorage from '@/components/_layout/PageToLocalstorage';
+import Filters from '@/components/Filters';
 import Pagination from '@/components/Pagination';
 import ProductList from '@/components/ProductList';
 import Sorting from '@/components/Sorting';
@@ -126,94 +127,63 @@ export default async function CatalogPage({
 	// console.log('currentPage', currentPage);
 	// console.log('pageData', pageData);
 	// console.log('sections', sections);
-	// console.log('products', products);
+	console.log('products', products);
 	// console.log('meta', meta);
 	// console.log('params', params);
 
 	const productSortingList = [
 		{ value: 'createdAt:desc', title: 'Newest Arrivals' },
 		{ value: 'stockStatus:asc', title: 'In Stock' },
-		// { value: 'popularity', title: 'Most Popular' },
 		{ value: 'price:asc', title: 'Price: Low to High' },
 		{ value: 'price:desc', title: 'Price: High to Low' },
 	];
+
+	const productFilterList = {
+		isPriceRange: true,
+		filters: [
+			{
+				filtersGroup: {
+					filtersGroupKey: 'category',
+					filtersGroupTitle: 'Categories',
+					filtersList: [
+						{ value: 'smartphones', title: 'Smartphones' },
+						{ value: 'laptops', title: 'Laptops' },
+						{ value: 'audio', title: 'Audio' },
+						{ value: 'wearables', title: 'Wearables' },
+						{ value: 'smart-home', title: 'Smart Home' },
+						{ value: 'gaming', title: 'Gaming' },
+					],
+				},
+			},
+			{
+				filtersGroup: {
+					filtersGroupKey: 'color',
+					filtersGroupTitle: 'Colors',
+					filtersList: [
+						{ value: 'pink', title: 'Pink' },
+						{ value: 'violet', title: 'Violet' },
+					],
+				},
+			},
+			{
+				filtersGroup: {
+					filtersGroupKey: 'storage',
+					filtersGroupTitle: 'Storage',
+					filtersList: [
+						{ value: '256 GB', title: '256 GB' },
+						{ value: '512 GB', title: '512 GB' },
+					],
+				},
+			},
+		],
+	};
+
 	return (
 		<main id="main-content" data-page-is={currentPage}>
 			<section className="catalog-section" aria-label="Catalog">
 				<div className="container catalog-container">
 					{/* Sidebar with filters */}
-					<aside className="sidebar-filters" aria-label="Product filters">
-						<h2 className="filters-title">Filters</h2>
-						<form className="filters-form">
-							<div className="filter-group">
-								<h3 className="filter-heading">Categories</h3>
-								<label className="checkbox-label">
-									<input
-										type="checkbox"
-										name="category"
-										defaultValue="smartphones"
-									/>
-									Smartphones
-								</label>
-								<label className="checkbox-label">
-									<input type="checkbox" name="category" defaultValue="laptops" />
-									Laptops
-								</label>
-								<label className="checkbox-label">
-									<input type="checkbox" name="category" defaultValue="audio" />
-									Audio
-								</label>
-								<label className="checkbox-label">
-									<input
-										type="checkbox"
-										name="category"
-										defaultValue="wearables"
-									/>
-									Wearables
-								</label>
-								<label className="checkbox-label">
-									<input
-										type="checkbox"
-										name="category"
-										defaultValue="smart-home"
-									/>
-									Smart Home
-								</label>
-								<label className="checkbox-label">
-									<input type="checkbox" name="category" defaultValue="gaming" />
-									Gaming
-								</label>
-							</div>
-							<div className="filter-group">
-								<h3 className="filter-heading">Price Range</h3>
-								<div className="price-inputs">
-									<input
-										type="number"
-										name="min-price"
-										placeholder="Min $"
-										className="form-input"
-										min={0}
-									/>
-									<span className="price-separator">-</span>
-									<input
-										type="number"
-										name="max-price"
-										placeholder="Max $"
-										className="form-input"
-										min={0}
-									/>
-								</div>
-							</div>
-							<div className="filter-actions">
-								<button type="submit" className="btn btn-primary">
-									Apply Filters
-								</button>
-								<button type="button" className="btn btn-outline reset-filters">
-									Reset
-								</button>
-							</div>
-						</form>
-					</aside>
+					<Filters filterData={productFilterList} />
 
 					{/* Main content */}
 					<div className="catalog-content">
