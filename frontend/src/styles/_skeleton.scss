@@ -96,7 +96,10 @@ html.nprogress-busy {
 
 // class="nprogress-busy"
 html.nprogress-busy {
-	.blog-section:has(.pagination.is-pending) .blog-grid {
+	.blog-section:has(.sort-select.is-pending) .blog-grid,
+	.blog-section:has(.pagination.is-pending) .blog-grid,
+	.catalog-section:has(.sort-select.is-pending) .product-grid,
+	.catalog-section:has(.pagination.is-pending) .product-grid {
 		* {
 			color: transparent !important;
 			pointer-events: none !important;
@@ -112,7 +115,8 @@ html.nprogress-busy {
 		h6,
 		p,
 		li,
-		label {
+		label,
+		span {
 			/* Делаем сам текст прозрачным */
 			color: transparent;
 
@@ -148,6 +152,7 @@ html.nprogress-busy {
 			animation: skeleton-shimmer 1.5s infinite linear;
 		}
 
+		.product-card-badge,
 		a:has(img),
 		img,
 		picture,

@@ -10,10 +10,6 @@ type Props = {
 
 // Функция расчета видимых страниц с точки зрения UX
 function getPaginationRange__(currentPage: number, pageCount: number, siblingCount = 1) {
-	// if (pageCount <= 5) {
-	// 	return Array.from({ length: pageCount }, (_, i) => i + 1);
-	// }
-
 	const totalPageNumbers = siblingCount * 2 + 3; // 1 + dots + siblings + current + siblings + dots + last
 	if (totalPageNumbers >= pageCount) {
 		return Array.from({ length: pageCount }, (_, i) => i + 1);
@@ -103,11 +99,6 @@ export default function Pagination({ meta }: Props) {
 		const params = new URLSearchParams(searchParams);
 		params.set('page', value);
 
-		// // Для пагинации replace
-		// router.replace(`${pathname}?${params}`, {
-		// 	scroll: false,
-		// });
-
 		// Оборачиваем в startTransition для отслеживания состояния перехода
 		startTransition(() => {
 			router.replace(`${pathname}?${params}`, {
@@ -115,7 +106,12 @@ export default function Pagination({ meta }: Props) {
 			});
 		});
 
-		// Для фильтров push
+		// // Для пагинации replace
+		// router.replace(`${pathname}?${params}`, {
+		// 	scroll: false,
+		// });
+
+		// // Для фильтров push
 		// router.push(`${pathname}?${params}`);
 	}
 

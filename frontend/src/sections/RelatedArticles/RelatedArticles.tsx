@@ -1,6 +1,5 @@
-import ArticleCard from '@/components/ArticleCard';
+import ArticleList from '@/components/ArticleList';
 import { Article } from '@backend-types/article';
-import ArticleList from '../ArticleList';
 
 type Props = {
 	title: string;

@@ -1,6 +1,7 @@
 import Buttons from '@/components/Buttons';
 import Picture from '@/components/Picture';
 import ProductCard from '@/components/ProductCard';
+import ProductList from '@/components/ProductList';
 import { SectionsBestProducts } from '@backend-types/sectionsBestProducts';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -18,13 +19,7 @@ export default function BestProducts({ data }: Props) {
 			<div className="container">
 				<h2 className="section-title">{title}</h2>
 
-				{products && (
-					<div className="product-grid">
-						{products.map((product, i) => {
-							return <ProductCard key={i} product={product} />;
-						})}
-					</div>
-				)}
+				{products && <ProductList products={products} />}
 
 				{buttons && (
 					<div className="text-center mt-lg">

@@ -2,6 +2,7 @@ import { BACKEND_URL } from '@/CONSTANTS';
 import {
 	ArticlesFetchType,
 	PageDataType,
+	ProductsFetchType,
 	StrapiResponseCollection,
 	StrapiResponseSingle,
 	TreeNavigationItem,
@@ -10,6 +11,7 @@ import { buildQuery } from '@/utils/buildQuery';
 import { Article } from '@backend-types/article';
 import { FormContact } from '@backend-types/formContact';
 import { Global } from '@backend-types/global';
+import { Product } from '@backend-types/product';
 import { notFound } from 'next/navigation';
 
 const SEO_POPULATE = {
@@ -112,6 +114,10 @@ const SECTIONS_POPULATE = {
 	},
 };
 
+const PRODUCT_POPULATE = {
+	populate: '*',
+};
+
 export async function getGlobalData() {
 	const queryGlobal = buildQuery({
 		populate: {
@@ -167,6 +173,47 @@ export async function getGlobalData() {
 		}
 
 		throw new Error('Backend unavailable');
+	}
+}
+
+export async function getContactsForm() {
+	const query = buildQuery({
+		populate: {
+			// 'forms.form-submit': { populate: '*' },
+			nameInput: { populate: '*' },
+			emailInput: { populate: '*' },
+			subjectSelect: { populate: '*' },
+			messageTextarea: { populate: '*' },
+			submitButton: { populate: '*' },
+		},
+	});
+
+	try {
+		const response = await fetch(`${BACKEND_URL}/api/form-contact?${query}`, {
+			// const response = await fetch(`${BACKEND_URL}/api/form-contact`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+		if (!response.ok) {
+			const errorData = await response.json();
+			console.error('Strapi Error Detail:', JSON.stringify(errorData, null, 2));
+			throw new Error(errorData.error?.message ?? 'Failed to fetch form');
+		}
+
+		const responseData: StrapiResponseSingle<FormContact> = await response.json();
+
+		return responseData.data;
+	} catch (error) {
+		if (error instanceof Error) {
+			console.error(error.message);
+		} else {
+			console.error(error);
+		}
+
+		throw new Error('Form contacts unavailable');
 	}
 }
 
@@ -342,7 +389,7 @@ export async function getArticles({ countOnPage, params }: ArticlesFetchType) {
 		if (!response.ok) {
 			const errorData = await response.json();
 			console.error('Strapi Error Detail:', JSON.stringify(errorData, null, 2));
-			throw new Error(errorData.error?.message ?? 'Failed to fetch latest articles');
+			throw new Error(errorData.error?.message ?? 'Failed to fetch articles');
 		}
 
 		const responseData: StrapiResponseCollection<Article> = await response.json();
@@ -358,36 +405,59 @@ export async function getArticles({ countOnPage, params }: ArticlesFetchType) {
 	}
 }
 
-export async function getContactsForm() {
+export async function getProducts({ params }: ProductsFetchType) {
+	const searchQuery = params?.search || '';
+	const sorting = params?.sort || 'createdAt:desc';
+	const pageCurrent = params?.page || '1';
+	const pageSize = 3;
+
+	/* 
+	Строка такого вида сохраняется в params
+	http://localhost:3000/products?level=first_level&level=two_level
+
+	В таком виде отправляется в бекенд запрос
+	http://localhost:1337/api/products?filters[level][slug][$in][0]=first_level&filters[level][slug][$in][1]=two_level
+	*/
+
 	const query = buildQuery({
-		populate: {
-			// 'forms.form-submit': { populate: '*' },
-			nameInput: { populate: '*' },
-			emailInput: { populate: '*' },
-			subjectSelect: { populate: '*' },
-			messageTextarea: { populate: '*' },
-			submitButton: { populate: '*' },
+		sort: [sorting],
+		pagination: {
+			page: pageCurrent,
+			pageSize: pageSize,
 		},
+		filters: {
+			...(searchQuery && {
+				title: {
+					$containsi: searchQuery,
+				},
+			}),
+		},
+		// populate: PRODUCT_POPULATE,
+		populate: '*',
 	});
 
+	console.log('queryProduct', query);
+
 	try {
-		const response = await fetch(`${BACKEND_URL}/api/form-contact?${query}`, {
-			// const response = await fetch(`${BACKEND_URL}/api/form-contact`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
+		const response = await fetch(
+			// `${BACKEND_URL}/api/products?[sort]=createdAt:desc&pagination[page]=1&pagination[pageSize]=${count}`,
+			`${BACKEND_URL}/api/products?${query}`,
+			{
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+				},
 			},
-		});
+		);
 
 		if (!response.ok) {
 			const errorData = await response.json();
 			console.error('Strapi Error Detail:', JSON.stringify(errorData, null, 2));
-			throw new Error(errorData.error?.message ?? 'Failed to fetch form');
+			throw new Error(errorData.error?.message ?? 'Failed to fetch products');
 		}
 
-		const responseData: StrapiResponseSingle<FormContact> = await response.json();
-
-		return responseData.data;
+		const responseData: StrapiResponseCollection<Product> = await response.json();
+		return responseData;
 	} catch (error) {
 		if (error instanceof Error) {
 			console.error(error.message);
@@ -395,6 +465,6 @@ export async function getContactsForm() {
 			console.error(error);
 		}
 
-		throw new Error('Form contacts unavailable');
+		throw new Error('Products unavailable');
 	}
 }

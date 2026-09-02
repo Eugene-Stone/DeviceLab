@@ -83,6 +83,15 @@ export type AccordionType = {
 	text: string;
 };
 
+export type ProductsParamsType = {
+	search?: string;
+	sort?: string;
+	page?: string;
+};
+export type ProductsFetchType = {
+	params?: ProductsParamsType;
+};
+
 export type ArticlesParamsType = {
 	search?: string;
 	sort?: string;

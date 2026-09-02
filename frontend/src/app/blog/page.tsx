@@ -2,7 +2,7 @@ import { getArticles, getPageData } from '@/api/api-server';
 import PageToLocalstorage from '@/components/_layout/PageToLocalstorage';
 import Pagination from '@/components/Pagination';
 import { BACKEND_URL, FRONTEND_URL, SITE_TITLE } from '@/CONSTANTS';
-import ArticleList from '@/sections/ArticleList';
+import ArticleList from '@/components/ArticleList';
 import DynamicSections from '@/sections/DynamicSections';
 import { ArticlesParamsType } from '@/TYPES';
 import { Blog } from '@backend-types/blog';

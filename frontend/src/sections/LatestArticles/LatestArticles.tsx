@@ -1,6 +1,7 @@
 import { getArticles } from '@/api/api-server';
+import ArticleList from '@/components/ArticleList';
 import { SectionsLatestArticles } from '@backend-types/sectionsLatestArticles';
-import ArticleList from '../ArticleList';
+
 type Props = {
 	data: SectionsLatestArticles;
 };

@@ -26,7 +26,10 @@ export default function ProductCard({ product }: Props) {
 						})}
 					</div>
 				)}
-				<Link href={`/catalog/${product.slug}`} aria-label={product.title}>
+				<Link
+					href={`/catalog/${product.slug}`}
+					aria-label={product.title}
+					title={product.title}>
 					{product.images && product.images.length > 0 ? (
 						<Picture
 							image={product.images[0]}
@@ -49,7 +52,9 @@ export default function ProductCard({ product }: Props) {
 				</Link>
 			</div>
 			<div className="product-card-body">
-				<h3 className="product-card-title">{product.title}</h3>
+				<h3 className="product-card-title" title={product.title}>
+					{product.title}
+				</h3>
 				<p className="product-card-price">
 					${product.price.toFixed(2)}{' '}
 					{product.priceOld && (
