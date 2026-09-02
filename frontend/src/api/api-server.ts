@@ -1,5 +1,6 @@
 import { BACKEND_URL } from '@/CONSTANTS';
 import {
+	ArticlesFetchType,
 	PageDataType,
 	StrapiResponseCollection,
 	StrapiResponseSingle,
@@ -181,7 +182,11 @@ export async function getPageData<T>({ url, pageName, pageType, slug }: PageData
 	let apiUrl = '';
 	// let apiUrl = `${BACKEND_URL}${url}?${query}`;
 
-	console.log('slug', slug);
+	if (pageType === 'collection') {
+		console.log('slug', slug);
+	} else if (pageType === 'single') {
+		console.log('pageName', pageName);
+	}
 
 	if (pageType === 'single') {
 		apiUrl = `${BACKEND_URL}${url}?${query}`;
@@ -288,12 +293,32 @@ export async function getPageData<T>({ url, pageName, pageType, slug }: PageData
 	}
 }
 
-export async function getLatestArticles(count: number) {
+export async function getArticles({ countOnPage, params }: ArticlesFetchType) {
+	const searchQuery = params?.search || '';
+	const sorting = params?.sort || 'createdAt:desc';
+	const pageCurrent = params?.page || '1';
+	const pageSize = countOnPage || 3;
+
+	/* 
+	Строка такого вида сохраняется в params
+	http://localhost:3000/blog?level=first_level&level=two_level
+
+	В таком виде отправляется в бекенд запрос
+	http://localhost:1337/api/blog?filters[level][slug][$in][0]=first_level&filters[level][slug][$in][1]=two_level
+	*/
+
 	const query = buildQuery({
-		sort: ['createdAt:desc'],
+		sort: [sorting],
 		pagination: {
-			page: '1',
-			pageSize: count,
+			page: pageCurrent,
+			pageSize: pageSize,
+		},
+		filters: {
+			...(searchQuery && {
+				title: {
+					$containsi: searchQuery,
+				},
+			}),
 		},
 		populate: {
 			image: {

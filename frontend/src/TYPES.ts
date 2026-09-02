@@ -82,3 +82,13 @@ export type AccordionType = {
 	title: string;
 	text: string;
 };
+
+export type ArticlesParamsType = {
+	search?: string;
+	sort?: string;
+	page?: string;
+};
+export type ArticlesFetchType = {
+	countOnPage?: string;
+	params?: ArticlesParamsType;
+};

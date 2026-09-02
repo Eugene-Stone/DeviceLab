@@ -1148,6 +1148,16 @@ body {
     transition: var(--transition);
     min-width: 40px;
     text-align: center;
+	 &[disabled] {
+		pointer-events: none;
+		opacity: 0.25;
+	 }
+	 &.dots {
+		border: none;
+		padding-left: 0;
+		padding-right: 0;
+		min-width: 20px;
+	 }
 }
 
 .page-link:hover {

@@ -1,5 +1,6 @@
 import ArticleCard from '@/components/ArticleCard';
 import { Article } from '@backend-types/article';
+import ArticleList from '../ArticleList';
 
 type Props = {
 	title: string;
@@ -11,13 +12,7 @@ export default async function RelatedArticles({ title, articles }: Props) {
 		<section className="blog-section" aria-label={title}>
 			<div className="container">
 				<h2 className="section-title">{title}</h2>
-				{articles && articles.length > 0 && (
-					<div className="blog-grid">
-						{articles.map((article, i) => {
-							return <ArticleCard key={i} article={article} />;
-						})}
-					</div>
-				)}
+				{articles && articles.length > 0 && <ArticleList articles={articles} />}
 			</div>
 		</section>
 	);

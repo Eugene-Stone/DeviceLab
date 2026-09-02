@@ -14,7 +14,10 @@ export default function ArticleCard({ article }: Props) {
 	return (
 		<article className="blog-card">
 			{article.image && (
-				<Link href={`/blog/${article.slug}`} aria-label={article.title}>
+				<Link
+					href={`/blog/${article.slug}`}
+					aria-label={article.title}
+					className="blog-card-image-link">
 					<Picture
 						image={article.image}
 						sizes="

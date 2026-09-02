@@ -1,0 +1,183 @@
+
+@keyframes skeleton-shimmer {
+	0% {
+		background-position-x: 150%, 0;
+	}
+
+	100% {
+		background-position-x: -50%, 0;
+	}
+}
+
+
+*,
+html.nprogress-busy {
+	&.skeleton {
+		* {
+			color: transparent !important;
+			pointer-events: none !important;
+			user-select: none !important;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		p,
+		li,
+		label {
+			/* Делаем сам текст прозрачным */
+			color: transparent;
+
+			/* Задаем фоновый градиент: 
+				первое значение — высота полосы (например, 70% от высоты строки),
+				остальное — прозрачный зазор между строками 
+			*/
+			/* 1-й слой — движущийся блик, 2-й слой — базовая полоса текста */
+			background-image:
+				linear-gradient(90deg,
+					transparent 0%,
+					rgba(255, 255, 255, 0.6) 50%,
+					transparent 100%),
+				linear-gradient(to bottom,
+					#e0e0e0 0%,
+					#e0e0e0 70%,
+					transparent 70%,
+					transparent 100%);
+
+			// /* Высота фона равна ровно 1 высоте строки, а ширина — 100% */
+			// background-size: 100% 1lh;
+			/* или */
+			// /* Умножаем размер шрифта (1em) на коэффициент высоты строки */
+			// background-size: 100% calc(1em * var(--line-height));
+
+			/* Закругляем углы на стыках строк (работает в современных браузерах) */
+			box-decoration-break: clone;
+			-webkit-box-decoration-break: clone;
+			border-radius: 4px;
+
+			background-repeat: repeat-x, repeat;
+			background-size: 200% 1lh, 100% 1lh;
+			animation: skeleton-shimmer 1.5s infinite linear;
+		}
+
+		img,
+		.btn,
+		input,
+		select,
+		textarea {
+			color: transparent !important;
+			border-color: transparent !important;
+			background-image:
+				linear-gradient(90deg,
+					transparent 0%,
+					rgba(255, 255, 255, 0.6) 50%,
+					transparent 100%),
+				linear-gradient(#e0e0e0 0%,
+					#e0e0e0 100%);
+
+			background-repeat: repeat-x, no-repeat;
+			background-size: 200% 100%, 100% 100%;
+
+			animation: skeleton-shimmer 1.5s infinite linear;
+
+			&::placeholder {
+				color: inherit;
+			}
+		}
+
+	}
+}
+
+
+
+
+// class="nprogress-busy"
+html.nprogress-busy {
+	.blog-section:has(.pagination.is-pending) .blog-grid {
+		* {
+			color: transparent !important;
+			pointer-events: none !important;
+			user-select: none !important;
+			transition: none !important;
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6,
+		p,
+		li,
+		label {
+			/* Делаем сам текст прозрачным */
+			color: transparent;
+
+			/* Задаем фоновый градиент: 
+				первое значение — высота полосы (например, 70% от высоты строки),
+				остальное — прозрачный зазор между строками 
+			*/
+			/* 1-й слой — движущийся блик, 2-й слой — базовая полоса текста */
+			background-image:
+				linear-gradient(90deg,
+					transparent 0%,
+					rgba(255, 255, 255, 0.6) 50%,
+					transparent 100%),
+				linear-gradient(to bottom,
+					#e0e0e0 0%,
+					#e0e0e0 70%,
+					transparent 70%,
+					transparent 100%);
+
+			// /* Высота фона равна ровно 1 высоте строки, а ширина — 100% */
+			// background-size: 100% 1lh;
+			/* или */
+			// /* Умножаем размер шрифта (1em) на коэффициент высоты строки */
+			// background-size: 100% calc(1em * var(--line-height));
+
+			/* Закругляем углы на стыках строк (работает в современных браузерах) */
+			box-decoration-break: clone;
+			-webkit-box-decoration-break: clone;
+			border-radius: 4px;
+
+			background-repeat: repeat-x, repeat;
+			background-size: 200% 1lh, 100% 1lh;
+			animation: skeleton-shimmer 1.5s infinite linear;
+		}
+
+		a:has(img),
+		img,
+		picture,
+		.btn,
+		input,
+		select,
+		textarea {
+			color: transparent !important;
+			border-color: transparent !important;
+			background-image:
+				linear-gradient(90deg,
+					transparent 0%,
+					rgba(255, 255, 255, 0.6) 50%,
+					transparent 100%),
+				linear-gradient(#e0e0e0 0%,
+					#e0e0e0 100%);
+
+			background-repeat: repeat-x, no-repeat;
+			background-size: 200% 100%, 100% 100%;
+
+			animation: skeleton-shimmer 1.5s infinite linear;
+
+			&::placeholder {
+				color: inherit;
+			}
+		}
+
+		picture img {
+			opacity: 0 !important;
+		}
+		
+	}
+}
