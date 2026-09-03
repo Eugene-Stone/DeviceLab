@@ -139,7 +139,7 @@ export default async function CatalogPage({
 	// console.log('currentPage', currentPage);
 	// console.log('pageData', pageData);
 	// console.log('sections', sections);
-	// console.log('products', products);
+	console.log('products', products);
 	// console.log('meta', meta);
 	// console.log('params', params);
 	// console.log('product_categoriesAll', product_categoriesAll);
@@ -214,7 +214,11 @@ export default async function CatalogPage({
 							<Sorting sortList={productSortingList} />
 						</div>
 
-						{products && products.length > 0 && <ProductList products={products} />}
+						{products && products.length > 0 ? (
+							<ProductList products={products} />
+						) : (
+							<h2>No products found</h2>
+						)}
 
 						{/* При вызове useSearchParams() в клиентском компоненте Next.js может потребовать обернуть этот компонент в <Suspense></Suspense> */}
 						<Suspense fallback={null}>

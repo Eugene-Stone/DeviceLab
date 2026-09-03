@@ -37,6 +37,14 @@ export default function Filters({ filterData }: Props) {
 	const minPrice = searchParams.get('min_price') || '';
 	const maxPrice = searchParams.get('max_price') || '';
 
+	// Проверка на наличие хотя бы одного активного фильтра из списка
+	const hasActiveGroupFilter = filterData.filters.some((groupItem) =>
+		searchParams.has(groupItem.filtersGroup.filtersGroupKey),
+	);
+
+	// Общий флаг: выбран ли какой-либо фильтр или заполнен диапазон цен
+	const hasActiveFilters = hasActiveGroupFilter || Boolean(minPrice) || Boolean(maxPrice);
+
 	// Update URL helper function
 	const updateQueryParams = (newParams: URLSearchParams) => {
 		// Reset pagination on filter change
@@ -183,12 +191,14 @@ export default function Filters({ filterData }: Props) {
 					<button type="submit" className="btn btn-primary">
 						Apply Filters
 					</button>
-					<button
-						type="button"
-						className="btn btn-outline reset-filters"
-						onClick={handleReset}>
-						Reset
-					</button>
+					{hasActiveFilters && (
+						<button
+							type="button"
+							className="btn btn-outline reset-filters"
+							onClick={handleReset}>
+							Reset
+						</button>
+					)}
 				</div>
 			</form>
 		</aside>
