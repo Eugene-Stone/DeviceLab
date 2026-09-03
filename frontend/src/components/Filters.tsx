@@ -2,21 +2,7 @@
 import { useRouter } from 'nextjs-toploader/app';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { ChangeEvent, useTransition } from 'react';
-
-type FilterListItem = {
-	key: string;
-	title: string;
-	isColor?: boolean;
-	color?: string | null;
-};
-
-type FilterGroupItem = {
-	filtersGroup: {
-		filtersGroupKey: string;
-		filtersGroupTitle: string;
-		filtersList: FilterListItem[];
-	};
-};
+import { FilterGroupItem } from '@/TYPES';
 
 type FilterData = {
 	isPriceRange: boolean;

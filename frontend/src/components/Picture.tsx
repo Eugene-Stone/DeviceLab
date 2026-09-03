@@ -9,8 +9,18 @@ type Props = {
 	sizes?: string;
 	alt?: string;
 	priority?: boolean;
+	onClick?: () => void; // Добавляем опциональный обработчик
+	onMouseEnter?: () => void; // Добавляем опциональный обработчик
 };
-export default function Picture({ className, image, sizes, alt, priority }: Props) {
+export default function Picture({
+	className,
+	image,
+	sizes,
+	alt,
+	priority,
+	onClick,
+	onMouseEnter,
+}: Props) {
 	const { srcSetString } = imageSrcSet(image);
 
 	// sizes="
@@ -21,7 +31,7 @@ export default function Picture({ className, image, sizes, alt, priority }: Prop
 	// "
 
 	return (
-		<picture className={className}>
+		<picture className={className} onClick={onClick} onMouseEnter={onMouseEnter}>
 			{srcSetString && sizes && <source srcSet={srcSetString} sizes={sizes} />}
 
 			{priority ? (

@@ -112,7 +112,7 @@ export default async function Home() {
 	const homeData = data;
 	const sections = homeData?.sections;
 
-	// console.log('currentPage', currentPage);
+	// console.log('currentPage \n', currentPage);
 	// console.log('homeData', homeData);
 	// console.log('sections', sections);
 

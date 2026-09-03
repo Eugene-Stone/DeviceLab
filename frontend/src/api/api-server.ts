@@ -257,11 +257,11 @@ export async function getPageData<T>({ url, pageName, pageType, slug }: PageData
 	let apiUrl = '';
 	// let apiUrl = `${BACKEND_URL}${url}?${query}`;
 
-	if (pageType === 'collection') {
-		console.log('slug', slug);
-	} else if (pageType === 'single') {
-		console.log('pageName', pageName);
-	}
+	// if (pageType === 'collection') {
+	// 	console.log('slug', slug);
+	// } else if (pageType === 'single') {
+	// 	console.log('pageName', pageName);
+	// }
 
 	if (pageType === 'single') {
 		apiUrl = `${BACKEND_URL}${url}?${query}`;
@@ -283,6 +283,19 @@ export async function getPageData<T>({ url, pageName, pageType, slug }: PageData
 			// console.log(query);
 			apiUrl = `${BACKEND_URL}${url}?filters[slug][$eq]=${slug}&${query}`;
 		} else if (pageName === 'product') {
+			query = buildQuery({
+				populate: {
+					seo: SEO_POPULATE,
+					sections: SECTIONS_POPULATE,
+					images: {
+						populate: '*',
+					},
+					variations: {
+						populate: '*',
+					},
+				},
+			});
+
 			apiUrl = `${BACKEND_URL}${url}?filters[slug][$eq]=${slug}&${query}`;
 		} else {
 			apiUrl = `${BACKEND_URL}${url}?filters[slug][$eq]=${slug}&${query}`;
@@ -584,15 +597,22 @@ export async function getProducts({ params }: ProductsFetchType) {
 	}
 }
 
-export async function getProductVariations() {
+export async function getProductVariations(groupId?: string) {
 	const query = buildQuery({
 		// Ограничиваем запрос, запрашиваем только поля id и variations
-		fields: ['id'],
+		fields: ['id', 'slug'],
 		populate: {
 			variations: true,
 		},
 		pagination: {
 			pageSize: 1000, // Запрашиваем достаточное количество товаров для вытягивания всех уникальных вариаций
+		},
+		filters: {
+			...(groupId && {
+				groupId: {
+					$eq: groupId,
+				},
+			}),
 		},
 	});
 

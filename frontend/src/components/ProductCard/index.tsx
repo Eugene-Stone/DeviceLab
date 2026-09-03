@@ -55,12 +55,18 @@ export default function ProductCard({ product }: Props) {
 				<h3 className="product-card-title" title={product.title}>
 					{product.title}
 				</h3>
-				<p className="product-card-price">
-					${product.price.toFixed(2)}{' '}
-					{product.priceOld && (
-						<span className="original-price">${product.priceOld.toFixed(2)}</span>
-					)}
-				</p>
+				{product.stockStatus === 'inStock' ? (
+					<p className="product-card-price">
+						${product.price.toFixed(2)}{' '}
+						{product.priceOld && (
+							<span className="original-price">${product.priceOld.toFixed(2)}</span>
+						)}
+					</p>
+				) : (
+					<p className="product-card-price" style={{ color: 'transparent' }}>
+						$
+					</p>
+				)}
 				<div className="product-card-actions">
 					<button className="btn btn-primary add-to-cart-btn">Add to Cart</button>
 					<Link href={`/catalog/${product.slug}`} className="btn btn-outline">
@@ -71,7 +77,7 @@ export default function ProductCard({ product }: Props) {
 					<p className="product-status in-stock">✓ In Stock</p>
 				)}
 				{product.stockStatus === 'outOffStock' && (
-					<p className="product-status out-off-stock">x Out off Stock</p>
+					<p className="product-status out-off-stock">X Out off Stock</p>
 				)}
 			</div>
 		</article>

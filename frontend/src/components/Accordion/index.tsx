@@ -1,6 +1,8 @@
 import { AccordionType } from '@/TYPES';
 import RichText from '@/utils/RichText';
-import * as AccordionRadix from '@radix-ui/react-accordion';
+
+// import * as AccordionRadix from '@radix-ui/react-accordion';
+import { Accordion as AccordionRadix } from 'radix-ui';
 
 type Props = {
 	accordion: AccordionType[];
@@ -12,7 +14,7 @@ export default function Accordion({ accordion }: Props) {
 				className="faq-list"
 				type="single"
 				collapsible
-				defaultValue="item-2">
+				defaultValue="item-1">
 				{accordion.map((item, i) => {
 					return (
 						<AccordionRadix.Item key={i} className="faq-item" value={`item-${i + 1}`}>

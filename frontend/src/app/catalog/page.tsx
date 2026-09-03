@@ -134,15 +134,17 @@ export default async function CatalogPage({
 	const { page, pageCount, pageSize, total } = meta.pagination;
 
 	const { data: product_categoriesAll } = await getProductsCategories();
+
+	// Получение вариаций
 	const productsForVariations = await getProductVariations();
 
 	// Генерируем динамические группы для (color, storage и любых других новых вариаций)
 	const dynamicVariationFilters = buildDynamicVariationFilters(productsForVariations);
 
-	// console.log('currentPage', currentPage);
+	// console.log('currentPage \n', currentPage);
 	// console.log('pageData', pageData);
 	// console.log('sections', sections);
-	console.log('products', products);
+	// console.log('products', products);
 	// console.log('meta', meta);
 	// console.log('params', params);
 	// console.log('product_categoriesAll', product_categoriesAll);

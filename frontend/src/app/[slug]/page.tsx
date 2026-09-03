@@ -137,7 +137,7 @@ export default async function PageBySlug({ params }: { params: Promise<{ slug: s
 	const pageData = data;
 	const sections = pageData?.sections;
 
-	// console.log('currentPage', currentPage);
+	// console.log('currentPage \n', currentPage);
 	// console.log('pageData', pageData);
 	// console.log('sections', sections);
 

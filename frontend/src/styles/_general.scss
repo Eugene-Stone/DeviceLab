@@ -5,6 +5,10 @@
     box-sizing: border-box;
 }
 
+.hidden {
+	display: none !important;
+}
+
 html {
     scroll-behavior: smooth;
 	 scroll-padding-top: 100px;
@@ -1086,6 +1090,7 @@ body {
     border-radius: var(--radius-sm) var(--radius-sm) 0 0;
 }
 
+.tab-button[data-state="active"],
 .tab-button.active {
     color: var(--primary-color);
     border-bottom-color: var(--primary-color);
@@ -1098,6 +1103,7 @@ body {
     animation: fadeInUp 0.4s ease-in-out;
 }
 
+.tab-content[data-state="active"],
 .tab-content.active {
     display: block;
 }

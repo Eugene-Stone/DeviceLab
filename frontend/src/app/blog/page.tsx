@@ -125,7 +125,7 @@ export default async function BlogPage({
 	const { data: articles, meta } = await getArticles({ params });
 	const { page, pageCount, pageSize, total } = meta.pagination;
 
-	// console.log('currentPage', currentPage);
+	// console.log('currentPage \n', currentPage);
 	// console.log('pageData', pageData);
 	// console.log('sections', sections);
 	// console.log('articles', articles);

@@ -106,3 +106,20 @@ export type ArticlesFetchType = {
 	countOnPage?: string;
 	params?: ArticlesParamsType;
 };
+
+// Filters
+export type FilterListItem = {
+	key: string;
+	title: string;
+	slug?: string;
+	isColor?: boolean;
+	color?: string | null;
+};
+
+export type FilterGroupItem = {
+	filtersGroup: {
+		filtersGroupKey: string;
+		filtersGroupTitle: string;
+		filtersList: FilterListItem[];
+	};
+};

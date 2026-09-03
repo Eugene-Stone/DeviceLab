@@ -141,7 +141,7 @@ export default async function ArticleBySlug({ params }: { params: Promise<{ slug
 	const sections = pageData?.sections;
 	const related_articles = pageData?.related_articles;
 
-	// console.log('currentPage', currentPage);
+	// console.log('currentPage \n', currentPage);
 	// console.log('pageData', pageData);
 	// console.log('sections', sections);
 

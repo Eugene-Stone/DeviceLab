@@ -2,6 +2,7 @@ import { getAllPageSlugs, getPageData } from '@/api/api-server';
 import PageToLocalstorage from '@/components/_layout/PageToLocalstorage';
 import { BACKEND_URL, FRONTEND_URL, SITE_TITLE } from '@/CONSTANTS';
 import DynamicSections from '@/sections/DynamicSections';
+import ProductDetail from '@/sections/ProductDetail';
 import { Media } from '@backend-types/media';
 import { Product } from '@backend-types/product';
 import { SharedSeo } from '@backend-types/sharedSeo';
@@ -137,12 +138,15 @@ export default async function ProductBySlug({ params }: { params: Promise<{ slug
 	const pageData = data;
 	const sections = pageData?.sections;
 
-	console.log('currentPage', currentPage);
-	console.log('pageData', pageData);
+	console.log('currentPage \n', currentPage);
+	// console.log('pageData', pageData);
 	// console.log('sections', sections);
 
 	return (
 		<main id="main-content" data-page-is={currentPage}>
+			<br />
+			<ProductDetail data={pageData} />
+
 			{sections && <DynamicSections sections={sections} />}
 
 			<PageToLocalstorage page={currentPage} data={pageData} />
