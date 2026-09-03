@@ -446,11 +446,12 @@ export async function getArticles({ countOnPage, params }: ArticlesFetchType) {
 	}
 }
 
-export async function getProducts({ params }: ProductsFetchType) {
+// чтобы функция не падала и при вызове без аргументов добавлено = {}
+export async function getProducts({ params, itemsCount }: ProductsFetchType = {}) {
 	const searchQuery = params?.search || '';
 	const sorting = params?.sort || 'createdAt:desc';
 	const pageCurrent = params?.page || '1';
-	const pageSize = 3;
+	const pageSize = itemsCount || 3;
 
 	// Парсим цены из Query-параметров
 	const minPrice = params?.min_price ? Number(params.min_price) : null;

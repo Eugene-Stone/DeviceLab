@@ -127,7 +127,7 @@ export default async function CatalogPage({
 	const sections = pageData?.sections;
 	const { title } = pageData;
 
-	// Get articles
+	// Get products
 	const params = await searchParams;
 
 	const { data: products, meta } = await getProducts({ params });
@@ -214,7 +214,16 @@ export default async function CatalogPage({
 					{/* Main content */}
 					<div className="catalog-content">
 						<div className="catalog-header">
-							<h1 className="page-title">{title}</h1>
+							<h1 className="page-title">
+								{params.search ? (
+									<>
+										Search by:{' '}
+										<em style={{ color: 'orange' }}>{params.search}</em>
+									</>
+								) : (
+									title
+								)}
+							</h1>
 
 							<Sorting sortList={productSortingList} />
 						</div>

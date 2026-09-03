@@ -8,6 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import HeaderMenuWrapper from './HeaderMenuWrapper';
+import HeaderSearch from './HeaderSearch';
 
 type Props = {
 	data: {
@@ -39,29 +40,8 @@ export default function Header({ data }: Props) {
 				</a>
 				<HeaderMenuWrapper pathname={pathname} menuPrimary={menuPrimary} />
 				<div className="header-actions">
-					<form className="search-form" role="search" aria-label="Site search">
-						<input
-							type="search"
-							placeholder="Search products..."
-							className="search-input"
-							aria-label="Search products"
-						/>
-						<button type="submit" className="search-button" aria-label="Submit search">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 32 32"
-								width={32}
-								height={32}
-								fill="none"
-								stroke="currentColor"
-								strokeWidth={2}
-								strokeLinecap="round"
-								strokeLinejoin="round">
-								<circle cx={14} cy={14} r={8} />
-								<line x1={20} y1={20} x2={27} y2={27} />
-							</svg>
-						</button>
-					</form>
+					<HeaderSearch />
+
 					<div className="user-actions">
 						<a
 							href="auth.html"

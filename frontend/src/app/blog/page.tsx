@@ -137,7 +137,18 @@ export default async function BlogPage({
 			<section className="blog-section" aria-label="Blog">
 				<div className="container">
 					<h1 className="page-title">{title}</h1>
-					{description && <p className="page-description">{description}</p>}
+
+					{description && (
+						<p className="page-description">
+							{params.search ? (
+								<>
+									Search by: <em style={{ color: 'orange' }}>{params.search}</em>
+								</>
+							) : (
+								description
+							)}
+						</p>
+					)}
 
 					{articles && articles.length > 0 && <ArticleList articles={articles} />}
 
