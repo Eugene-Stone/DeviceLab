@@ -1,4 +1,4 @@
-import { getPageData } from '@/api/api-server';
+import { getAllPageSlugs, getPageData } from '@/api/api-server';
 import PageToLocalstorage from '@/components/_layout/PageToLocalstorage';
 import { BACKEND_URL, FRONTEND_URL, SITE_TITLE } from '@/CONSTANTS';
 import Article from '@/sections/Article';
@@ -10,6 +10,26 @@ import { Media } from '@backend-types/media';
 import { SharedSeo } from '@backend-types/sharedSeo';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+
+// Сборщик выдаст ошибку с указанием конкретной строки и функции, из-за которой страница переводится в Dynamic
+// export const dynamic = 'error';
+
+// 1. Set background revalidation interval (3600 sec = 1 hour)
+export const revalidate = 3600;
+
+// 2. Allow dynamic generation for newly created CMS pages not built during compile time
+export const dynamicParams = true;
+
+// 3. Pre-render static HTML for all existing slugs during build
+export async function generateStaticParams() {
+	try {
+		const paths = await getAllPageSlugs('articles');
+		return paths;
+	} catch (error) {
+		console.error('Failed to generate static params:', error);
+		return [];
+	}
+}
 
 export async function generateMetadata({
 	params,

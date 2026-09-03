@@ -218,6 +218,33 @@ export async function getContactsForm() {
 	}
 }
 
+// Функция, которая возвращает список всех существующих страниц
+export async function getAllPageSlugs(
+	value: 'pages' | 'products' | 'articles',
+): Promise<Array<{ slug: string }>> {
+	let fetchUrl = 'pages';
+
+	if (value === 'pages') fetchUrl = `${BACKEND_URL}/api/pages`;
+	if (value === 'products') fetchUrl = `${BACKEND_URL}/api/products`;
+	if (value === 'articles') fetchUrl = `${BACKEND_URL}/api/articles`;
+
+	// Fetch all slugs from Strapi
+	const response = await fetch(fetchUrl);
+	const data = await response.json();
+
+	const params: Array<{ slug: string }> = [];
+
+	// eslint-disable-next-line
+	data?.data?.forEach((page: any) => {
+		// Add default locale entry
+		params.push({
+			slug: page.slug,
+		});
+	});
+
+	return params;
+}
+
 export async function getPageData<T>({ url, pageName, pageType, slug }: PageDataType) {
 	const queryPage = buildQuery({
 		populate: {
