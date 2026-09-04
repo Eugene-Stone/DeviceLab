@@ -126,3 +126,11 @@ export type FilterGroupItem = {
 };
 
 export type FormStatus = 'idle' | 'loading' | 'success' | 'error';
+
+export interface RegisterRequest {
+	username: string;
+	email: string;
+	password: string;
+	acceptedTerms?: boolean;
+	acceptedTermsAt?: string;
+}

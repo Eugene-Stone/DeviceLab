@@ -284,6 +284,24 @@
     margin-bottom: var(--spacing-xs);
     cursor: pointer;
     transition: var(--transition);
+
+	 &:has(.error-field) {
+		flex-wrap: wrap;
+	 }
+	.error-field {
+		display: block;
+		width: 100%;
+		text-align: left;
+		margin-top: 0;
+	}
+	a {
+		text-decoration: underline;
+		text-decoration-thickness: 1px !important;
+		text-underline-offset: 3px;
+		&:hover {
+			text-decoration: none;
+		}
+	}
 }
 
 .checkbox-label:hover {

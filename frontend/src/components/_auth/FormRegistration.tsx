@@ -1,5 +1,7 @@
 'use client';
+import { registerUser } from '@/api/api-client';
 import { FormStatus } from '@/TYPES';
+import { formatDate } from '@/utils/formatDate';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'nextjs-toploader/app';
@@ -7,8 +9,10 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 type FormValues = {
+	username: string;
 	email: string;
 	password: string;
+	terms: boolean;
 };
 export default function FormRegistration() {
 	const router = useRouter();
@@ -32,23 +36,33 @@ export default function FormRegistration() {
 		setStatus('loading');
 
 		try {
-			const res = await signIn('credentials', {
+			const currentDate = new Date();
+
+			const res = await registerUser({
+				username: data.username,
 				email: data.email,
 				password: data.password,
-				redirect: false,
+				// acceptedTerms: data.terms,
+				// acceptedTermsAt: formatDate(currentDate, 'withTime'),
 			});
 
-			if (!res?.ok) {
-				setStatus('error');
-				setServerError(res?.error || 'Invalid email or password');
-				return; // Останавливаем выполнение, чтобы не дойти до success
-			}
+			// if (!res?.ok) {
+			// 	setStatus('error');
+			// 	setServerError(res?.error || 'Invalid email or password');
+			// 	return; // Останавливаем выполнение, чтобы не дойти до success
+			// }
 
 			setStatus('success');
-			setTimeout(() => {
-				router.push('/profile');
-				router.refresh();
-			}, 500);
+			reset({
+				username: '',
+				email: '',
+				password: '',
+			});
+
+			// setTimeout(() => {
+			// 	router.push('/profile');
+			// 	router.refresh();
+			// }, 500);
 		} catch (error) {
 			if (error instanceof Error) {
 				setServerError(error.message);
@@ -59,17 +73,40 @@ export default function FormRegistration() {
 		}
 	}
 
-	const handleGoogleSignIn = () => {
-		signIn('google', { callbackUrl: '/profile' });
-	};
-
 	return (
 		<form
 			className={`auth-form ${status === 'loading' ? 'sending' : ''}`}
-			id="login-form"
-			onSubmit={handleSubmit(onSubmit)}>
-			<h2>Welcome Back</h2>
-			<p className="auth-description">Sign in to access your account</p>
+			id="register-form"
+			onSubmit={handleSubmit(onSubmit)}
+			autoComplete="off">
+			{/* Невидимые поля-ловушки для браузерного автозаполнения */}
+			<input type="text" name="fake_username" style={{ display: 'none' }} tabIndex={-1} />
+			<input type="text" name="fake_email" style={{ display: 'none' }} tabIndex={-1} />
+			<input type="password" name="fake_password" style={{ display: 'none' }} tabIndex={-1} />
+
+			<h2>Create Account</h2>
+			<p className="auth-description">
+				Join DeviceLab for exclusive offers and faster checkout
+			</p>
+			<div className="form-group">
+				<label htmlFor="login-username" className="form-label">
+					Username
+				</label>
+				<input
+					{...register('username', {
+						required: 'This field required',
+					})}
+					type="text"
+					name="username"
+					autoComplete="username"
+					className="form-input"
+				/>
+				{errors.username && (
+					<span className="error-field">
+						{errors.username?.message || 'This field required'}
+					</span>
+				)}
+			</div>
 			<div className="form-group">
 				<label htmlFor="login-email" className="form-label">
 					Email Address
@@ -80,6 +117,7 @@ export default function FormRegistration() {
 					})}
 					type="email"
 					name="email"
+					autoComplete="email"
 					className="form-input"
 				/>
 				{errors.email && (
@@ -98,6 +136,7 @@ export default function FormRegistration() {
 					})}
 					type="password"
 					name="password"
+					autoComplete="new-password"
 					className="form-input"
 				/>
 				{errors.password && (
@@ -107,44 +146,36 @@ export default function FormRegistration() {
 				)}
 			</div>
 
-			<div className="form-options hidden">
-				<label className="checkbox-label">
-					<input type="checkbox" name="remember" /> Remember me
-				</label>
-				<Link href="/forgot-password" className="forgot-password">
-					Forgot Password?
-				</Link>
-			</div>
+			<label className="checkbox-label">
+				<input
+					{...register('terms', {
+						required: 'You must agree to the Terms & Conditions',
+					})}
+					type="checkbox"
+				/>{' '}
+				I agree to the <Link href="/terms-and-conditions">Terms &amp; Conditions</Link>
+				{errors.terms && (
+					<span className="error-field">
+						{errors.terms?.message || 'This field required'}
+					</span>
+				)}
+			</label>
 
 			<button
 				type="submit"
 				className="btn btn-primary btn-block btn-lg"
 				disabled={status === 'loading'}>
-				{status === 'loading' ? 'Signing in...' : 'Sign In'}
+				{status === 'loading' ? 'Creating Account...' : 'Create Account'}
 			</button>
 
-			<br />
-			<p className="auth-divider" style={{ textAlign: 'center' }}>
-				or continue with
-			</p>
-			<br />
-
-			<div className="social-auth">
-				<button type="button" className="btn btn-outline" onClick={handleGoogleSignIn}>
-					Google
-				</button>
-				{/* <button type="button" className="btn btn-outline">
-					Facebook
-				</button> */}
-				{/* <button type="button" className="btn btn-outline">
-					Apple
-				</button> */}
-			</div>
-
 			{status === 'success' && (
-				<p className="success-field">You have successfully logged in to the site.</p>
+				<p className="success-field">You have successfully register in to the site.</p>
 			)}
-			{status === 'error' && <p className="error-field">Invalid email or password</p>}
+			{status === 'error' && (
+				<p className="error-field">
+					{serverError ? serverError : 'Invalid email or password'}
+				</p>
+			)}
 		</form>
 	);
 }

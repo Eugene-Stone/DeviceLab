@@ -80,6 +80,12 @@
     },
     "phoneNumber": {
       "type": "string"
+    },
+    "acceptedTerms": {
+      "type": "boolean"
+    },
+    "acceptedTermsAt": {
+      "type": "string"
     }
   }
 }

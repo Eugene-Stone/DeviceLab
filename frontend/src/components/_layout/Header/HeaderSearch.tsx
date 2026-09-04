@@ -127,7 +127,7 @@ export default function HeaderSearch() {
 			{queryDebounce !== '' && (
 				<div className="search-float__wrapper">
 					<div className="search-float">
-						{products && products.length > 0 && (
+						{products && products.length > 0 ? (
 							<div className="search-float__group">
 								<h4>Products</h4>
 								<ul>
@@ -149,6 +149,8 @@ export default function HeaderSearch() {
 									See all products results
 								</button>
 							</div>
+						) : (
+							'Products not found'
 						)}
 
 						{articles && articles.length > 0 && (
