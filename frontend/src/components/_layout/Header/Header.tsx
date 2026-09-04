@@ -52,25 +52,53 @@ export default function Header({ data }: Props) {
 					</Suspense>
 
 					<div className="user-actions">
-						<button onClick={handleLogout}>Log Out</button>
-						<a href="/auth" className="user-link" aria-label="Sign in to your account">
-							<span className="user-icon">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 32 32"
-									width={32}
-									height={32}
-									fill="none"
-									stroke="currentColor"
-									strokeWidth={2}
-									strokeLinecap="round"
-									strokeLinejoin="round">
-									<circle cx={16} cy={10} r={5} />
-									<path d="M6 26c0-4.4 3.6-8 10-8s10 3.6 10 8" />
-								</svg>
-							</span>
-							<span className="user-text">Sign In</span>
-						</a>
+						{session.status === 'authenticated' && (
+							<button onClick={handleLogout}>Log Out</button>
+						)}
+
+						{session.status === 'authenticated' ? (
+							<Link href="/profile" className="user-link" aria-label="Profile">
+								<span className="user-icon">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 32 32"
+										width={32}
+										height={32}
+										fill="none"
+										stroke="currentColor"
+										strokeWidth={2}
+										strokeLinecap="round"
+										strokeLinejoin="round">
+										<circle cx={16} cy={10} r={5} />
+										<path d="M6 26c0-4.4 3.6-8 10-8s10 3.6 10 8" />
+									</svg>
+								</span>
+								<span className="user-text">Profile</span>
+							</Link>
+						) : (
+							<Link
+								href="/auth"
+								className="user-link"
+								aria-label="Sign in to your account">
+								<span className="user-icon">
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 32 32"
+										width={32}
+										height={32}
+										fill="none"
+										stroke="currentColor"
+										strokeWidth={2}
+										strokeLinecap="round"
+										strokeLinejoin="round">
+										<circle cx={16} cy={10} r={5} />
+										<path d="M6 26c0-4.4 3.6-8 10-8s10 3.6 10 8" />
+									</svg>
+								</span>
+								<span className="user-text">Sign In</span>
+							</Link>
+						)}
+
 						<a href="cart.html" className="cart-link" aria-label="Shopping cart">
 							<span className="cart-icon">
 								<svg

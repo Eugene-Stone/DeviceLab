@@ -1105,8 +1105,71 @@ body {
 }
 
 /* Modern Forms */
+form {
+	position: relative;
+	&.is-loading,
+	&.sending {
+		position: relative;
+		pointer-events: none; // Блокируем взаимодействие с формой
+
+		// Полупрозрачная подложка
+		&::before {
+			content: '';
+			position: absolute;
+			inset: -10px;
+			// background-color: rgba(255, 255, 255, 0.75);
+			backdrop-filter: blur(3px);
+			z-index: 10;
+		}
+
+		// Спиннер
+		&::after {
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 44px;
+			height: 44px;
+			margin-top: -22px;
+			margin-left: -22px;
+			border: 6px solid #000000;
+			border-top-color: #f7d000; // Желтый акцентный цвет кнопки
+			border-radius: 50%;
+			// box-shadow: 3px 3px 0 #000000;
+			z-index: 11;
+			animation: spinner 1s linear infinite;
+		}
+	}
+}
+
+
+@keyframes spinner {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+
 .form-group {
     margin-bottom: var(--spacing-md);
+}
+
+.success-field,
+.error-field {
+	font-size: 80%;
+	text-align: center;
+	margin-top: 3px;
+}
+
+.success-field {
+	color: rgb(24, 164, 82);
+}
+.error-field {
+	color: red;
 }
 
 .form-label {

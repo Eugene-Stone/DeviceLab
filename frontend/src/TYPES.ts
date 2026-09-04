@@ -124,3 +124,5 @@ export type FilterGroupItem = {
 		filtersList: FilterListItem[];
 	};
 };
+
+export type FormStatus = 'idle' | 'loading' | 'success' | 'error';

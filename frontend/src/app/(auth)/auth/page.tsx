@@ -1,6 +1,4 @@
-import { redirect } from 'next/navigation';
-import { Suspense } from 'react';
-import AuthTabs from './AuthTabs';
+import AuthTabs from '@/components/_auth/AuthTabs';
 
 export const dynamic = 'force-static'; // 'force-dynamic' || 'force-static';
 // export const revalidate = 60; // Пересборка каждые 60 секунд, работает если выбрано 'force-static'
@@ -10,11 +8,6 @@ type Props = {
 };
 
 export default async function Login({ params }: Props) {
-	// const user = await getMeServer();
-	// if (user) {
-	// 	redirect(`/${locale}/profile`);
-	// }
-
 	return (
 		<section className="auth-section">
 			<div className="container auth-container">
