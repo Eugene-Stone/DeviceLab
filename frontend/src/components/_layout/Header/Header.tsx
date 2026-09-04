@@ -9,6 +9,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import HeaderMenuWrapper from './HeaderMenuWrapper';
 import HeaderSearch from './HeaderSearch';
+import { useSession } from 'next-auth/react';
+import { handleLogout } from '@/api/api-client';
+import { Suspense } from 'react';
+import HeaderSearchSkeleton from './HeaderSearchSkeleton';
 
 type Props = {
 	data: {
@@ -19,6 +23,8 @@ type Props = {
 export default function Header({ data }: Props) {
 	const { globalData, menuPrimary } = data;
 	const pathname = usePathname();
+
+	const session = useSession();
 
 	// const { globalData, menuFooter, menuPrimary } = useGlobalContext();
 	// console.log('globalDataContext', globalData);
@@ -40,13 +46,14 @@ export default function Header({ data }: Props) {
 				</a>
 				<HeaderMenuWrapper pathname={pathname} menuPrimary={menuPrimary} />
 				<div className="header-actions">
-					<HeaderSearch />
+					{/* При вызове useSearchParams() в клиентском компоненте Next.js может потребовать обернуть этот компонент в <Suspense></Suspense> */}
+					<Suspense fallback={<HeaderSearchSkeleton />}>
+						<HeaderSearch />
+					</Suspense>
 
 					<div className="user-actions">
-						<a
-							href="auth.html"
-							className="user-link"
-							aria-label="Sign in to your account">
+						<button onClick={handleLogout}>Log Out</button>
+						<a href="/auth" className="user-link" aria-label="Sign in to your account">
 							<span className="user-icon">
 								<svg
 									xmlns="http://www.w3.org/2000/svg"

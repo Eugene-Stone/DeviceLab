@@ -13,6 +13,8 @@ import { notFound } from 'next/navigation';
 
 import NextTopLoader from 'nextjs-toploader';
 import ReloadToTop from '@/components/_layout/ReloadToTop';
+import { getServerSession } from 'next-auth';
+import { authConfig } from '@/configs/auth';
 
 // export const metadata: Metadata = {
 // 	title: 'Create Next App',
@@ -103,6 +105,12 @@ export default async function RootLayout({ children }: LayoutProps<'/'>) {
 	const { globalData, menuPrimary, menuFooter } = await getGlobalData();
 	const global = { globalData, menuPrimary, menuFooter };
 	const providerTwoData = 'Hello provider';
+
+	// В App Router передача authConfig обязательна для получения правильного JWT/Session
+	// В статических страницах работает неккоректно
+	// Ломает статическую генерацию страниц по слагам если вызывать в layout
+	// const session = await getServerSession(authConfig);
+
 	// console.log('globalData', globalData);
 	// console.log('menuPrimary', menuPrimary);
 	// console.log('menuFooter', menuFooter);

@@ -22,6 +22,7 @@ const config: Core.Config.Middlewares = [
 	'strapi::query',
 	'strapi::body',
 	// 'strapi::session',
+	// Настройка для безопасности
 	{
 		name: 'strapi::session',
 		config: {
@@ -36,6 +37,7 @@ const config: Core.Config.Middlewares = [
 	},
 	'strapi::favicon',
 	'strapi::public',
+	// 'global::inject-frontend-url', // Включает создание ссылки на фронтенд из .env
 ];
 
 export default config;

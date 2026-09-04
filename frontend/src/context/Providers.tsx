@@ -1,7 +1,9 @@
-// 'use client';
+'use client';
 
 import { ReactNode } from 'react';
 import { GlobalContextProvider, GlobalContextType } from './GlobalContext';
+
+import { SessionProvider } from 'next-auth/react';
 
 interface ProvidersProps {
 	children: ReactNode;
@@ -14,5 +16,9 @@ interface ProvidersProps {
 export default function Providers({ children, data }: ProvidersProps) {
 	// console.log(data.global);
 	// console.log(data.providerTwoData);
-	return <GlobalContextProvider value={data.global}>{children}</GlobalContextProvider>;
+	return (
+		<SessionProvider>
+			<GlobalContextProvider value={data.global}>{children}</GlobalContextProvider>
+		</SessionProvider>
+	);
 }

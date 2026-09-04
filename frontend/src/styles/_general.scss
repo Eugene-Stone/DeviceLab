@@ -392,6 +392,8 @@ body {
     color: var(--color-white);
     transition: var(--transition);
     flex-shrink: 0;
+	 line-height: 1;
+	 font-size: inherit;
 }
 
 .search-button:hover {
