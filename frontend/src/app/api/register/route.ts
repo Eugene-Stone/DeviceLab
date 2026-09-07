@@ -32,14 +32,6 @@ export async function POST(request: Request) {
 		});
 	}
 
-	// При подтверждении почты это не требуется
-	// (await cookies()).set('jwt', data.jwt, {
-	// 	httpOnly: true,
-	// 	secure: process.env.NODE_ENV === 'production',
-	// 	sameSite: 'lax',
-	// 	path: '/',
-	// });
-
 	return NextResponse.json({
 		user: data.user,
 	});

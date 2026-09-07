@@ -26,6 +26,8 @@ export default function Header({ data }: Props) {
 
 	const session = useSession();
 
+	// console.log('session', session);
+
 	// const { globalData, menuFooter, menuPrimary } = useGlobalContext();
 	// console.log('globalDataContext', globalData);
 
@@ -52,9 +54,9 @@ export default function Header({ data }: Props) {
 					</Suspense>
 
 					<div className="user-actions">
-						{session.status === 'authenticated' && (
+						{/* {session.status === 'authenticated' && (
 							<button onClick={handleLogout}>Log Out</button>
-						)}
+						)} */}
 
 						{session.status === 'authenticated' ? (
 							<Link href="/profile" className="user-link" aria-label="Profile">

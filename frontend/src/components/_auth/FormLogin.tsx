@@ -79,7 +79,6 @@ export default function FormLogin() {
 						required: 'This field required',
 					})}
 					type="email"
-					name="email"
 					className="form-input"
 				/>
 				{errors.email && (
@@ -97,7 +96,6 @@ export default function FormLogin() {
 						required: 'This field required',
 					})}
 					type="password"
-					name="password"
 					className="form-input"
 				/>
 				{errors.password && (
@@ -107,11 +105,11 @@ export default function FormLogin() {
 				)}
 			</div>
 
-			<div className="form-options hidden">
+			<div className="form-options remember-line">
 				<label className="checkbox-label">
 					<input type="checkbox" name="remember" /> Remember me
 				</label>
-				<Link href="/forgot-password" className="forgot-password">
+				<Link href="/forgot-password" className="forgot-password-link">
 					Forgot Password?
 				</Link>
 			</div>

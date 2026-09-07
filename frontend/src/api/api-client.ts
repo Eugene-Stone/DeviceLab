@@ -1,14 +1,14 @@
-import { RegisterRequest } from '@/TYPES';
-import { signOut } from 'next-auth/react';
+import { ForgotPasswordRequest, RegisterRequest, ResetPasswordRequest } from '@/TYPES';
+import { signIn, signOut } from 'next-auth/react';
 
 export const handleLogout = async () => {
 	await signOut({
-		callbackUrl: '/', // Страница, на которую перенаправить после выхода
 		redirect: true,
+		callbackUrl: '/', // Страница, на которую перенаправить после выхода
 	});
 };
 
-export async function registerUser(data: RegisterRequest) {
+export async function handleRegister(data: RegisterRequest) {
 	const response = await fetch('/api/register', {
 		method: 'POST',
 		headers: {
@@ -23,5 +23,68 @@ export async function registerUser(data: RegisterRequest) {
 		throw new Error(result.error?.message ?? 'Registration failed');
 	}
 
+	// Если регистрация прошла успешно, сразу авторизуем пользователя
+	// Вызываем авторизацию NextAuth через только что созданные учетные данные. Работает если нет подтверждения по email
+	// const signInResult = await signIn('credentials', {
+	// 	email: data.email,
+	// 	password: data.password,
+	// 	redirect: true,
+	// 	callbackUrl: '/profile',
+	// });
+
+	// if (signInResult?.error) {
+	// 	throw new Error('Account created, but failed to sign in automatically.');
+	// }
+
 	return result;
+}
+
+export async function handleForgotPassword(dataForgot: ForgotPasswordRequest) {
+	const { email } = dataForgot;
+
+	const response = await fetch('/api/forgot-password', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			email,
+		}),
+	});
+
+	// const data = await response.json();
+	const text = await response.text();
+	const data = text ? JSON.parse(text) : {};
+
+	if (!response.ok) {
+		throw new Error(data.error?.message ?? 'Forgot-password error');
+	}
+
+	return data;
+}
+
+export async function handleResetPassword(dataReset: ResetPasswordRequest) {
+	const { password, passwordConfirmation, code } = dataReset;
+
+	const response = await fetch('/api/reset-password', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			password,
+			passwordConfirmation,
+			code,
+		}),
+	});
+
+	// const data = await response.json();
+	const text = await response.text();
+	const data = text ? JSON.parse(text) : {};
+
+	if (!response.ok) {
+		throw new Error(data.error?.message ?? 'Reset-password error');
+	}
+
+	return data;
 }

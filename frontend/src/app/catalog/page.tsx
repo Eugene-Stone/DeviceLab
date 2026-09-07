@@ -20,6 +20,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
+// Страница с проверкой сессии должна быть динамической
 export const dynamic = 'force-dynamic'; // 'force-dynamic' || 'force-static';
 export const revalidate = 600; // Пересборка каждые 600 секунд, работает если выбрано 'force-static'
 

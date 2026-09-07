@@ -65,8 +65,6 @@ export const authConfig: AuthOptions = {
 				session.user.id = token.id as string;
 				session.user.strapiUser = token.strapiUser;
 			}
-			// СТРОКА session.jwt = token.jwt УДАЛЕНА.
-			// JWT теперь не утекает на клиент при useSession()
 			return session;
 		},
 	},

@@ -134,3 +134,16 @@ export interface RegisterRequest {
 	acceptedTerms?: boolean;
 	acceptedTermsAt?: string;
 }
+
+export interface ForgotPasswordRequest {
+	email: string;
+}
+
+export interface ResetPasswordForm {
+	password: string;
+	passwordConfirmation: string;
+}
+
+export interface ResetPasswordRequest extends ResetPasswordForm {
+	code: string;
+}

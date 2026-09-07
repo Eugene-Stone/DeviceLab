@@ -1,5 +1,5 @@
 'use client';
-import { registerUser } from '@/api/api-client';
+import { handleRegister } from '@/api/api-client';
 import { FormStatus } from '@/TYPES';
 import { formatDate } from '@/utils/formatDate';
 import { signIn } from 'next-auth/react';
@@ -38,19 +38,13 @@ export default function FormRegistration() {
 		try {
 			const currentDate = new Date();
 
-			const res = await registerUser({
+			const res = await handleRegister({
 				username: data.username,
 				email: data.email,
 				password: data.password,
 				// acceptedTerms: data.terms,
 				// acceptedTermsAt: formatDate(currentDate, 'withTime'),
 			});
-
-			// if (!res?.ok) {
-			// 	setStatus('error');
-			// 	setServerError(res?.error || 'Invalid email or password');
-			// 	return; // Останавливаем выполнение, чтобы не дойти до success
-			// }
 
 			setStatus('success');
 			reset({
@@ -97,7 +91,6 @@ export default function FormRegistration() {
 						required: 'This field required',
 					})}
 					type="text"
-					name="username"
 					autoComplete="username"
 					className="form-input"
 				/>
@@ -116,7 +109,6 @@ export default function FormRegistration() {
 						required: 'This field required',
 					})}
 					type="email"
-					name="email"
 					autoComplete="email"
 					className="form-input"
 				/>
@@ -135,7 +127,6 @@ export default function FormRegistration() {
 						required: 'This field required',
 					})}
 					type="password"
-					name="password"
 					autoComplete="new-password"
 					className="form-input"
 				/>
@@ -169,7 +160,10 @@ export default function FormRegistration() {
 			</button>
 
 			{status === 'success' && (
-				<p className="success-field">You have successfully register in to the site.</p>
+				<p className="success-field">
+					You have successfully register in to the site. Check the Email to confirm your
+					accaunt
+				</p>
 			)}
 			{status === 'error' && (
 				<p className="error-field">

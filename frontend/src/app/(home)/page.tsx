@@ -9,6 +9,7 @@ import { SharedSeo } from '@backend-types/sharedSeo';
 import { BACKEND_URL, FRONTEND_URL, SITE_TITLE } from '@/CONSTANTS';
 import { Media } from '@backend-types/media';
 
+// Страница с проверкой сессии должна быть динамической
 export const dynamic = 'force-static'; // 'force-dynamic' || 'force-static';
 export const revalidate = 600; // Пересборка каждые 600 секунд, работает если выбрано 'force-static'
 

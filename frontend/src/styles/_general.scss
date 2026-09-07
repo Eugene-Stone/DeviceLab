@@ -287,6 +287,7 @@ body {
 }
 
 .search-float__wrapper {
+	display: none;
    position: absolute;
    right: 0;
    top: calc(100% + 8px);
@@ -371,6 +372,10 @@ body {
 .search-form:focus-within {
     border-color: var(--primary-color);
     box-shadow: var(--shadow-primary-focus);
+
+	 .search-float__wrapper {
+		display: block;
+	 }
 }
 
 .search-input {
@@ -1158,6 +1163,23 @@ form {
     margin-bottom: var(--spacing-md);
 }
 
+.remember-line {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 15px;
+	.checkbox-label {
+		margin-bottom: 0;
+	}
+}
+
+.forgot-password-link {
+	font-size: 80%;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
 .success-field,
 .error-field {
 	font-size: 80%;
@@ -1177,6 +1199,12 @@ form {
     margin-bottom: var(--spacing-xs);
     font-weight: 500;
     color: var(--text-secondary);
+}
+
+.form-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 15px
 }
 
 .form-input,

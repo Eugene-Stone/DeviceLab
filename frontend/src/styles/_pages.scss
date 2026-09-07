@@ -78,12 +78,19 @@
 }
 
 /* Categories Section */
+.profile-section,
 .categories-section,
 .products-section,
 .features-section,
 .blog-section,
 .catalog-section {
     margin-bottom: var(--spacing-3xl);
+}
+
+.profile-section {
+	&:first-child {
+		margin-top: 30px;
+	}
 }
 
 .section-title {
@@ -943,6 +950,11 @@
     width: 100%;
     max-width: 450px;
     box-shadow: var(--shadow-xl);
+	 .auth-tabs {
+		.tab-button {
+			flex-grow: 1;
+		}
+	 }
 }
 
 .auth-tabs {
@@ -987,6 +999,16 @@
     padding: var(--spacing-md);
     margin-top: var(--spacing-lg);
     box-shadow: var(--shadow-sm);
+
+	 .tabs {
+		.log-out__button {
+			margin-left: auto;
+			color: var(--color-success-text);
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	 }
 }
 
 .order-card {
