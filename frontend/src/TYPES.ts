@@ -1,3 +1,5 @@
+import { StrapiUser } from './next-auth';
+
 // Navigation plugin types
 export type NavigationItemType = 'INTERNAL' | 'EXTERNAL' | 'WRAPPER';
 
@@ -146,4 +148,8 @@ export interface ResetPasswordForm {
 
 export interface ResetPasswordRequest extends ResetPasswordForm {
 	code: string;
+}
+
+export interface ChangePasswordRequest extends ResetPasswordForm {
+	currentPassword: string;
 }

@@ -107,7 +107,7 @@ export default async function BlogPage({
 	searchParams: Promise<ArticlesParamsType>;
 }) {
 	// Задержка для проверки loading.tsx
-	await new Promise((resolve) => setTimeout(resolve, 500));
+	// await new Promise((resolve) => setTimeout(resolve, 500));
 
 	const { currentPage, data } = await getPageData<Blog>({
 		url: '/api/blog',

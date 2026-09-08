@@ -125,7 +125,7 @@ export async function generateMetadata({
 
 export default async function ArticleBySlug({ params }: { params: Promise<{ slug: string }> }) {
 	// Задержка для проверки loading.tsx
-	await new Promise((resolve) => setTimeout(resolve, 500));
+	// await new Promise((resolve) => setTimeout(resolve, 500));
 
 	const { slug } = await params;
 

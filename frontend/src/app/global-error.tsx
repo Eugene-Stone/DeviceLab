@@ -2,7 +2,6 @@
 
 import { SITE_TITLE } from '@/CONSTANTS';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import '@/styles/main.scss';
 
@@ -21,19 +20,19 @@ export default function GlobalError({ error, reset }: Props) {
 			<body>
 				<header className="site-header">
 					<div className="container header-container">
-						<Link href="/" className="logo">
+						<span className="logo">
 							<Image
 								alt={SITE_TITLE}
 								width={150}
 								height={80}
 								src="/images/logo.png"
 							/>
-						</Link>
+						</span>
 						<div className="main-nav__wrapper"></div>
 						<div className="header-actions">
 							<div className="user-actions">
-								<span className="cart-link" aria-label="Shopping cart">
-									<span className="cart-icon">
+								<span className="user-link" aria-label="Sign in to your account">
+									<span className="user-icon">
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											viewBox="0 0 32 32"
@@ -44,9 +43,8 @@ export default function GlobalError({ error, reset }: Props) {
 											strokeWidth={2}
 											strokeLinecap="round"
 											strokeLinejoin="round">
-											<path d="M4 6h4l2.5 13.5a2 2 0 0 0 2 1.5h11a2 2 0 0 0 2-1.5L27 9H9" />
-											<circle cx={13} cy={26} r={2} />
-											<circle cx={23} cy={26} r={2} />
+											<circle cx={16} cy={10} r={5} />
+											<path d="M6 26c0-4.4 3.6-8 10-8s10 3.6 10 8" />
 										</svg>
 									</span>
 								</span>

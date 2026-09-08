@@ -52,12 +52,28 @@ export const authConfig: AuthOptions = {
 		}),
 	],
 	callbacks: {
-		async jwt({ token, user }) {
+		async jwt({ token, user, trigger }) {
 			if (user) {
 				token.id = user.id;
 				token.jwt = user.jwt; // Сохраняем JWT в зашифрованную HttpOnly куку NextAuth
 				token.strapiUser = user.strapiUser;
 			}
+
+			// При вызове update() делаем запрос в Strapi за свежим профилем
+			if (trigger === 'update' && token.jwt) {
+				try {
+					const res = await fetch(`${BACKEND_URL}/api/users/me?populate=*`, {
+						headers: { Authorization: `Bearer ${token.jwt}` },
+						cache: 'no-store',
+					});
+					if (res.ok) {
+						token.strapiUser = await res.json();
+					}
+				} catch (e) {
+					console.error('Error refreshing user session:', e);
+				}
+			}
+
 			return token;
 		},
 		async session({ session, token }) {
@@ -65,6 +81,10 @@ export const authConfig: AuthOptions = {
 				session.user.id = token.id as string;
 				session.user.strapiUser = token.strapiUser;
 			}
+
+			// Добавляем jwt в сессию для использования НА СЕРВЕРЕ
+			// session.jwt = token.jwt as string;
+
 			return session;
 		},
 	},

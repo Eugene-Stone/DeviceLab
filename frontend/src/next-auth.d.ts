@@ -9,6 +9,9 @@ export interface StrapiUser {
 	blocked?: boolean;
 	createdAt?: string;
 	updatedAt?: string;
+	firstName?: string;
+	lastName?: string;
+	phoneNumber?: string;
 	[key: string]: unknown;
 }
 

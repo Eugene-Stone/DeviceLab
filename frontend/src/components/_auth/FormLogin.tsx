@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 type FormValues = {
 	email: string;
 	password: string;
+	remember: boolean;
 };
 export default function FormLogin() {
 	const router = useRouter();
@@ -22,9 +23,9 @@ export default function FormLogin() {
 		formState: { errors, isValid },
 	} = useForm<FormValues>({
 		mode: 'onChange',
-		// defaultValues: {
-		// 	email: '',
-		// },
+		defaultValues: {
+			remember: true,
+		},
 	});
 
 	async function onSubmit(data: FormValues) {
@@ -107,7 +108,7 @@ export default function FormLogin() {
 
 			<div className="form-options remember-line">
 				<label className="checkbox-label">
-					<input type="checkbox" name="remember" /> Remember me
+					<input {...register('remember')} type="checkbox" /> Remember me
 				</label>
 				<Link href="/forgot-password" className="forgot-password-link">
 					Forgot Password?

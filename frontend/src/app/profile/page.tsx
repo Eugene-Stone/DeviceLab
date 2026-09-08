@@ -1,4 +1,6 @@
 import ProfileTabs from '@/components/_profile/ProfileTabs';
+import { authConfig } from '@/configs/auth';
+import { getServerSession } from 'next-auth';
 
 // Страница с проверкой сессии должна быть динамической
 export const dynamic = 'force-dynamic'; // 'force-dynamic' || 'force-static';
@@ -6,18 +8,9 @@ export const dynamic = 'force-dynamic'; // 'force-dynamic' || 'force-static';
 
 export default async function ProfilePage() {
 	// Задержка для проверки loading.tsx
-	await new Promise((resolve) => setTimeout(resolve, 500));
+	// await new Promise((resolve) => setTimeout(resolve, 500));
 
-	// const { currentPage, data } = await getPageData<Blog>({
-	// 	url: '/api/blog',
-	// 	pageName: 'blog',
-	// 	pageType: 'single',
-	// });
-	// if (!data) notFound();
-
-	// const pageData = data;
-	// const sections = pageData?.sections;
-	// const { title, description } = pageData;
+	const session = await getServerSession(authConfig);
 
 	return (
 		<main id="main-content" data-page-is={'profile'}>
@@ -25,7 +18,7 @@ export default async function ProfilePage() {
 				<div className="container">
 					<h1 className="page-title">My Account</h1>
 
-					<ProfileTabs />
+					<ProfileTabs session={session} />
 				</div>
 			</section>
 		</main>

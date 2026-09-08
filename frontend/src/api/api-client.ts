@@ -1,4 +1,10 @@
-import { ForgotPasswordRequest, RegisterRequest, ResetPasswordRequest } from '@/TYPES';
+import { StrapiUser } from '@/next-auth';
+import {
+	ChangePasswordRequest,
+	ForgotPasswordRequest,
+	RegisterRequest,
+	ResetPasswordRequest,
+} from '@/TYPES';
 import { signIn, signOut } from 'next-auth/react';
 
 export const handleLogout = async () => {
@@ -84,6 +90,49 @@ export async function handleResetPassword(dataReset: ResetPasswordRequest) {
 
 	if (!response.ok) {
 		throw new Error(data.error?.message ?? 'Reset-password error');
+	}
+
+	return data;
+}
+
+export async function handleUpdateProfile(profileData: StrapiUser) {
+	const response = await fetch('/api/update-user', {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(profileData),
+	});
+
+	const text = await response.text();
+	const data = text ? JSON.parse(text) : null;
+
+	if (!response.ok) {
+		throw new Error(data.error?.message ?? 'update-user error');
+	}
+
+	return data;
+}
+
+export async function handleChangePassword(dataPassword: ChangePasswordRequest) {
+	const { password, currentPassword, passwordConfirmation } = dataPassword;
+
+	const response = await fetch('/api/change-password', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			password,
+			currentPassword,
+			passwordConfirmation,
+		}),
+	});
+
+	const data = await response.json();
+
+	if (!response.ok) {
+		throw new Error(data.error?.message ?? 'reset-password error');
 	}
 
 	return data;

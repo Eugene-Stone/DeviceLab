@@ -100,7 +100,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
 	// Задержка для проверки loading.tsx
-	await new Promise((resolve) => setTimeout(resolve, 500));
+	// await new Promise((resolve) => setTimeout(resolve, 500));
 
 	const { currentPage, data } = await getPageData<Homepage>({
 		url: '/api/homepage',

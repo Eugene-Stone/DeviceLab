@@ -115,7 +115,7 @@ export default async function CatalogPage({
 	searchParams: Promise<ProductsParamsType>;
 }) {
 	// Задержка для проверки loading.tsx
-	await new Promise((resolve) => setTimeout(resolve, 500));
+	// await new Promise((resolve) => setTimeout(resolve, 500));
 
 	const { currentPage, data } = await getPageData<Catalog>({
 		url: '/api/catalog',

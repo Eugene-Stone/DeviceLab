@@ -917,6 +917,14 @@ body {
     height: 300px;
 }
 
+.btn-link {
+	padding: 0;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+
 .btn-primary {
     background: var(--bg-brand-gradient);
     color: var(--color-white);
@@ -1108,7 +1116,13 @@ body {
 .in-stock {
     color: var(--secondary-color);
 }
-
+button {
+	&:disabled {
+		opacity: 0.25;
+		user-select: none;
+		pointer-events: none;
+	}
+}
 /* Modern Forms */
 form {
 	position: relative;
