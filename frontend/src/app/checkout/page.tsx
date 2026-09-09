@@ -22,7 +22,7 @@ export default async function Cart() {
 					<div className="cart-container">
 						<CheckoutForm />
 
-						<OrderSummary />
+						{/* <OrderSummary /> */}
 					</div>
 				</div>
 			</section>
