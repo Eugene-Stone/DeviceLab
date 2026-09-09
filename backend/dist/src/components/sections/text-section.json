@@ -1,0 +1,33 @@
+{
+    "collectionName": "components_sections_text_sections",
+    "info": {
+        "displayName": "Text Section"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string",
+            "default": "Text section"
+        },
+        "titleTag": {
+            "type": "enumeration",
+            "default": "h2",
+            "enum": [
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "h6"
+            ]
+        },
+        "text": {
+            "type": "customField",
+            "customField": "plugin::ckeditor5.CKEditor",
+            "options": {
+                "preset": "defaultHtml"
+            }
+        }
+    },
+    "config": {}
+}

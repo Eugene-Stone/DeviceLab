@@ -1,0 +1,21 @@
+{
+    "collectionName": "components_forms_form_checkboxes_list",
+    "info": {
+        "displayName": "Form Checkbox"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string"
+        },
+        "value": {
+            "type": "string",
+            "required": true
+        },
+        "isChecked": {
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "config": {}
+}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M6 5 a10 2 0 0 1 20 0 a10 2 0 0 1 -20 0 Z" /> <!-- Верхний обод -->
+  <path d="M8 8 v 8 c 0 4.5 3.5 8 8 8 s 8 -3.5 8 -8 v -8" /> <!-- Основная чаша -->
+  <path d="M6 8 a 4 6 0 0 0 -4 0 v 6 a 4 6 0 0 0 4 0 M 26 8 a 4 6 0 0 1 4 0 v 6 a 4 6 0 0 1 -4 0" /> <!-- Ручки -->
+  <path d="M16 21 v 6" /> <!-- Ножка -->
+  <path d="M12 27 h 8 M 10 28 h 12 M 8 29 h 16" /> <!-- Трехуровневое основание -->
+</svg>

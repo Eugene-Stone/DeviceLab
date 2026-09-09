@@ -1,0 +1,18 @@
+{
+    "collectionName": "components_sections_features",
+    "info": {
+        "displayName": "Features"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string"
+        },
+        "cards": {
+            "type": "component",
+            "component": "ui.card",
+            "repeatable": true
+        }
+    },
+    "config": {}
+}

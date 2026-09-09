@@ -1,0 +1,30 @@
+{
+    "kind": "collectionType",
+    "collectionName": "form_requests",
+    "info": {
+        "singularName": "form-request",
+        "pluralName": "form-requests",
+        "displayName": "Form Requests"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "formTitle": {
+            "type": "string"
+        },
+        "formData": {
+            "type": "text"
+        },
+        "formDataJSON": {
+            "type": "json"
+        },
+        "user": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "plugin::users-permissions.user",
+            "inversedBy": "form_requests"
+        }
+    }
+}

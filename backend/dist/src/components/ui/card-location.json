@@ -1,0 +1,23 @@
+{
+    "collectionName": "components_ui_card_locations",
+    "info": {
+        "displayName": "Card Location"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string"
+        },
+        "image": {
+            "type": "media",
+            "multiple": false,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "href": {
+            "type": "string"
+        }
+    },
+    "config": {}
+}

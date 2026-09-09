@@ -1,0 +1,76 @@
+{
+    "kind": "collectionType",
+    "collectionName": "articles",
+    "info": {
+        "singularName": "article",
+        "pluralName": "articles",
+        "displayName": "Articles"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "title": {
+            "type": "string"
+        },
+        "slug": {
+            "type": "uid",
+            "targetField": "title"
+        },
+        "image": {
+            "type": "media",
+            "multiple": false,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "text": {
+            "type": "customField",
+            "customField": "plugin::ckeditor5.CKEditor",
+            "options": {
+                "preset": "defaultHtml"
+            }
+        },
+        "tags": {
+            "type": "customField",
+            "customField": "plugin::tagsinput.tags",
+            "options": {
+                "apiUrl": "/api/article-tags?fields[0]=title"
+            }
+        },
+        "related_articles": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::article.article"
+        },
+        "author": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "api::author.author",
+            "inversedBy": "articles"
+        },
+        "sections": {
+            "type": "dynamiczone",
+            "components": [
+                "sections.text-section",
+                "sections.team",
+                "sections.our-story",
+                "sections.latest-articles",
+                "sections.hero",
+                "sections.hero-title",
+                "sections.features",
+                "sections.faq",
+                "sections.cta",
+                "sections.contacts",
+                "sections.categories",
+                "sections.best-products"
+            ]
+        },
+        "seo": {
+            "type": "component",
+            "component": "shared.seo",
+            "repeatable": false
+        }
+    }
+}

@@ -1,0 +1,18 @@
+{
+    "collectionName": "components_ui_card_hours",
+    "info": {
+        "displayName": "Card Hours"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string"
+        },
+        "hours": {
+            "type": "component",
+            "component": "shared.single-field",
+            "repeatable": true
+        }
+    },
+    "config": {}
+}

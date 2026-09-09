@@ -1,0 +1,13 @@
+{
+    "collectionName": "components_ui_card_connects",
+    "info": {
+        "displayName": "Card Connect"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string"
+        }
+    },
+    "config": {}
+}

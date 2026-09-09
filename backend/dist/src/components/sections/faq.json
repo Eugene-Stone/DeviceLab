@@ -1,0 +1,18 @@
+{
+    "collectionName": "components_sections_faqs",
+    "info": {
+        "displayName": "Faq"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string"
+        },
+        "accordion": {
+            "type": "component",
+            "component": "ui.card-faq",
+            "repeatable": true
+        }
+    },
+    "config": {}
+}

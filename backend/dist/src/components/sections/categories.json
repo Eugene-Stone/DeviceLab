@@ -1,0 +1,32 @@
+{
+    "collectionName": "components_sections_categories",
+    "info": {
+        "displayName": "Categories"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string"
+        },
+        "showAllCategories": {
+            "type": "boolean",
+            "default": true
+        },
+        "product_categories": {
+            "type": "relation",
+            "relation": "oneToMany",
+            "target": "api::product-category.product-category",
+            "conditions": {
+                "visible": {
+                    "==": [
+                        {
+                            "var": "showAllCategories"
+                        },
+                        false
+                    ]
+                }
+            }
+        }
+    },
+    "config": {}
+}

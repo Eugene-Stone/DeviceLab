@@ -1,0 +1,68 @@
+{
+    "kind": "collectionType",
+    "collectionName": "product_orders",
+    "info": {
+        "singularName": "product-order",
+        "pluralName": "product-orders",
+        "displayName": "Product Orders"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "orderNumber": {
+            "type": "string",
+            "unique": true
+        },
+        "orderStatus": {
+            "type": "enumeration",
+            "default": "pending",
+            "enum": [
+                "pending",
+                "processing",
+                "completed",
+                "cancelled"
+            ]
+        },
+        "totalAmount": {
+            "type": "decimal"
+        },
+        "paymentMethod": {
+            "type": "string"
+        },
+        "paymentTransactionId": {
+            "type": "string"
+        },
+        "paymentStatus": {
+            "type": "enumeration",
+            "enum": [
+                "pending",
+                "paid",
+                "failed",
+                "refunded"
+            ]
+        },
+        "items": {
+            "type": "richtext"
+        },
+        "itemsJSON": {
+            "type": "json"
+        },
+        "itemsDefault": {
+            "type": "text",
+            "default": "[   {     \"productId\": 2,     \"productTitle\": \"iPhone 15 Pro\",     \"variationId\": 12,     \"sku\": \"APL-IP15P-256-BLK\",     \"color\": \"Space Grey\",     \"storage\": \"256GB\",     \"priceAtPurchase\": 799,     \"quantity\": 1   } ]"
+        },
+        "buyerDetails": {
+            "type": "component",
+            "component": "products.buyer-details",
+            "repeatable": false
+        },
+        "user": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "plugin::users-permissions.user",
+            "inversedBy": "product_orders"
+        }
+    }
+}

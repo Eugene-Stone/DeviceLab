@@ -1,0 +1,18 @@
+{
+    "collectionName": "components_sections_teams",
+    "info": {
+        "displayName": "Team"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string"
+        },
+        "cards": {
+            "type": "component",
+            "component": "ui.card-team",
+            "repeatable": true
+        }
+    },
+    "config": {}
+}

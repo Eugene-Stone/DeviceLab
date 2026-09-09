@@ -1,0 +1,96 @@
+{
+    "collectionName": "components_shared_seos",
+    "info": {
+        "displayName": "SEO",
+        "icon": "search"
+    },
+    "options": {},
+    "attributes": {
+        "metaTitle": {
+            "type": "string",
+            "default": "DeviceLab - Premium Gadgets Store | Smartphones, Laptops",
+            "maxLength": 60
+        },
+        "metaDescription": {
+            "type": "text",
+            "default": "Discover the latest premium electronics at DeviceLab. Shop smartphones, laptops, wireless audio, wearables, and smart home devices.",
+            "maxLength": 160
+        },
+        "keywords": {
+            "type": "text",
+            "default": "electronics store, gadgets shop, smartphones UK, laptops, wireless headphones, smartwatches, smart home devices, audio equipment, gaming gear, DeviceLab, buy electronics online"
+        },
+        "canonicalUrl": {
+            "type": "string"
+        },
+        "metaRobots": {
+            "type": "enumeration",
+            "default": "index,follow",
+            "enum": [
+                "index,follow",
+                "noindex,follow",
+                "index,nofollow",
+                "noindex,nofollow"
+            ]
+        },
+        "preventIndexing": {
+            "type": "boolean",
+            "default": false
+        },
+        "metaViewport": {
+            "type": "string",
+            "default": "width=device-width, initial-scale=1.0"
+        },
+        "ogTitle": {
+            "type": "string",
+            "default": "DeviceLab - Premium Electronics & Gadgets Store"
+        },
+        "ogDescription": {
+            "type": "text",
+            "default": "Discover the latest premium electronics at DeviceLab. Shop smartphones, laptops, wireless audio, wearables, and smart home devices. Free UK delivery on orders over £50. 2-year warranty on all products."
+        },
+        "ogImage": {
+            "type": "media",
+            "multiple": false,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "ogUrl": {
+            "type": "string"
+        },
+        "ogType": {
+            "type": "string",
+            "default": "website"
+        },
+        "twitterCard": {
+            "type": "enumeration",
+            "default": "summary_large_image",
+            "enum": [
+                "summary",
+                "summary_large_image",
+                "app",
+                "player"
+            ]
+        },
+        "twitterTitle": {
+            "type": "string",
+            "default": "DeviceLab - Premium Electronics & Gadgets Store"
+        },
+        "twitterDescription": {
+            "type": "text",
+            "default": "Discover the latest tech innovations. Smartphones, laptops, audio, wearables & smart home. Free UK delivery on orders over £50."
+        },
+        "twitterImage": {
+            "type": "media",
+            "multiple": false,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "structuredData": {
+            "type": "text",
+            "default": "{ \t\t\"@context\": \"https://schema.org\", \t\t\"@type\": \"Organization\", \t\t\"name\": \"DeviceLab\", \t\t\"url\": \"https://devicelab.com\", \t\t\"logo\": \"https://devicelab.com/images/logo.png\", \t\t\"description\": \"Premium electronics and gadgets store offering the latest smartphones, laptops, audio equipment, and smart home devices with free UK delivery.\", \t\t\"address\": { \t\t\t\t\"@type\": \"PostalAddress\", \t\t\t\t\"streetAddress\": \"123 Oxford Street\", \t\t\t\t\"addressLocality\": \"London\", \t\t\t\t\"addressRegion\": \"Greater London\", \t\t\t\t\"postalCode\": \"W1D 2HG\", \t\t\t\t\"addressCountry\": \"GB\" \t\t}, \t\t\"contactPoint\": { \t\t\t\t\"@type\": \"ContactPoint\", \t\t\t\t\"telephone\": \"+555-20-123-4567\", \t\t\t\t\"contactType\": \"customer service\", \t\t\t\t\"email\": \"info@devicelab.com\", \t\t\t\t\"availableLanguage\": [\"English\"] \t\t}, \t\t\"sameAs\": [ \t\t\t\t\"https://facebook.com/devicelab\", \t\t\t\t\"https://twitter.com/devicelab\", \t\t\t\t\"https://instagram.com/devicelab\", \t\t\t\t\"https://youtube.com/devicelab\" \t\t], \t\t\"openingHoursSpecification\": { \t\t\t\t\"@type\": \"OpeningHoursSpecification\", \t\t\t\t\"dayOfWeek\": [\"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\"], \t\t\t\t\"opens\": \"09:00\", \t\t\t\t\"closes\": \"18:00\" \t\t} }"
+        }
+    }
+}
