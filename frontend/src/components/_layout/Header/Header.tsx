@@ -11,7 +11,7 @@ import HeaderMenuWrapper from './HeaderMenuWrapper';
 import HeaderSearch from './HeaderSearch';
 import { useSession } from 'next-auth/react';
 import { handleLogout } from '@/api/api-client';
-import { Suspense } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import HeaderSearchSkeleton from './HeaderSearchSkeleton';
 
 type Props = {
@@ -26,10 +26,25 @@ export default function Header({ data }: Props) {
 
 	const session = useSession();
 
-	// console.log('session', session);
+	// const [currentSession, setCurrentSession] = useState(() => {
+	// 	if (typeof window !== 'undefined') {
+	// 		return (
+	// 			((session.status === 'authenticated' || session.status === 'unauthenticated') &&
+	// 				session) ||
+	// 			JSON.parse(localStorage.getItem('session') || '')
+	// 		);
+	// 	}
+	// 	return false;
+	// });
 
-	// const { globalData, menuFooter, menuPrimary } = useGlobalContext();
-	// console.log('globalDataContext', globalData);
+	// useEffect(() => {
+	// 	if (typeof window !== 'undefined' && session.status === 'authenticated') {
+	// 		localStorage.setItem('session', JSON.stringify(session));
+	// 	}
+	// }, [session]);
+
+	// console.log('session', session);
+	// console.log('currentSession', currentSession);
 
 	return (
 		<header className="site-header">

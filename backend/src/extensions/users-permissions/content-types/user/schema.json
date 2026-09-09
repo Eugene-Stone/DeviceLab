@@ -86,6 +86,12 @@
     },
     "acceptedTermsAt": {
       "type": "string"
+    },
+    "form_requests": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::form-request.form-request",
+      "mappedBy": "user"
     }
   }
 }

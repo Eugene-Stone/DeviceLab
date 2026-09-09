@@ -16,6 +16,15 @@
     },
     "formData": {
       "type": "text"
+    },
+    "formDataJSON": {
+      "type": "json"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "form_requests"
     }
   }
 }

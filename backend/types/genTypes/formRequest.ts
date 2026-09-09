@@ -1,4 +1,4 @@
-
+import { User } from './user';
 
 export interface FormRequest {
   id?: number;
@@ -9,4 +9,6 @@ export interface FormRequest {
   locale?: string | null;
   formTitle?: string;
   formData?: string;
+  formDataJSON?: Record<string, any>;
+  user?: User | null;
 };
