@@ -1,17 +1,10 @@
+import { CartProduct, CartState } from '@/TYPES';
 import { Product } from '@backend-types/product';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-export interface CartType extends Product {
-	quantity?: number;
-}
-
-export interface cartState {
-	cartList: CartType[];
-}
-
 // // Вспомогательная функция сохранения в localStorage
-// const saveToLocalStorage = (cartList: CartType[]) => {
+// const saveToLocalStorage = (cartList: CartProduct[]) => {
 // 	if (typeof window !== 'undefined') {
 // 		localStorage.setItem('cart', JSON.stringify(cartList));
 // 	}
@@ -23,8 +16,9 @@ if (typeof window !== 'undefined') {
 	cartFromStorage = localStorage.getItem('cart');
 }
 
-const initialState: cartState = {
-	cartList: cartFromStorage ? JSON.parse(cartFromStorage) : [],
+const initialState: CartState = {
+	// cartList: cartFromStorage ? JSON.parse(cartFromStorage) : [],
+	cartList: [],
 };
 
 export const cartSlice = createSlice({
@@ -32,7 +26,10 @@ export const cartSlice = createSlice({
 	initialState,
 
 	reducers: {
-		addProduct: (state, action: PayloadAction<CartType>) => {
+		setCart: (state, action: PayloadAction<CartProduct[]>) => {
+			state.cartList = action.payload;
+		},
+		addProduct: (state, action: PayloadAction<CartProduct>) => {
 			const amountToAdd = action.payload.quantity ?? 1;
 			const existingProduct = state.cartList.find((item) => item.id === action.payload.id);
 
@@ -47,7 +44,7 @@ export const cartSlice = createSlice({
 
 			// saveToLocalStorage(state.cartList);
 		},
-		decrementProduct: (state, action: PayloadAction<CartType>) => {
+		decrementProduct: (state, action: PayloadAction<CartProduct>) => {
 			const existingProduct = state.cartList.find((item) => item.id === action.payload.id);
 
 			if (existingProduct) {
@@ -61,7 +58,15 @@ export const cartSlice = createSlice({
 				state.cartList = state.cartList.filter((item) => item.id !== action.payload.id);
 			}
 		},
-		removeProduct: (state, action: PayloadAction<CartType>) => {
+		// Добавляем экшен для точной установки количества (из инпута)
+		updateQuantity: (state, action: PayloadAction<{ id: number; quantity: number }>) => {
+			const existingProduct = state.cartList.find((item) => item.id === action.payload.id);
+
+			if (existingProduct) {
+				existingProduct.quantity = action.payload.quantity;
+			}
+		},
+		removeProduct: (state, action: PayloadAction<CartProduct>) => {
 			state.cartList = state.cartList.filter((item) => !(item.id === action.payload.id));
 		},
 		clearCart: (state) => {
@@ -70,5 +75,6 @@ export const cartSlice = createSlice({
 	},
 });
 
-export const { addProduct, decrementProduct, removeProduct, clearCart } = cartSlice.actions;
+export const { setCart, addProduct, decrementProduct, updateQuantity, removeProduct, clearCart } =
+	cartSlice.actions;
 export default cartSlice.reducer;

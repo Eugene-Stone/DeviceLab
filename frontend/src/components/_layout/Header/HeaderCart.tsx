@@ -1,4 +1,5 @@
 'use client';
+import { setCart } from '@/redux/slices/cartSlice';
 import { RootState } from '@/redux/store';
 import Link from 'next/link';
 import { useEffect, useState, useSyncExternalStore } from 'react';
@@ -16,6 +17,22 @@ export default function HeaderCart() {
 	);
 
 	const { cartList } = useSelector((state: RootState) => state.cartReducer);
+	// console.log('cartList', cartList);
+
+	const dispatch = useDispatch();
+
+	// initialState корзины пустой по умолчанию:
+	// Данные записываются при первом рендере
+	useEffect(() => {
+		const cartFromStorage = localStorage.getItem('cart');
+		if (cartFromStorage) {
+			try {
+				dispatch(setCart(JSON.parse(cartFromStorage)));
+			} catch (e) {
+				console.error('Failed to parse cart from storage', e);
+			}
+		}
+	}, [dispatch]);
 
 	return (
 		<Link href="/cart" className="cart-link" aria-label="Shopping cart">

@@ -1,3 +1,4 @@
+import { Product } from '@backend-types/product';
 import { StrapiUser } from './next-auth';
 
 // Navigation plugin types
@@ -152,4 +153,12 @@ export interface ResetPasswordRequest extends ResetPasswordForm {
 
 export interface ChangePasswordRequest extends ResetPasswordForm {
 	currentPassword: string;
+}
+
+export interface CartProduct extends Product {
+	quantity?: number;
+}
+
+export interface CartState {
+	cartList: CartProduct[];
 }

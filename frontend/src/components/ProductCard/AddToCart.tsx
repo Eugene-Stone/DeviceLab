@@ -3,10 +3,9 @@ import { Product } from '@backend-types/product';
 
 import { Toast } from 'radix-ui';
 
-import { RootState } from '@/redux/store';
-import { useDispatch, useSelector } from 'react-redux';
-import { addProduct, decrementProduct, removeProduct, clearCart } from '@/redux/slices/cartSlice';
-import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addProduct } from '@/redux/slices/cartSlice';
+import { useState } from 'react';
 
 type Props = {
 	product: Product;
@@ -20,8 +19,6 @@ export default function AddToCart({ product, count, className }: Props) {
 
 	const { stockStatus } = product;
 	const dispatch = useDispatch();
-
-	const { cartList } = useSelector((state: RootState) => state.cartReducer);
 
 	const handleAddToCart = () => {
 		// 1. Сбрасываем старый тост

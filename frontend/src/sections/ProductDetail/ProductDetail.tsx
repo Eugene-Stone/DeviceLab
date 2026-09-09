@@ -39,7 +39,7 @@ export default async function ProductDetail({ data }: Props) {
 
 	// 3. Строим матрицу товаров группы
 	const matrixProductsVariations = buildProductMatrix(productsForVariations);
-	console.log('matrixProductsVariations', matrixProductsVariations);
+	// console.log('matrixProductsVariations', matrixProductsVariations);
 
 	// 4. Преобразуем вариации ТЕКУЩЕГО товара из массива в объект вида { color: "purple", storage: "128 gb" }
 	const currentVariationsRecord: Record<string, string> = {};

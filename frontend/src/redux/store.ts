@@ -23,6 +23,6 @@ export type AppDispatch = typeof store.dispatch;
 // import { addProduct, decrementProduct, removeProduct, clearCart } from '@/redux/slices/cartSlice';
 
 // const dispatch = useDispatch();
-// dispatch(clearCart());
+// // dispatch(clearCart());
 
 // const { cartList } = useSelector((state: RootState) => state.cartReducer);
