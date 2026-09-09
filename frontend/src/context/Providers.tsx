@@ -4,6 +4,8 @@ import { ReactNode } from 'react';
 import { GlobalContextProvider, GlobalContextType } from './GlobalContext';
 
 import { SessionProvider } from 'next-auth/react';
+import ProviderRedux from './ProviderRedux';
+import { Toast } from 'radix-ui';
 
 interface ProvidersProps {
 	children: ReactNode;
@@ -18,7 +20,13 @@ export default function Providers({ children, data }: ProvidersProps) {
 	// console.log(data.providerTwoData);
 	return (
 		<SessionProvider>
-			<GlobalContextProvider value={data.global}>{children}</GlobalContextProvider>
+			<ProviderRedux>
+				<Toast.Provider swipeDirection="right">
+					<GlobalContextProvider value={data.global}>{children}</GlobalContextProvider>
+
+					<Toast.Viewport className="ToastViewport" />
+				</Toast.Provider>
+			</ProviderRedux>
 		</SessionProvider>
 	);
 }

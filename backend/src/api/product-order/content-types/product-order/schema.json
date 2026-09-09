@@ -28,7 +28,25 @@
     "totalAmount": {
       "type": "decimal"
     },
+    "paymentMethod": {
+      "type": "string"
+    },
+    "paymentTransactionId": {
+      "type": "string"
+    },
+    "paymentStatus": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "paid",
+        "failed",
+        "refunded"
+      ]
+    },
     "items": {
+      "type": "richtext"
+    },
+    "itemsJSON": {
       "type": "json"
     },
     "itemsDefault": {

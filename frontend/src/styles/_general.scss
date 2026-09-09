@@ -79,6 +79,7 @@ select:focus-visible {
 }
 
 #main-content {
+	>.cart-section,
 	>.blog-section,
 	>.container:first-child>.page-title {
 		&:first-child {
@@ -145,6 +146,10 @@ body {
     top: 0;
     z-index: 1000;
     box-shadow: var(--shadow-header);
+	 transition: 0.15s;
+	 &.not-mounted {
+		opacity: 0;
+	 }
 }
 
 .header-container {
@@ -1421,32 +1426,66 @@ form {
 /* Notification */
 .notification {
     position: fixed;
-    top: 20px;
+    bottom: 20px;
     right: 20px;
     background: var(--bg-secondary-gradient);
     color: var(--color-white);
     padding: 1rem 1.5rem;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);
-    transform: translateX(120%);
     transition: transform 0.3s ease-in-out;
-    z-index: 1000;
+    z-index: 2000;
     font-weight: 500;
 }
 
-.notification.show {
-    transform: translateX(0);
-    animation: slideInRight 0.3s ease;
+/* 1. Анимации появления и обычного закрытия */
+.notification[data-state="open"] {
+   animation: slideIn 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes slideInRight {
-    from {
-        transform: translateX(120%);
-    }
-    to {
-        transform: translateX(0);
-    }
+.notification[data-state="closed"] {
+   animation: slideOut 150ms ease-in forwards;
 }
 
+/* 2. Атрибуты, возникающие ТОЛЬКО при свайпе жест мышкой/пальцем */
+.notification[data-swipe="move"] {
+	transform: translateX(var(--radix-toast-swipe-move-x));
+}
+.notification[data-swipe="cancel"] {
+	transform: translateX(0);
+	transition: transform 200ms ease-out;
+}
+.notification[data-swipe="end"] {
+	animation: slideRight 100ms ease-out;
+}
 
+@keyframes slideIn {
+   from {
+      transform: translateX(calc(100% + 20px));
+      opacity: 0;
+   }
+   to {
+      transform: translateX(0);
+      opacity: 1;
+   }
+}
 
+@keyframes slideOut {
+   from {
+      opacity: 1;
+      transform: translateX(0);
+   }
+   to {
+      opacity: 0;
+      transform: translateX(20px);
+   }
+}
+
+@keyframes slideRight {
+	from {
+		transform: translateX(var(--radix-toast-swipe-end-x));
+	}
+	to {
+		transform: translateX(100%);
+	}
+}

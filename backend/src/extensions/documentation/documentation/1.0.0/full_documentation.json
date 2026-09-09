@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2026-09-09T08:00:07.402Z"
+    "x-generation-date": "2026-09-09T09:27:12.232Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -16960,7 +16960,25 @@
                       "type": "number",
                       "format": "float"
                     },
-                    "items": {},
+                    "paymentMethod": {
+                      "type": "string"
+                    },
+                    "paymentTransactionId": {
+                      "type": "string"
+                    },
+                    "paymentStatus": {
+                      "type": "string",
+                      "enum": [
+                        "pending",
+                        "paid",
+                        "failed",
+                        "refunded"
+                      ]
+                    },
+                    "items": {
+                      "type": "string"
+                    },
+                    "itemsJSON": {},
                     "itemsDefault": {
                       "type": "string"
                     },
@@ -24745,7 +24763,25 @@
                 "type": "number",
                 "format": "float"
               },
-              "items": {},
+              "paymentMethod": {
+                "type": "string"
+              },
+              "paymentTransactionId": {
+                "type": "string"
+              },
+              "paymentStatus": {
+                "type": "string",
+                "enum": [
+                  "pending",
+                  "paid",
+                  "failed",
+                  "refunded"
+                ]
+              },
+              "items": {
+                "type": "string"
+              },
+              "itemsJSON": {},
               "itemsDefault": {
                 "type": "string"
               },
@@ -24851,7 +24887,25 @@
             "type": "number",
             "format": "float"
           },
-          "items": {},
+          "paymentMethod": {
+            "type": "string"
+          },
+          "paymentTransactionId": {
+            "type": "string"
+          },
+          "paymentStatus": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "paid",
+              "failed",
+              "refunded"
+            ]
+          },
+          "items": {
+            "type": "string"
+          },
+          "itemsJSON": {},
           "itemsDefault": {
             "type": "string"
           },
@@ -25815,7 +25869,25 @@
                       "type": "number",
                       "format": "float"
                     },
-                    "items": {},
+                    "paymentMethod": {
+                      "type": "string"
+                    },
+                    "paymentTransactionId": {
+                      "type": "string"
+                    },
+                    "paymentStatus": {
+                      "type": "string",
+                      "enum": [
+                        "pending",
+                        "paid",
+                        "failed",
+                        "refunded"
+                      ]
+                    },
+                    "items": {
+                      "type": "string"
+                    },
+                    "itemsJSON": {},
                     "itemsDefault": {
                       "type": "string"
                     },

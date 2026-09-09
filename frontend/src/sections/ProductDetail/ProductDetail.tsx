@@ -1,6 +1,7 @@
 import { getProductsCategories, getProductVariations } from '@/api/api-server';
 import ProductDetailTabs from '@/components/ProductDetailTabs';
 import ProductGallery from '@/components/ProductGallery';
+import ProductQuantityAdd from '@/components/ProductQuantityAdd';
 import ProductVariations from '@/components/ProductVariations';
 import { buildDynamicVariationFilters } from '@/utils/buildDynamicVariationFilters';
 import { buildProductMatrix } from '@/utils/buildProductMatrix';
@@ -96,32 +97,7 @@ export default async function ProductDetail({ data }: Props) {
 							/>
 						)}
 
-						<div className="quantity-add">
-							<div className="quantity-control">
-								<button
-									className="quantity-minus btn"
-									aria-label="Decrease quantity">
-									-
-								</button>
-								<input
-									type="number"
-									className="quantity-input"
-									defaultValue={1}
-									min={1}
-									aria-label="Quantity"
-								/>
-								<button
-									className="quantity-plus btn"
-									aria-label="Increase quantity">
-									+
-								</button>
-							</div>
-							<button
-								className="btn btn-primary btn-lg add-to-cart-btn"
-								data-product-id="iphone-15-pro">
-								Add to Cart
-							</button>
-						</div>
+						<ProductQuantityAdd product={data} />
 
 						{overview && (
 							<div className="product-short-description">

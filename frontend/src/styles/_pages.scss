@@ -692,6 +692,12 @@
     box-shadow: var(--shadow-sm);
 }
 
+.summary-row {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 7px;
+}
+
 /* Checkout Page */
 .checkout-grid {
     display: grid;

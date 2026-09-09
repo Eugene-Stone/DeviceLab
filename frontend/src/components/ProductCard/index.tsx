@@ -3,6 +3,8 @@ import Picture from '../Picture';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import AddToCart from './AddToCart';
+
 type Props = {
 	product: Product;
 };
@@ -68,7 +70,8 @@ export default function ProductCard({ product }: Props) {
 					</p>
 				)}
 				<div className="product-card-actions">
-					<button className="btn btn-primary add-to-cart-btn">Add to Cart</button>
+					<AddToCart product={product} count={1} />
+
 					<Link href={`/catalog/${product.slug}`} className="btn btn-outline">
 						View Details
 					</Link>

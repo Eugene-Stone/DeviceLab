@@ -910,9 +910,10 @@ export interface ApiProductOrderProductOrder
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    items: Schema.Attribute.JSON;
+    items: Schema.Attribute.RichText;
     itemsDefault: Schema.Attribute.Text &
       Schema.Attribute.DefaultTo<'[   {     "productId": 2,     "productTitle": "iPhone 15 Pro",     "variationId": 12,     "sku": "APL-IP15P-256-BLK",     "color": "Space Grey",     "storage": "256GB",     "priceAtPurchase": 799,     "quantity": 1   } ]'>;
+    itemsJSON: Schema.Attribute.JSON;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -924,6 +925,11 @@ export interface ApiProductOrderProductOrder
       ['pending', 'processing', 'completed', 'cancelled']
     > &
       Schema.Attribute.DefaultTo<'pending'>;
+    paymentMethod: Schema.Attribute.String;
+    paymentStatus: Schema.Attribute.Enumeration<
+      ['pending', 'paid', 'failed', 'refunded']
+    >;
+    paymentTransactionId: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     totalAmount: Schema.Attribute.Decimal;
     updatedAt: Schema.Attribute.DateTime;
