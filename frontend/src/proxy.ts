@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 // 1. Оцениваем, относится ли текущий роут к защищенным
-const protectedRoutes = ['/profile', '/dashboard', '/orders', '/checkout'];
+const protectedRoutes = ['/profile', '/dashboard', '/orders'];
 
 function isProtectedRoute(pathname: string): boolean {
 	return protectedRoutes.some((route) => pathname === route || pathname.startsWith(`${route}/`));

@@ -20,6 +20,8 @@ declare module 'next-auth' {
 		jwt?: string;
 		user: {
 			id: string;
+			provider?: string;
+			isOAuth?: boolean;
 			strapiUser?: StrapiUser;
 		} & DefaultSession['user'];
 	}

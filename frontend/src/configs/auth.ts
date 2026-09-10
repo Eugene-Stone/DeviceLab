@@ -52,7 +52,41 @@ export const authConfig: AuthOptions = {
 		}),
 	],
 	callbacks: {
-		async jwt({ token, user, trigger }) {
+		async signIn({ user, account, profile }) {
+			if (account?.provider === 'google') {
+				try {
+					// Отправляем Google access_token в Strapi для авторизации/регистрации
+					// Важно: в Strapi должен быть включен и настроен Google provider в разделе Users & Permissions
+					const res = await fetch(
+						`${BACKEND_URL}/api/auth/google/callback?access_token=${account.access_token}`,
+					);
+					const data = await res.json();
+
+					if (data.jwt && data.user) {
+						// Получаем полные данные пользователя Strapi
+						const meRes = await fetch(`${BACKEND_URL}/api/users/me?populate=*`, {
+							headers: { Authorization: `Bearer ${data.jwt}` },
+						});
+						const fullUser = meRes.ok ? await meRes.json() : data.user;
+
+						// Записываем Strapi данные прямо в объект user NextAuth
+						user.jwt = data.jwt;
+						user.strapiUser = fullUser;
+						return true;
+					}
+					return false;
+				} catch (e) {
+					console.error('Error authenticating with Strapi via Google:', e);
+					return false;
+				}
+			}
+			return true;
+		},
+		async jwt({ token, user, trigger, account }) {
+			if (account) {
+				token.provider = account.provider; // 'google' или 'credentials'
+			}
+
 			if (user) {
 				token.id = user.id;
 				token.jwt = user.jwt; // Сохраняем JWT в зашифрованную HttpOnly куку NextAuth
@@ -80,6 +114,11 @@ export const authConfig: AuthOptions = {
 			if (session.user) {
 				session.user.id = token.id as string;
 				session.user.strapiUser = token.strapiUser;
+
+				// Прокидываем провайдер или флаг
+				session.user.provider =
+					(token.provider as string) || token.strapiUser?.provider || 'local';
+				session.user.isOAuth = session.user.provider !== 'local';
 			}
 
 			// Добавляем jwt в сессию для использования НА СЕРВЕРЕ

@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2026-09-09T20:51:05.172Z"
+    "x-generation-date": "2026-09-10T15:15:20.023Z"
   },
   "x-strapi-config": {
     "plugins": [
@@ -17392,6 +17392,14 @@
           "customerEmail": {
             "type": "string"
           },
+          "deliveryMethod": {
+            "type": "string",
+            "enum": [
+              "pickup",
+              "courier",
+              "postOperator"
+            ]
+          },
           "deliveryCity": {
             "type": "string"
           },
@@ -17401,15 +17409,10 @@
           "deliveryStreetHouse": {
             "type": "string"
           },
-          "deliveryMethod": {
-            "type": "string",
-            "enum": [
-              "pickup",
-              "courier",
-              "postOperator"
-            ]
-          },
           "deliveryPostOperator": {
+            "type": "string"
+          },
+          "deliveryPostOffice": {
             "type": "string"
           },
           "orderComments": {

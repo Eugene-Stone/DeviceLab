@@ -113,24 +113,13 @@ export interface ProductsBuyerDetails extends Struct.ComponentSchema {
       ['pickup', 'courier', 'postOperator']
     > &
       Schema.Attribute.DefaultTo<'pickup'>;
-    deliveryPostOperator: Schema.Attribute.Text &
+    deliveryPostOffice: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Post Office DHL - Victoria Square Branch (Ref: PO-99123)'>;
+    deliveryPostOperator: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Post Office DHL'>;
     deliveryStreet: Schema.Attribute.String;
     deliveryStreetHouse: Schema.Attribute.String;
     orderComments: Schema.Attribute.Text;
-  };
-}
-
-export interface ProductsProductVariant extends Struct.ComponentSchema {
-  collectionName: 'components_products_product_variants';
-  info: {
-    displayName: 'Product Variant';
-  };
-  attributes: {
-    color: Schema.Attribute.String &
-      Schema.Attribute.CustomField<'plugin::color-picker.color'>;
-    isColor: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    value: Schema.Attribute.String;
   };
 }
 
@@ -516,7 +505,6 @@ declare module '@strapi/strapi' {
       'forms.form-submit': FormsFormSubmit;
       'forms.form-textarea': FormsFormTextarea;
       'products.buyer-details': ProductsBuyerDetails;
-      'products.product-variant': ProductsProductVariant;
       'products.product-variations': ProductsProductVariations;
       'sections.best-products': SectionsBestProducts;
       'sections.categories': SectionsCategories;

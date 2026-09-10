@@ -511,10 +511,20 @@ export async function getProducts({ params, itemsCount }: ProductsFetchType = {}
 			pageSize: pageSize,
 		},
 		filters: {
+			// Чтобы поиск работал по логике «или название, или SKU», нужно использовать оператор $or:
 			...(searchQuery && {
-				title: {
-					$containsi: searchQuery,
-				},
+				$or: [
+					{
+						title: {
+							$containsi: searchQuery,
+						},
+					},
+					{
+						sku: {
+							$containsi: searchQuery,
+						},
+					},
+				],
 			}),
 			...(filterCategory.length > 0 && {
 				product_category: {

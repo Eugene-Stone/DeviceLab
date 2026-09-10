@@ -40,7 +40,6 @@ export async function PUT(request: NextRequest) {
 		);
 	}
 
-	const body = await request.json();
 	const meResponse = await fetch(`${BACKEND_URL}/api/users/me`, {
 		headers: { Authorization: `Bearer ${token}` },
 		cache: 'no-store',
@@ -51,6 +50,8 @@ export async function PUT(request: NextRequest) {
 	}
 
 	const currentUser = await meResponse.json();
+
+	const body = await request.json();
 	const { userId: _ignoredUserId, ...dataWithoutId } = body;
 
 	const response = await fetch(`${BACKEND_URL}/api/users/${currentUser.id}?populate=*`, {

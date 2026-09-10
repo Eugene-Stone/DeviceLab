@@ -36,7 +36,7 @@ export default function OrderSummary({ type }: Props) {
 					Proceed to Checkout
 				</Link>
 			) : (
-				<Link href="/cart" className="btn btn-primary btn-block">
+				<Link href="/checkout/success" className="btn btn-primary btn-block">
 					Confirm Order
 				</Link>
 			)}

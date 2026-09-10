@@ -14,6 +14,15 @@
     "customerEmail": {
       "type": "string"
     },
+    "deliveryMethod": {
+      "type": "enumeration",
+      "default": "pickup",
+      "enum": [
+        "pickup",
+        "courier",
+        "postOperator"
+      ]
+    },
     "deliveryCity": {
       "type": "string",
       "conditions": {
@@ -53,17 +62,22 @@
         }
       }
     },
-    "deliveryMethod": {
-      "type": "enumeration",
-      "default": "pickup",
-      "enum": [
-        "pickup",
-        "courier",
-        "postOperator"
-      ]
-    },
     "deliveryPostOperator": {
-      "type": "text",
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "deliveryMethod"
+            },
+            "postOperator"
+          ]
+        }
+      },
+      "default": "Post Office DHL"
+    },
+    "deliveryPostOffice": {
+      "type": "string",
       "conditions": {
         "visible": {
           "==": [

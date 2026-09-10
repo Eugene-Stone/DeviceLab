@@ -12,18 +12,11 @@ export default async function Cart() {
 	// Задержка для проверки loading.tsx
 	// await new Promise((resolve) => setTimeout(resolve, 500));
 
-	const session = await getServerSession(authConfig);
-
 	return (
-		<main id="main-content" data-page-is={'Checkout'}>
+		<main id="main-content" data-page-is={'Checkout success'}>
 			<section className="cart-section">
 				<div className="container">
-					<h1 className="page-title">Checkout</h1>
-					<div className="cart-container">
-						<CheckoutForm session={session} />
-
-						<OrderSummary type={'checkout'} />
-					</div>
+					<h1 className="page-title">Checkout success</h1>
 				</div>
 			</section>
 		</main>

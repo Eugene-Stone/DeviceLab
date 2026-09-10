@@ -5,6 +5,7 @@ import {
 	RegisterRequest,
 	ResetPasswordRequest,
 } from '@/TYPES';
+import { ProductOrder } from '@backend-types/productOrder';
 import { signIn, signOut } from 'next-auth/react';
 
 export const handleLogout = async () => {
@@ -138,23 +139,20 @@ export async function handleChangePassword(dataPassword: ChangePasswordRequest) 
 	return data;
 }
 
-// export async function handleSendContactsForm<T>(dataForm: T) {
-// 	const response = await fetch('/api/form-requests', {
-// 		method: 'POST',
-// 		headers: {
-// 			'Content-Type': 'application/json',
-// 		},
-// 		body: JSON.stringify({
-// 			formTitle: dataForm.formTitle,
-// 			formData: dataForm.formData,
-// 		}),
-// 	});
+export async function handleSendOrder(orderRequest: ProductOrder) {
+	const response = await fetch(`/api/product-orders`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify(orderRequest),
+	});
 
-// 	const data = await response.json();
+	const data = await response.json();
 
-// 	if (!response.ok) {
-// 		throw new Error(data.error?.message ?? 'Sending form error');
-// 	}
+	if (!response.ok) {
+		throw new Error(data.error?.message ?? 'Sending order error');
+	}
 
-// 	return data;
-// }
+	return data;
+}

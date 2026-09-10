@@ -69,7 +69,7 @@ export default function ProfilePasswordForm({ session }: Props) {
 		}
 	}
 
-	return isPasswordEdditing ? (
+	return isPasswordEdditing && currentSession.user.provider === 'credentials' ? (
 		<form
 			style={{ marginTop: 25 }}
 			className={`profile-form ${status === 'loading' ? 'sending' : ''}`}
@@ -139,7 +139,7 @@ export default function ProfilePasswordForm({ session }: Props) {
 			)}
 		</form>
 	) : (
-		<>
+		currentSession.user.provider === 'credentials' && (
 			<button
 				style={{ marginTop: 15 }}
 				type="button"
@@ -149,6 +149,6 @@ export default function ProfilePasswordForm({ session }: Props) {
 				}}>
 				EDIT PASSWORD
 			</button>
-		</>
+		)
 	);
 }
