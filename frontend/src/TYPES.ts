@@ -161,4 +161,5 @@ export interface CartProduct extends Product {
 
 export interface CartState {
 	cartList: CartProduct[];
+	isOrderCompleted: boolean;
 }

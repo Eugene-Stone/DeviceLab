@@ -1,22 +1,41 @@
-import CheckoutForm from '@/components/_order/CheckoutForm';
-import OrderSummary from '@/components/_order/OrderSummary';
-import { authConfig } from '@/configs/auth';
+'use client';
 
-import { getServerSession } from 'next-auth';
+import { setOrderCompleted } from '@/redux/slices/cartSlice';
+import { RootState } from '@/redux/store';
+import { useRouter } from 'nextjs-toploader/app';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-// Страница с проверкой сессии должна быть динамической
-export const dynamic = 'force-dynamic'; // 'force-dynamic' || 'force-static';
-export const revalidate = 600; // Пересборка каждые 600 секунд, работает если выбрано 'force-static'
+export default function CheckoutSuccessPage() {
+	const router = useRouter();
+	const dispatch = useDispatch();
 
-export default async function Cart() {
-	// Задержка для проверки loading.tsx
-	// await new Promise((resolve) => setTimeout(resolve, 500));
+	const { isOrderCompleted } = useSelector((state: RootState) => state.cartReducer);
+
+	// 1. Проверка флага и редирект
+	useEffect(() => {
+		if (!isOrderCompleted) {
+			router.replace('/');
+		}
+	}, [isOrderCompleted, router]);
+
+	// // 2. Сброс флага СТРОГО при размонтировании страницы
+	// useEffect(() => {
+	// 	return () => {
+	// 		dispatch(setOrderCompleted(false));
+	// 	};
+	// }, [dispatch]);
+
+	if (!isOrderCompleted) {
+		return <main id="main-content" data-page-is={'Checkout success'}></main>;
+	}
 
 	return (
 		<main id="main-content" data-page-is={'Checkout success'}>
 			<section className="cart-section">
 				<div className="container">
-					<h1 className="page-title">Checkout success</h1>
+					<h1>Thank you for your order!</h1>
+					<p>We have received your order and are processing it.</p>
 				</div>
 			</section>
 		</main>

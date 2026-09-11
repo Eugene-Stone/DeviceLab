@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
 	const originError = validateRequestOrigin(request);
 	const rateLimitError = validateRateLimit(request, {
 		name: 'form-request',
-		limit: 10,
+		limit: 10, // Для теста 100, для прода 10
 		windowMs: 15 * 60 * 1000,
 	});
 

@@ -28,9 +28,13 @@ export default function CartList() {
 	return (
 		<div className="cart-items" ref={parent}>
 			{isMounted ? (
-				cartList.map((item, i) => {
-					return <CartItem key={i} product={item} />;
-				})
+				cartList && cartList.length > 0 ? (
+					cartList.map((item, i) => {
+						return <CartItem key={i} product={item} />;
+					})
+				) : (
+					<h3>Your cart is empty...</h3>
+				)
 			) : (
 				<>
 					<CartItemSkeleton />

@@ -46,6 +46,17 @@ svg {
 	display: inline-flex;
 }
 
+.user-icon {
+	position: relative;
+	.session-indicator {
+		font-size: 6px;
+		display: block;
+		position: absolute;
+		right: 0;
+		bottom: 50%;
+	}
+}
+
 a {
     color: var(--primary-color);
     text-decoration: none;

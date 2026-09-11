@@ -19,6 +19,7 @@ if (typeof window !== 'undefined') {
 const initialState: CartState = {
 	// cartList: cartFromStorage ? JSON.parse(cartFromStorage) : [],
 	cartList: [],
+	isOrderCompleted: false,
 };
 
 export const cartSlice = createSlice({
@@ -69,12 +70,33 @@ export const cartSlice = createSlice({
 		removeProduct: (state, action: PayloadAction<CartProduct>) => {
 			state.cartList = state.cartList.filter((item) => !(item.id === action.payload.id));
 		},
+
+		// Устанавливает флаг перед редиректом на /checkout/success
+		setOrderCompleted: (state, action: PayloadAction<boolean>) => {
+			state.isOrderCompleted = action.payload;
+		},
+
+		// Очищает корзину после успешной отправки заказа
 		clearCart: (state) => {
 			state.cartList = [];
+		},
+
+		// Полный сброс корзины и состояния успешного заказа
+		resetCartState: (state) => {
+			state.cartList = [];
+			state.isOrderCompleted = false;
 		},
 	},
 });
 
-export const { setCart, addProduct, decrementProduct, updateQuantity, removeProduct, clearCart } =
-	cartSlice.actions;
+export const {
+	setCart,
+	addProduct,
+	decrementProduct,
+	updateQuantity,
+	removeProduct,
+	setOrderCompleted,
+	resetCartState,
+	clearCart,
+} = cartSlice.actions;
 export default cartSlice.reducer;

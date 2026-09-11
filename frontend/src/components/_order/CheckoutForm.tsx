@@ -5,9 +5,11 @@ import { FormStatus } from '@/TYPES';
 import autoAnimate from '@formkit/auto-animate';
 import { Session } from 'next-auth';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'nextjs-toploader/app';
 import { useEffect, useRef, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearCart, setOrderCompleted } from '@/redux/slices/cartSlice';
 
 type Props = {
 	session: Session | null;
@@ -28,30 +30,44 @@ type FormValues = {
 };
 
 const POST_OPERATORS = [
-	{ id: 'operator-1', title: 'Operator 1' },
-	{ id: 'operator-2', title: 'Operator 2' },
-	{ id: 'operator-3', title: 'Operator 3' },
+	{ id: 'royal-mail', title: 'Royal Mail' },
+	{ id: 'evri', title: 'Evri (ParcelShop)' },
+	{ id: 'dpd-uk', title: 'DPD UK' },
 ];
 
+// Royal Mail: Post Office Branches
 const POST_OFFICES_LIST_1 = [
-	{ id: 'office-1', title: 'Post Office DHL 1 - Victoria Square Branch (Ref: PO-99123)' },
-	{ id: 'office-2', title: 'Post Office DHL 2 - Victoria Square Branch (Ref: PO-99123)' },
-	{ id: 'office-3', title: 'Post Office DHL 3 - Victoria Square Branch (Ref: PO-99123)' },
+	{ id: 'rm-10291', title: 'Post Office - Victoria Street Branch (Ref: PO-10291)' },
+	{ id: 'rm-10482', title: 'Post Office - City Road Branch (Ref: PO-10482)' },
+	{ id: 'rm-10955', title: 'Post Office - Oxford Circus Branch (Ref: PO-10955)' },
 ];
 
+// Evri: Local ParcelShops & Lockers
 const POST_OFFICES_LIST_2 = [
-	{ id: 'office-1', title: 'Post Office DHL 1 - Victoria Square Branch (Ref: PO-99123)' },
-	{ id: 'office-2', title: 'Post Office DHL 2 - Victoria Square Branch (Ref: PO-99123)' },
+	{ id: 'evri-8821', title: 'Evri ParcelShop - Tesco Express, High Street (Ref: EV-8821)' },
+	{ id: 'evri-8834', title: 'Evri Locker - Shell Station, Kings Cross (Ref: EV-8834)' },
+];
+
+// DPD UK: Pickup Points
+const POST_OFFICES_LIST_3 = [
+	{ id: 'dpd-4012', title: 'DPD Pickup Point - Sainsbury’s Local, West End (Ref: DPD-4012)' },
+	{ id: 'dpd-4058', title: 'DPD Pickup Point - Premier Stores, Camden (Ref: DPD-4058)' },
 ];
 
 const POST_OFFICES: Record<string, { id: string; title: string }[]> = {
-	'operator-1': POST_OFFICES_LIST_1,
-	'operator-2': POST_OFFICES_LIST_2,
+	'royal-mail': POST_OFFICES_LIST_1,
+	evri: POST_OFFICES_LIST_2,
+	'dpd-uk': POST_OFFICES_LIST_3,
 };
 
 export default function CheckoutForm({ session }: Props) {
+	const router = useRouter();
+	const dispatch = useDispatch();
+
 	const { data: clientSession, update } = useSession();
 	const currentSession = clientSession || session;
+
+	// console.log('currentSession', currentSession);
 
 	const [status, setStatus] = useState<FormStatus>('idle');
 	const [serverError, setServerError] = useState('');
@@ -80,6 +96,10 @@ export default function CheckoutForm({ session }: Props) {
 		mode: 'onChange',
 		defaultValues: {
 			deliveryMethod: 'pickup', // Устанавливаем значение по умолчанию
+			customerFirstName: currentSession?.user.strapiUser?.firstName || '',
+			customerLastName: currentSession?.user.strapiUser?.lastName || '',
+			customerPhone: currentSession?.user.strapiUser?.phoneNumber || '',
+			customerEmail: currentSession?.user.strapiUser?.email || '',
 		},
 	});
 
@@ -139,15 +159,22 @@ export default function CheckoutForm({ session }: Props) {
 				},
 			};
 
-			console.log('orderRequest', orderRequest);
+			// console.log('orderRequest', orderRequest);
 
 			const res = await handleSendOrder(orderRequest);
 
 			setStatus('success');
 
+			dispatch(setOrderCompleted(true));
+
 			setTimeout(() => {
 				reset();
 				setStatus('idle');
+
+				// Замена текущего URL в истории браузера
+				router.replace('/checkout/success');
+
+				dispatch(clearCart());
 			}, 1000);
 		} catch (error) {
 			if (error instanceof Error) {
@@ -162,6 +189,7 @@ export default function CheckoutForm({ session }: Props) {
 	return (
 		<form
 			ref={parent}
+			id="checkout-form"
 			className={`checkout-form ${status === 'loading' ? 'sending' : ''}`}
 			onSubmit={handleSubmit(onSubmit)}
 			autoComplete="off">
@@ -350,31 +378,54 @@ export default function CheckoutForm({ session }: Props) {
 						)}
 					</div>
 
-					{selectedPostOperator === 'operator-1' && (
+					{selectedPostOperator === 'royal-mail' && (
 						<div className="form-group">
 							<label htmlFor="deliveryPostOffice" className="form-label">
 								Post Office *
 							</label>
-							{/* <select
-								{...register('deliveryPostOffice', {
-									required: 'Select post Office',
-								})}
-								id="deliveryPostOffice"
-								className="form-input">
-								<option value="">Select operator...</option>
-								<option value="Office 1">
-									Post Office DHL 1 - Victoria Square Branch (Ref: PO-99123)
-								</option>
-								<option value="Office 2">
-									Post Office DHL 2 - Victoria Square Branch (Ref: PO-99123)
-								</option>
-								<option value="Office 3">
-									Post Office DHL 3 - Victoria Square Branch (Ref: PO-99123)
-								</option>
-							</select> */}
 							<select {...register('deliveryPostOffice')} className="form-input">
 								<option value="">Select office...</option>
 								{POST_OFFICES_LIST_1.map((op) => (
+									<option key={op.id} value={op.id}>
+										{op.title}
+									</option>
+								))}
+							</select>
+							{errors.deliveryPostOffice && (
+								<span className="error-text">
+									{errors.deliveryPostOffice.message}
+								</span>
+							)}
+						</div>
+					)}
+					{selectedPostOperator === 'evri' && (
+						<div className="form-group">
+							<label htmlFor="deliveryPostOffice" className="form-label">
+								Post Office *
+							</label>
+							<select {...register('deliveryPostOffice')} className="form-input">
+								<option value="">Select office...</option>
+								{POST_OFFICES_LIST_2.map((op) => (
+									<option key={op.id} value={op.id}>
+										{op.title}
+									</option>
+								))}
+							</select>
+							{errors.deliveryPostOffice && (
+								<span className="error-text">
+									{errors.deliveryPostOffice.message}
+								</span>
+							)}
+						</div>
+					)}
+					{selectedPostOperator === 'dpd-uk' && (
+						<div className="form-group">
+							<label htmlFor="deliveryPostOffice" className="form-label">
+								Post Office *
+							</label>
+							<select {...register('deliveryPostOffice')} className="form-input">
+								<option value="">Select office...</option>
+								{POST_OFFICES_LIST_3.map((op) => (
 									<option key={op.id} value={op.id}>
 										{op.title}
 									</option>
@@ -405,8 +456,6 @@ export default function CheckoutForm({ session }: Props) {
 					/>
 				</div>
 			</section>
-
-			<button type="submit">Submit</button>
 
 			{status === 'success' && (
 				<p className="success-field">You have successfully bought products</p>

@@ -84,8 +84,8 @@ export default function Header({ data }: Props) {
 						)} */}
 
 						{/* {
-	${isMounted ? '' : 'not-mounted'}
-} */}
+							${isMounted ? '' : 'not-mounted'}
+						} */}
 						<Link
 							href={session.status === 'authenticated' ? '/profile' : '/auth'}
 							className="user-link"
@@ -108,6 +108,10 @@ export default function Header({ data }: Props) {
 									<circle cx={16} cy={10} r={5} />
 									<path d="M6 26c0-4.4 3.6-8 10-8s10 3.6 10 8" />
 								</svg>
+
+								{session.status === 'authenticated' && (
+									<span className="session-indicator">🟢</span>
+								)}
 							</span>
 							<span className="user-text hidden">
 								{session.status === 'authenticated'

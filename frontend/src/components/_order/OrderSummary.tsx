@@ -7,7 +7,7 @@ type Props = {
 };
 export default function OrderSummary({ type }: Props) {
 	const { cartList } = useSelector((state: RootState) => state.cartReducer);
-	console.log('cartList', cartList);
+	// console.log('cartList', cartList);
 
 	let total = 0;
 	cartList.forEach((product) => {
@@ -15,31 +15,37 @@ export default function OrderSummary({ type }: Props) {
 	});
 
 	return (
-		<aside className="cart-summary">
-			<h3>Order Summary</h3>
-			{/* <div className="summary-row">
+		cartList &&
+		cartList.length > 0 && (
+			<aside className="cart-summary">
+				<h3>Order Summary</h3>
+				{/* <div className="summary-row">
 				<span>Subtotal</span>
 				<span>$0.00</span>
 			</div> */}
-			{/* <div className="summary-row">
+				{/* <div className="summary-row">
 				<span>Shipping</span>
 				<span>Free</span>
 			</div> */}
-			<div className="summary-row total">
-				<span>Total</span>
-				<span>${total.toFixed(2)}</span>
-			</div>
-			<br />
+				<div className="summary-row total">
+					<span>Total</span>
+					<span>${total.toFixed(2)}</span>
+				</div>
+				<br />
 
-			{type === 'cart' ? (
-				<Link href="/checkout" className="btn btn-primary btn-block">
-					Proceed to Checkout
-				</Link>
-			) : (
-				<Link href="/checkout/success" className="btn btn-primary btn-block">
-					Confirm Order
-				</Link>
-			)}
-		</aside>
+				{type === 'cart' ? (
+					<Link href="/checkout" className="btn btn-primary btn-block">
+						Proceed to Checkout
+					</Link>
+				) : (
+					<button
+						type="submit"
+						form="checkout-form"
+						className="btn btn-primary btn-block">
+						Confirm Order
+					</button>
+				)}
+			</aside>
+		)
 	);
 }
