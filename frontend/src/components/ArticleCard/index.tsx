@@ -39,7 +39,7 @@ export default function ArticleCard({ article }: Props) {
 					href={`/blog/${article.slug}`}
 					className="btn btn-outline"
 					aria-label={'Article - ' + article.title}>
-					Read More
+					Read More <span className="sr-only">Article - {article.title}</span>
 				</Link>
 			</div>
 		</article>
