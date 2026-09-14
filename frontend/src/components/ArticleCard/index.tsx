@@ -16,7 +16,7 @@ export default function ArticleCard({ article }: Props) {
 			{article.image && (
 				<Link
 					href={`/blog/${article.slug}`}
-					aria-label={article.title}
+					aria-label={'Article - ' + article.title}
 					className="blog-card-image-link">
 					<Picture
 						image={article.image}
