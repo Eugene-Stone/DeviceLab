@@ -11,6 +11,7 @@ import { useSearchParams } from 'next/navigation';
 import ProfileOrderItem from './ProfileOrderItem';
 import ProfileOrderItemSkeleton from './ProfileOrderItemSkeleton';
 import autoAnimate from '@formkit/auto-animate';
+import { useQuery } from '@tanstack/react-query';
 
 type Props = {
 	session: Session;
@@ -18,47 +19,45 @@ type Props = {
 
 export default function ProfileOrders({ session }: Props) {
 	const searchParams = useSearchParams();
-	const page = searchParams.get('page') || '';
+	const page = searchParams.get('page') || '1';
 
-	const [orders, setOrders] = useState<ProductOrder[]>([]);
-	const [metaOrders, setMetaOrders] = useState<Meta | null>(null);
-	const [serverError, setServerError] = useState('');
+	// const [orders, setOrders] = useState<ProductOrder[]>([]);
+	// const [metaOrders, setMetaOrders] = useState<Meta | null>(null);
+	// const [serverError, setServerError] = useState('');
 
 	const { data: clientSession, update } = useSession();
 
 	const currentSession = clientSession || session;
-	const userId = currentSession.user.id;
+	const userId = currentSession.user.id as unknown as number;
 
-	const [isLoading, setIsLoading] = useState(true);
+	// const [isLoading, setIsLoading] = useState(true);
 
-	// console.log('user', user);
+	// useEffect(() => {
+	// 	async function fetchOrders() {
+	// 		try {
+	// 			const { data, meta } = await getProductsOrders({
+	// 				params: {
+	// 					page: page || '1',
+	// 				},
+	// 				// itemsCount: 3,
+	// 				userId: userId as unknown as number,
+	// 			});
 
-	useEffect(() => {
-		async function fetchOrders() {
-			try {
-				const { data, meta } = await getProductsOrders({
-					params: {
-						page: page || '1',
-					},
-					// itemsCount: 3,
-					userId: userId as unknown as number,
-				});
+	// 			setOrders(data);
+	// 			setMetaOrders(meta);
+	// 			setIsLoading(false);
+	// 		} catch (error) {
+	// 			if (error instanceof Error) {
+	// 				setServerError(error.message);
+	// 				console.log(error.message);
+	// 			} else {
+	// 				console.log('Nothing found');
+	// 			}
+	// 		}
+	// 	}
 
-				setOrders(data);
-				setMetaOrders(meta);
-				setIsLoading(false);
-			} catch (error) {
-				if (error instanceof Error) {
-					setServerError(error.message);
-					console.log(error.message);
-				} else {
-					console.log('Nothing found');
-				}
-			}
-		}
-
-		fetchOrders();
-	}, [page, userId]);
+	// 	fetchOrders();
+	// }, [page, userId]);
 
 	// Хук useSyncExternalStore для безопасной синхронизации клиентского состояния без создания эффектов с каскадными рендерами:
 	// On server returns false, on client returns true
@@ -73,6 +72,28 @@ export default function ProfileOrders({ session }: Props) {
 		// eslint-disable-next-line
 		parent.current && autoAnimate(parent.current);
 	}, [parent]);
+
+	const { data, isLoading, isError, error } = useQuery({
+		queryKey: ['user-orders', userId, page],
+		queryFn: () =>
+			getProductsOrders({
+				params: { page },
+				userId,
+			}),
+		enabled: Boolean(userId),
+		staleTime: 1000 * 60 * 5,
+		gcTime: 1000 * 60 * 15,
+		placeholderData: (previousData) => previousData,
+	});
+
+	// if (isLoading) return <div>Loading orders...</div>;
+	if (isError)
+		return (
+			<div>Error: {error instanceof Error ? error.message : 'Failed to fetch orders'}</div>
+		);
+
+	const orders = data?.data || [];
+	const metaOrders = data?.meta;
 
 	return !isLoading ? (
 		orders && orders.length > 0 ? (

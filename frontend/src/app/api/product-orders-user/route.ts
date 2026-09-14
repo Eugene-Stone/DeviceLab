@@ -75,7 +75,8 @@ export async function GET(request: NextRequest) {
 	}
 
 	// Сбросит кэш ВСЕХ страниц внутри группы
-	revalidatePath('/', 'layout');
+	// В GET-запросах revalidatePath использовать нельзя. Он предназначен для Server Actions или POST/PUT/DELETE маршрутов при мутации данных. При каждом fetchOrders у тебя инвалидировался весь кэш Next.js.
+	// revalidatePath('/', 'layout');
 
 	return NextResponse.json(data);
 }

@@ -82,13 +82,15 @@ export default function CheckoutForm({ session }: Props) {
 		parent.current && autoAnimate(parent.current);
 	}, [parent]);
 
-	const { cartList } = useSelector((state: RootState) => state.cartReducer);
+	const { cartList, isOrderCompleted } = useSelector((state: RootState) => state.cartReducer);
 	// console.log('cartList', cartList);
 
-	let total = 0;
-	cartList.forEach((product) => {
-		return (total = product.price * (product.quantity || 1) + total);
-	});
+	useEffect(() => {
+		// Редиректим на главную ТОЛЬКО если корзина пуста И заказ НЕ был успешно оформлен
+		if ((!cartList || cartList.length < 1) && !isOrderCompleted) {
+			router.replace('/');
+		}
+	}, [cartList, isOrderCompleted, router]);
 
 	const {
 		register,
@@ -139,6 +141,15 @@ export default function CheckoutForm({ session }: Props) {
 	const selectedPostOperator = useWatch({
 		control,
 		name: 'deliveryPostOperator',
+	});
+
+	if (!cartList || cartList.length < 1) {
+		return null;
+	}
+
+	let total = 0;
+	cartList.forEach((product) => {
+		return (total = product.price * (product.quantity || 1) + total);
 	});
 
 	async function onSubmit(data: FormValues) {
@@ -195,15 +206,16 @@ export default function CheckoutForm({ session }: Props) {
 
 			dispatch(setOrderCompleted(true));
 
-			setTimeout(() => {
-				reset();
-				setStatus('idle');
+			// setTimeout(() => {
+			reset();
+			setStatus('idle');
 
-				// Замена текущего URL в истории браузера
-				router.replace('/checkout/success');
+			// 1. Сначала переходим на страницу успеха
+			router.replace('/checkout/success');
 
-				dispatch(clearCart());
-			}, 1000);
+			// 2. Очистку корзины делаем после перехода (или прямо в useEffect на странице success)
+			dispatch(clearCart());
+			// }, 1000);
 		} catch (error) {
 			if (error instanceof Error) {
 				setServerError(error.message);
