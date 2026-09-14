@@ -35,7 +35,10 @@ export default function ArticleCard({ article }: Props) {
 				<p className="blog-date">{datePost}</p>
 				<h3 className="blog-title">{article.title}</h3>
 				<p className="blog-excerpt">{dateBrief}</p>
-				<Link href={`/blog/${article.slug}`} className="btn btn-outline">
+				<Link
+					href={`/blog/${article.slug}`}
+					className="btn btn-outline"
+					aria-label={article.title}>
 					Read More
 				</Link>
 			</div>

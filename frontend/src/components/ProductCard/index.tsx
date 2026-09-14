@@ -72,7 +72,10 @@ export default function ProductCard({ product }: Props) {
 				<div className="product-card-actions">
 					<AddToCart product={product} count={1} />
 
-					<Link href={`/catalog/${product.slug}`} className="btn btn-outline">
+					<Link
+						href={`/catalog/${product.slug}`}
+						className="btn btn-outline"
+						aria-label={product.title}>
 						View Details
 					</Link>
 				</div>
