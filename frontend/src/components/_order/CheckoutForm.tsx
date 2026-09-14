@@ -10,6 +10,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCart, setOrderCompleted } from '@/redux/slices/cartSlice';
+import { User } from '@backend-types/user';
+import { getMeClient } from '@/api/getMeClient';
 
 type Props = {
 	session: Session | null;
@@ -72,6 +74,8 @@ export default function CheckoutForm({ session }: Props) {
 	const [status, setStatus] = useState<FormStatus>('idle');
 	const [serverError, setServerError] = useState('');
 
+	const [user, setUser] = useState<User | null>(null);
+
 	const parent = useRef(null);
 	useEffect(() => {
 		// eslint-disable-next-line
@@ -96,12 +100,36 @@ export default function CheckoutForm({ session }: Props) {
 		mode: 'onChange',
 		defaultValues: {
 			deliveryMethod: 'pickup', // Устанавливаем значение по умолчанию
-			customerFirstName: currentSession?.user.strapiUser?.firstName || '',
-			customerLastName: currentSession?.user.strapiUser?.lastName || '',
-			customerPhone: currentSession?.user.strapiUser?.phoneNumber || '',
-			customerEmail: currentSession?.user.strapiUser?.email || '',
+			customerFirstName: user?.firstName || '',
+			customerLastName: user?.lastName || '',
+			customerPhone: user?.phoneNumber || '',
+			customerEmail: user?.email || '',
 		},
 	});
+
+	useEffect(() => {
+		async function initUser() {
+			try {
+				const userResponse = await getMeClient();
+				// console.log('userResponse', userResponse);
+				setUser(userResponse);
+
+				// Синхронизируем форму с полученным пользователем
+				if (userResponse) {
+					reset({
+						customerFirstName: userResponse?.firstName || '',
+						customerLastName: userResponse?.lastName || '',
+						customerPhone: userResponse?.phoneNumber || '',
+						customerEmail: userResponse?.email || '',
+					});
+				}
+			} catch (error) {
+				setUser(null);
+			}
+		}
+
+		initUser();
+	}, [currentSession, reset]);
 
 	// Отслеживаем изменение deliveryMethod
 	const selectedDeliveryMethod = useWatch({

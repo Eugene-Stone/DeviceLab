@@ -21,9 +21,15 @@ export default function CheckoutSuccessPage() {
 
 	// // 2. Сброс флага СТРОГО при размонтировании страницы
 	// useEffect(() => {
-	// 	return () => {
-	// 		dispatch(setOrderCompleted(false));
-	// 	};
+	// 	setTimeout(
+	// 		() => {
+	// 			dispatch(setOrderCompleted(false));
+	// 		},
+	// 		1000 * 60 * 10,
+	// 	); // 10мин
+	// 	// return () => {
+	// 	// 	dispatch(setOrderCompleted(false));
+	// 	// };
 	// }, [dispatch]);
 
 	if (!isOrderCompleted) {

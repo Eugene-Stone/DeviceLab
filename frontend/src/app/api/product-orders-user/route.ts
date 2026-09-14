@@ -36,16 +36,16 @@ export async function GET(request: NextRequest) {
 		);
 	}
 
-	// const meResponse = await fetch(`${BACKEND_URL}/api/users/me`, {
-	// 	headers: { Authorization: `Bearer ${token}` },
-	// 	cache: 'no-store',
-	// });
+	const meResponse = await fetch(`${BACKEND_URL}/api/users/me`, {
+		headers: { Authorization: `Bearer ${token}` },
+		cache: 'no-store',
+	});
 
-	// if (!meResponse.ok) {
-	// 	return NextResponse.json({ error: { message: 'Login required' } }, { status: 401 });
-	// }
+	if (!meResponse.ok) {
+		return NextResponse.json({ error: { message: 'Login required' } }, { status: 401 });
+	}
 
-	// const currentUser = await meResponse.json();
+	const currentUser = await meResponse.json();
 
 	// const body = await request.json();
 	// const { userId: _ignoredUserId, ...dataWithoutId } = body;
@@ -54,14 +54,17 @@ export async function GET(request: NextRequest) {
 	const searchParams = request.nextUrl.searchParams.toString();
 	const queryPath = searchParams ? `${searchParams}` : '';
 
-	const response = await fetch(`${BACKEND_URL}/api/product-orders?${queryPath}`, {
-		method: 'GET',
-		headers: {
-			Authorization: `Bearer ${token}`,
-			'Content-Type': 'application/json',
+	const response = await fetch(
+		`${BACKEND_URL}/api/product-orders?filters[user][id][$eq]=${currentUser.id}&${queryPath}&populate=*`,
+		{
+			method: 'GET',
+			headers: {
+				Authorization: `Bearer ${token}`,
+				'Content-Type': 'application/json',
+			},
+			cache: 'no-store',
 		},
-		cache: 'no-store',
-	});
+	);
 
 	const data = await response.json();
 

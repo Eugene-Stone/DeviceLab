@@ -2,7 +2,7 @@ import { Session } from 'next-auth';
 import { handleChangePassword, handleUpdateProfile } from '@/api/api-client';
 import { StrapiUser } from '@/next-auth';
 import { FormStatus } from '@/TYPES';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
 
@@ -20,7 +20,6 @@ export default function ProfilePasswordForm({ session }: Props) {
 	const { data: clientSession, update } = useSession();
 
 	const currentSession = clientSession || session;
-	const user = currentSession.user.strapiUser;
 
 	const [isPasswordEdditing, setIsPasswordEdditing] = useState(false);
 

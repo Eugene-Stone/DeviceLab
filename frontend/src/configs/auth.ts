@@ -2,7 +2,7 @@ import { AuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { BACKEND_URL } from '@/CONSTANTS';
-import { StrapiUser } from '@/next-auth';
+
 
 export const authConfig: AuthOptions = {
 	providers: [
@@ -32,18 +32,11 @@ export const authConfig: AuthOptions = {
 					const data = await res.json();
 					if (!res.ok || !data.jwt) return null;
 
-					// Получаем полные данные пользователя со всеми связями
-					const meRes = await fetch(`${BACKEND_URL}/api/users/me?populate=*`, {
-						headers: { Authorization: `Bearer ${data.jwt}` },
-					});
-					const fullUser: StrapiUser = meRes.ok ? await meRes.json() : data.user;
-
 					return {
-						id: String(fullUser.id),
-						name: fullUser.username ?? fullUser.email,
-						email: fullUser.email,
+						id: String(data.user.id),
+						name: data.user.username ?? data.user.email,
+						email: data.user.email,
 						jwt: data.jwt,
-						strapiUser: fullUser,
 					};
 				} catch {
 					return null;
@@ -52,7 +45,7 @@ export const authConfig: AuthOptions = {
 		}),
 	],
 	callbacks: {
-		async signIn({ user, account, profile }) {
+		async signIn({ user, account }) {
 			if (account?.provider === 'google') {
 				try {
 					// Отправляем Google access_token в Strapi для авторизации/регистрации
@@ -63,15 +56,8 @@ export const authConfig: AuthOptions = {
 					const data = await res.json();
 
 					if (data.jwt && data.user) {
-						// Получаем полные данные пользователя Strapi
-						const meRes = await fetch(`${BACKEND_URL}/api/users/me?populate=*`, {
-							headers: { Authorization: `Bearer ${data.jwt}` },
-						});
-						const fullUser = meRes.ok ? await meRes.json() : data.user;
-
-						// Записываем Strapi данные прямо в объект user NextAuth
+						user.id = String(data.user.id);
 						user.jwt = data.jwt;
-						user.strapiUser = fullUser;
 						return true;
 					}
 					return false;
@@ -82,7 +68,7 @@ export const authConfig: AuthOptions = {
 			}
 			return true;
 		},
-		async jwt({ token, user, trigger, account }) {
+		async jwt({ token, user, account }) {
 			if (account) {
 				token.provider = account.provider; // 'google' или 'credentials'
 			}
@@ -90,22 +76,6 @@ export const authConfig: AuthOptions = {
 			if (user) {
 				token.id = user.id;
 				token.jwt = user.jwt; // Сохраняем JWT в зашифрованную HttpOnly куку NextAuth
-				token.strapiUser = user.strapiUser;
-			}
-
-			// При вызове update() делаем запрос в Strapi за свежим профилем
-			if (trigger === 'update' && token.jwt) {
-				try {
-					const res = await fetch(`${BACKEND_URL}/api/users/me?populate=*`, {
-						headers: { Authorization: `Bearer ${token.jwt}` },
-						cache: 'no-store',
-					});
-					if (res.ok) {
-						token.strapiUser = await res.json();
-					}
-				} catch (e) {
-					console.error('Error refreshing user session:', e);
-				}
 			}
 
 			return token;
@@ -113,16 +83,10 @@ export const authConfig: AuthOptions = {
 		async session({ session, token }) {
 			if (session.user) {
 				session.user.id = token.id as string;
-				session.user.strapiUser = token.strapiUser;
-
-				// Прокидываем провайдер или флаг
-				session.user.provider =
-					(token.provider as string) || token.strapiUser?.provider || 'local';
+				// Прокидываем провайдер и флаг
+				session.user.provider = (token.provider as string) || 'local';
 				session.user.isOAuth = session.user.provider !== 'local';
 			}
-
-			// Добавляем jwt в сессию для использования НА СЕРВЕРЕ
-			// session.jwt = token.jwt as string;
 
 			return session;
 		},

@@ -53,7 +53,7 @@ export default function Header({ data }: Props) {
 	// 	}
 	// }, [session]);
 
-	// console.log('session', session);
+	// console.log('header session', session);
 	// console.log('currentSession', currentSession);
 
 	return (

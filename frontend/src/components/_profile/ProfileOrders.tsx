@@ -27,7 +27,7 @@ export default function ProfileOrders({ session }: Props) {
 	const { data: clientSession, update } = useSession();
 
 	const currentSession = clientSession || session;
-	const user = currentSession.user.strapiUser;
+	const userId = currentSession.user.id;
 
 	const [isLoading, setIsLoading] = useState(true);
 
@@ -41,7 +41,7 @@ export default function ProfileOrders({ session }: Props) {
 						page: page || '1',
 					},
 					// itemsCount: 3,
-					userId: user?.id as number,
+					userId: userId as unknown as number,
 				});
 
 				setOrders(data);
@@ -58,7 +58,7 @@ export default function ProfileOrders({ session }: Props) {
 		}
 
 		fetchOrders();
-	}, [page, user?.id]);
+	}, [page, userId]);
 
 	// Хук useSyncExternalStore для безопасной синхронизации клиентского состояния без создания эффектов с каскадными рендерами:
 	// On server returns false, on client returns true
@@ -75,15 +75,19 @@ export default function ProfileOrders({ session }: Props) {
 	}, [parent]);
 
 	return !isLoading ? (
-		<>
-			<div ref={parent} className="orders-list">
-				{orders.map((order, i) => {
-					return <ProfileOrderItem key={i} order={order} />;
-				})}
-			</div>
+		orders && orders.length > 0 ? (
+			<>
+				<div ref={parent} className="orders-list">
+					{orders.map((order, i) => {
+						return <ProfileOrderItem key={i} order={order} />;
+					})}
+				</div>
 
-			{metaOrders && <Pagination meta={metaOrders} />}
-		</>
+				{metaOrders && <Pagination meta={metaOrders} />}
+			</>
+		) : (
+			<p>You haven`t placed a single order yet.</p>
+		)
 	) : (
 		<div className="orders-list">
 			<ProfileOrderItemSkeleton />

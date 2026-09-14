@@ -2,9 +2,11 @@ import { Session } from 'next-auth';
 import { handleUpdateProfile } from '@/api/api-client';
 import { StrapiUser } from '@/next-auth';
 import { FormStatus } from '@/TYPES';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
+import { getMeClient } from '@/api/getMeClient';
+import { User } from '@backend-types/user';
 
 type Props = {
 	session: Session;
@@ -20,9 +22,10 @@ type FormValues = {
 
 export default function ProfileDataForm({ session }: Props) {
 	const { data: clientSession, update } = useSession();
+	const [user, setUser] = useState<User | null>(null);
 
 	const currentSession = clientSession || session;
-	const user = currentSession.user.strapiUser;
+	// const user = currentSession.user.strapiUser;
 
 	// console.log('user', user);
 	// console.log('serverSession', session);
@@ -47,6 +50,31 @@ export default function ProfileDataForm({ session }: Props) {
 		},
 	});
 
+	useEffect(() => {
+		async function initUser() {
+			try {
+				const userResponse = await getMeClient();
+				// console.log('userResponse', userResponse);
+				setUser(userResponse);
+
+				// Синхронизируем форму с полученным пользователем
+				if (userResponse) {
+					reset({
+						username: userResponse.username || '',
+						email: userResponse.email || '',
+						firstName: userResponse.firstName || '',
+						lastName: userResponse.lastName || '',
+						phoneNumber: userResponse.phoneNumber || '',
+					});
+				}
+			} catch (error) {
+				setUser(null);
+			}
+		}
+
+		initUser();
+	}, [currentSession, reset]);
+
 	async function onSubmit(data: FormValues) {
 		console.log('user', user);
 		console.log('session', session);
@@ -68,9 +96,9 @@ export default function ProfileDataForm({ session }: Props) {
 			// await update();
 
 			// 1. Обновляем NextAuth сессию новым объектом
-			await update({
-				strapiUser: updatedUser,
-			});
+			// await update({
+			// 	strapiUser: updatedUser,
+			// });
 
 			// 2. Задаем новые defaultValues, сбрасывая isDirty в false
 			reset({

@@ -705,14 +705,14 @@ export async function getProductsOrders({ params, itemsCount, userId }: Products
 			pageSize: pageSize,
 		},
 		filters: {
+			// ...(userId && {
+			// 	user: {
+			// 		id: {
+			// 			$eq: userId,
+			// 		},
+			// 	},
+			// }),
 			// Чтобы поиск работал по логике «или название, или SKU», нужно использовать оператор $or:
-			...(userId && {
-				user: {
-					id: {
-						$eq: userId,
-					},
-				},
-			}),
 			...(searchQuery && {
 				$or: [
 					{
@@ -729,10 +729,11 @@ export async function getProductsOrders({ params, itemsCount, userId }: Products
 			}),
 		},
 		// populate: PRODUCT_POPULATE,
-		populate: '*',
+		// populate: '*',
 	});
 
-	console.log('queryProductOrder', query);
+	// console.log('queryProductOrder', query);
+	// console.log('userId', userId);
 
 	try {
 		const response = await fetch(`/api/product-orders-user?${query}`, {

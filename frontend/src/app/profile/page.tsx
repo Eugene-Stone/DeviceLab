@@ -16,7 +16,7 @@ export default async function ProfilePage() {
 		<main id="main-content" data-page-is={'profile'}>
 			<section className="profile-section">
 				<div className="container">
-					<h1 className="page-title">My Account</h1>
+					<h1 className="page-title">Hello - {session?.user.name}</h1>
 
 					<ProfileTabs session={session} />
 				</div>
