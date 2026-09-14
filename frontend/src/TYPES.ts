@@ -99,6 +99,7 @@ export type ProductsParamsType = {
 export type ProductsFetchType = {
 	params?: ProductsParamsType;
 	itemsCount?: number;
+	userId?: number;
 };
 
 export type ArticlesParamsType = {

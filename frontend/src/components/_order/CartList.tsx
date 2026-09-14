@@ -22,6 +22,7 @@ export default function CartList() {
 	);
 
 	useEffect(() => {
+		// eslint-disable-next-line
 		parent.current && autoAnimate(parent.current);
 	}, [parent]);
 

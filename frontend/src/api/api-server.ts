@@ -13,6 +13,7 @@ import { FormContact } from '@backend-types/formContact';
 import { Global } from '@backend-types/global';
 import { Product } from '@backend-types/product';
 import { ProductCategory } from '@backend-types/productCategory';
+import { ProductOrder } from '@backend-types/productOrder';
 import { notFound } from 'next/navigation';
 
 const SEO_POPULATE = {
@@ -687,5 +688,75 @@ export async function getProductsCategories() {
 		}
 
 		throw new Error('Categories unavailable');
+	}
+}
+
+// чтобы функция не падала и при вызове без аргументов добавлено = {}
+export async function getProductsOrders({ params, itemsCount, userId }: ProductsFetchType = {}) {
+	const searchQuery = params?.search || '';
+	const sorting = params?.sort || 'createdAt:desc';
+	const pageCurrent = params?.page || '1';
+	const pageSize = itemsCount || 3;
+
+	const query = buildQuery({
+		sort: [sorting],
+		pagination: {
+			page: pageCurrent,
+			pageSize: pageSize,
+		},
+		filters: {
+			// Чтобы поиск работал по логике «или название, или SKU», нужно использовать оператор $or:
+			...(userId && {
+				user: {
+					id: {
+						$eq: userId,
+					},
+				},
+			}),
+			...(searchQuery && {
+				$or: [
+					{
+						orderNumber: {
+							$containsi: searchQuery,
+						},
+					},
+					// {
+					// 	sku: {
+					// 		$containsi: searchQuery,
+					// 	},
+					// },
+				],
+			}),
+		},
+		// populate: PRODUCT_POPULATE,
+		populate: '*',
+	});
+
+	console.log('queryProductOrder', query);
+
+	try {
+		const response = await fetch(`/api/product-orders-user?${query}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+
+		if (!response.ok) {
+			const errorData = await response.json();
+			console.error('Strapi Error Detail:', JSON.stringify(errorData, null, 2));
+			throw new Error(errorData.error?.message ?? 'Failed to fetch product orders');
+		}
+
+		const responseData: StrapiResponseCollection<ProductOrder> = await response.json();
+		return responseData;
+	} catch (error) {
+		if (error instanceof Error) {
+			console.error(error.message);
+		} else {
+			console.error(error);
+		}
+
+		throw new Error('Product orders unavailable');
 	}
 }

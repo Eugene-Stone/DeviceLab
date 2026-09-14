@@ -63,7 +63,11 @@ html.nprogress-busy {
 			animation: skeleton-shimmer 1.5s infinite linear;
 		}
 
+
+		.image,
+		a:has(img),
 		img,
+		picture,
 		.btn,
 		input,
 		select,
@@ -87,6 +91,10 @@ html.nprogress-busy {
 				color: inherit;
 			}
 		}
+		
+		picture img {
+			opacity: 0 !important;
+		}
 
 	}
 }
@@ -98,6 +106,7 @@ html.nprogress-busy {
 html.nprogress-busy {
 	.blog-section:has(.sort-select.is-pending) .blog-grid,
 	.blog-section:has(.pagination.is-pending) .blog-grid,
+	.profile-section:has(.pagination.is-pending) .orders-list,
 	.catalog-section:has(.sort-select.is-pending) .product-grid,
 	.catalog-section:has(.pagination.is-pending) .product-grid,
 	.catalog-section:has(.sidebar-filters.is-pending) .product-grid {
