@@ -76,7 +76,7 @@ export default function ProductCard({ product }: Props) {
 						href={`/catalog/${product.slug}`}
 						className="btn btn-outline"
 						aria-label={product.title}>
-						View Details
+						View Details <span className="sr-only">{`Product - ${product.title}`}</span>
 					</Link>
 				</div>
 				{product.stockStatus === 'inStock' && (

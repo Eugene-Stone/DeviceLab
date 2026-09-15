@@ -1,0 +1,1 @@
+import{ax as s,ay as c,r as a}from"./strapi-CW51tot0.js";function g(o){const e=s().getMonitor(),[t,r]=c(e,o);return a.useEffect(()=>e.subscribeToOffsetChange(r)),a.useEffect(()=>e.subscribeToStateChange(r)),t}export{g as u};

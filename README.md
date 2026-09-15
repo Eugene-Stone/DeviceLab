@@ -2,6 +2,11 @@
 
 Full-stack проект интернет-магазина и контентного сайта с frontend на Next.js и backend на Strapi.
 
+## Демо
+
+https://device-lab-sigma.vercel.app
+
+
 ## Технологии
 
 - Frontend: Next.js 16, React 19, TypeScript, Sass, Redux Toolkit, NextAuth.

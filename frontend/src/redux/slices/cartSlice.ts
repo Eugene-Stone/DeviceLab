@@ -49,14 +49,11 @@ export const cartSlice = createSlice({
 			const existingProduct = state.cartList.find((item) => item.id === action.payload.id);
 
 			if (existingProduct) {
-				if (existingProduct.quantity) {
-					if (existingProduct.quantity > 1) {
-						existingProduct.quantity = existingProduct.quantity - 1;
-					}
-					return;
+				if ((existingProduct.quantity ?? 1) > 1) {
+					existingProduct.quantity = (existingProduct.quantity ?? 1) - 1;
+				} else {
+					state.cartList = state.cartList.filter((item) => item.id !== action.payload.id);
 				}
-			} else {
-				state.cartList = state.cartList.filter((item) => item.id !== action.payload.id);
 			}
 		},
 		// Добавляем экшен для точной установки количества (из инпута)

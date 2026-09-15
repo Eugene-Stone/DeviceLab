@@ -1,46 +1,26 @@
 /* Left menu hidden items */
-a[href="#main-content"] {
-	+ div {
-		> nav:first-child{
-			> div {
-				> ul {
-					> li:has(a[aria-label="Deploy"]),
-					> li:has(a[aria-label="SEO Vitals"]),
-					> li:has(a[aria-label="Generated Types"]) {
-						display: none;
-					}
-				}
-			}
-		}
-	}
+a[href="#main-content"] + div > nav:first-child > div > ul > li:has(a[aria-label="Deploy"]),
+a[href="#main-content"] + div > nav:first-child > div > ul > li:has(a[aria-label="SEO Vitals"]),
+a[href="#main-content"] + div > nav:first-child > div > ul > li:has(a[aria-label="Generated Types"]) {
+   display: none;
 }
 
 /* Seo aside style fix */
-[aria-labelledby="additional-information"] {
-	> div {
-		&:has([data-testid="seo-browser-preview"]) {
-			width: 100%;
-			padding: 0;
-		}
-	}
+[aria-labelledby="additional-information"] > div:has([data-testid="seo-browser-preview"]) {
+   width: 100%;
+   padding: 0;
 }
 
-
-
 /* strapi-plugin-tagsinput */
-.react-tagsinput {
-	.react-tagsinput-input {
-		color: inherit;
-	}
+.react-tagsinput .react-tagsinput-input {
+   color: inherit;
+}
 
-	.react-autosuggest__suggestions-container {
-		background-color: #444;
-		color: #fff;
+.react-tagsinput .react-autosuggest__suggestions-container {
+   background-color: #444;
+   color: #fff;
+}
 
-		li {
-			&:hover {
-				background-color: #333;
-			}
-		}
-	}
+.react-tagsinput .react-autosuggest__suggestions-container li:hover {
+   background-color: #333;
 }
