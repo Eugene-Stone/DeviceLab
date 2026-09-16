@@ -15,6 +15,7 @@ import NextTopLoader from 'nextjs-toploader';
 import ReloadToTop from '@/components/_layout/ReloadToTop';
 import { getServerSession } from 'next-auth';
 import { authConfig } from '@/configs/auth';
+import Script from 'next/script';
 
 // export const metadata: Metadata = {
 // 	title: 'Create Next App',
@@ -105,6 +106,7 @@ export default async function RootLayout({ children }: LayoutProps<'/'>) {
 	const { globalData, menuPrimary, menuFooter } = await getGlobalData();
 	const global = { globalData, menuPrimary, menuFooter };
 	const providerTwoData = 'Hello provider';
+	const structuredData = globalData.seo?.structuredData;
 
 	// В App Router передача authConfig обязательна для получения правильного JWT/Session
 	// В статических страницах работает неккоректно
@@ -118,6 +120,23 @@ export default async function RootLayout({ children }: LayoutProps<'/'>) {
 	return (
 		<html lang="en" data-scroll-behavior="smooth" data-theme="dark-">
 			<body>
+				{/* {structuredData && (
+					<script
+						type="application/ld+json"
+						dangerouslySetInnerHTML={{
+							__html: structuredData.replace(/</g, '\\u003c'), // Защита от XSS
+						}}
+					/>
+				)} */}
+
+				{/* {structuredData && (
+					<Script id="seo-structured-data">
+						{`
+							${structuredData.replace(/</g, '\\u003c')} // Защита от XSS
+						`}
+					</Script>
+				)} */}
+
 				{/* <ReloadToTop /> */}
 				<NextTopLoader
 					color="orange"

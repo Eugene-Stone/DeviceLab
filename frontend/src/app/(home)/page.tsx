@@ -8,6 +8,7 @@ import { Metadata } from 'next';
 import { SharedSeo } from '@backend-types/sharedSeo';
 import { BACKEND_URL, FRONTEND_URL, SITE_TITLE } from '@/CONSTANTS';
 import { Media } from '@backend-types/media';
+import Script from 'next/script';
 
 // Страница с проверкой сессии должна быть динамической
 export const dynamic = 'force-static'; // 'force-dynamic' || 'force-static';
@@ -112,17 +113,42 @@ export default async function Home() {
 
 	const homeData = data;
 	const sections = homeData?.sections;
+	const structuredData = homeData.seo?.structuredData;
 
 	// console.log('currentPage \n', currentPage);
 	// console.log('homeData', homeData);
 	// console.log('sections', sections);
 
 	return (
-		<main id="main-content" data-page-is={currentPage}>
-			{sections && <DynamicSections sections={sections} />}
+		<>
+			{structuredData && (
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{
+						__html: structuredData.replace(/</g, '\\u003c'), // Защита от XSS
+					}}
+				/>
+			)}
+			{/* 
+			{structuredData && (
+				<Script
+					id="seo-structured-data"
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{
+						__html:
+							typeof structuredData === 'string'
+								? structuredData.replace(/</g, '\\u003c') // Защита от XSS
+								: JSON.stringify(structuredData),
+					}}
+				/>
+			)} */}
 
-			{/* <TodoList /> */}
-			<PageToLocalstorage page={currentPage} data={homeData} />
-		</main>
+			<main id="main-content" data-page-is={currentPage}>
+				{sections && <DynamicSections sections={sections} />}
+
+				{/* <TodoList /> */}
+				<PageToLocalstorage page={currentPage} data={homeData} />
+			</main>
+		</>
 	);
 }

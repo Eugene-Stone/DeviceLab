@@ -136,16 +136,27 @@ export default async function PageBySlug({ params }: { params: Promise<{ slug: s
 
 	const pageData = data;
 	const sections = pageData?.sections;
+	const structuredData = pageData.seo?.structuredData;
 
 	// console.log('currentPage \n', currentPage);
 	// console.log('pageData', pageData);
 	// console.log('sections', sections);
 
 	return (
-		<main id="main-content" data-page-is={currentPage}>
-			{sections && <DynamicSections sections={sections} />}
+		<>
+			{structuredData && (
+				<script
+					type="application/ld+json"
+					dangerouslySetInnerHTML={{
+						__html: structuredData.replace(/</g, '\\u003c'), // Защита от XSS
+					}}
+				/>
+			)}
+			<main id="main-content" data-page-is={currentPage}>
+				{sections && <DynamicSections sections={sections} />}
 
-			<PageToLocalstorage page={currentPage} data={pageData} />
-		</main>
+				<PageToLocalstorage page={currentPage} data={pageData} />
+			</main>
+		</>
 	);
 }
