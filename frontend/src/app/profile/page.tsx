@@ -11,6 +11,7 @@ export default async function ProfilePage() {
 	// await new Promise((resolve) => setTimeout(resolve, 500));
 
 	const session = await getServerSession(authConfig);
+	console.log('profile session', session);
 
 	return (
 		<main id="main-content" data-page-is={'profile'}>

@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
 		return NextResponse.json(
 			{
 				error: {
-					message: 'Login required',
+					message: 'Login required (Can`t get token)',
 				},
 			},
 			{
@@ -42,7 +42,10 @@ export async function GET(request: NextRequest) {
 	});
 
 	if (!meResponse.ok) {
-		return NextResponse.json({ error: { message: 'Login required' } }, { status: 401 });
+		return NextResponse.json(
+			{ error: { message: 'Login required (Can`t get meResponse)' } },
+			{ status: 401 },
+		);
 	}
 
 	const currentUser = await meResponse.json();
