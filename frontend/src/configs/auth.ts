@@ -8,6 +8,13 @@ export const authConfig: AuthOptions = {
 		GoogleProvider({
 			clientId: process.env.GOOGLE_CLIENT_ID as string,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+			// Принудительный запрос access_token у Google и проверка:
+			authorization: {
+				params: {
+					scope: 'openid email profile',
+					response_type: 'code',
+				},
+			},
 		}),
 		CredentialsProvider({
 			name: 'Credentials',
@@ -80,30 +87,31 @@ export const authConfig: AuthOptions = {
 		// 	return token;
 		// },
 		async jwt({ token, user, account }) {
-			// Первичный вход пользователя
-			if (account) {
-				token.provider = account.provider;
+			if (account && account.provider === 'google') {
+				try {
+					// Пробуем забрать access_token, а если его нет — id_token
+					const googleToken = account.access_token || account.id_token;
 
-				// Обработка Google OAuth
-				if (account.provider === 'google') {
-					try {
-						// Для Strapi v4/v5 отправляем access_token (или id_token, если access_token пустой)
-						const accessToken = account.access_token || account.id_token;
+					console.log('--- GOOGLE AUTH DEBUG ---');
+					console.log('Google Token Present:', !!googleToken);
+					console.log('Backend URL:', BACKEND_URL);
 
-						const res = await fetch(
-							`${BACKEND_URL}/api/auth/google/callback?access_token=${accessToken}`,
-						);
-						const data = await res.json();
+					const res = await fetch(
+						`${BACKEND_URL}/api/auth/google/callback?access_token=${googleToken}`,
+					);
 
-						if (data.jwt && data.user) {
-							token.id = String(data.user.id);
-							token.jwt = data.jwt; // Сохраняем полученный JWT от Strapi
-						} else {
-							console.error('Strapi auth failed:', data);
-						}
-					} catch (e) {
-						console.error('Error authenticating with Strapi via Google:', e);
+					const data = await res.json();
+					console.log('Strapi Response Status:', res.status);
+					console.log('Strapi Data Has JWT:', !!data.jwt);
+
+					if (data.jwt && data.user) {
+						token.id = String(data.user.id);
+						token.jwt = data.jwt; // Сохраняем реальный Strapi JWT
+					} else {
+						console.error('Strapi error payload:', data);
 					}
+				} catch (e) {
+					console.error('Error authenticating with Strapi via Google:', e);
 				}
 			}
 

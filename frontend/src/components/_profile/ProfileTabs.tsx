@@ -15,6 +15,8 @@ export default function ProfileTabs({ session }: Props) {
 		redirect(`/auth`);
 	}
 
+	console.log('profile session', session);
+
 	return (
 		<Tabs.Root className="profile-container" defaultValue="tab1">
 			<Tabs.List className="tabs" aria-label="Tabs">
