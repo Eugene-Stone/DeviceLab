@@ -87,31 +87,27 @@ export const authConfig: AuthOptions = {
 		// 	return token;
 		// },
 		async jwt({ token, user, account }) {
-			if (account && account.provider === 'google') {
-				try {
-					// Пробуем забрать access_token, а если его нет — id_token
-					const googleToken = account.access_token || account.id_token;
+			// Зарабатывает только при первичном входе (когда передается account)
+			if (account) {
+				token.provider = account.provider;
 
-					console.log('--- GOOGLE AUTH DEBUG ---');
-					console.log('Google Token Present:', !!googleToken);
-					console.log('Backend URL:', BACKEND_URL);
+				if (account.provider === 'google') {
+					try {
+						const googleToken = account.access_token || account.id_token;
+						const res = await fetch(
+							`${BACKEND_URL}/api/auth/google/callback?access_token=${googleToken}`,
+						);
+						const data = await res.json();
 
-					const res = await fetch(
-						`${BACKEND_URL}/api/auth/google/callback?access_token=${googleToken}`,
-					);
-
-					const data = await res.json();
-					console.log('Strapi Response Status:', res.status);
-					console.log('Strapi Data Has JWT:', !!data.jwt);
-
-					if (data.jwt && data.user) {
-						token.id = String(data.user.id);
-						token.jwt = data.jwt; // Сохраняем реальный Strapi JWT
-					} else {
-						console.error('Strapi error payload:', data);
+						if (data.jwt && data.user) {
+							token.id = String(data.user.id);
+							token.jwt = data.jwt; // Сохраняем токен от Strapi
+						} else {
+							console.error('Strapi auth failed:', data);
+						}
+					} catch (e) {
+						console.error('Error authenticating with Strapi via Google:', e);
 					}
-				} catch (e) {
-					console.error('Error authenticating with Strapi via Google:', e);
 				}
 			}
 
@@ -127,9 +123,14 @@ export const authConfig: AuthOptions = {
 			if (session.user) {
 				session.user.id = token.id as string;
 
+				// Читаем провайдер строго из зашифрованного токена
+				const provider = (token.provider as string) || 'credentials';
+				session.user.provider = provider;
+				session.user.isOAuth = provider !== 'credentials' && provider !== 'local';
+
 				// Прокидываем провайдер и флаг
-				session.user.provider = (token.provider as string) || 'local';
-				session.user.isOAuth = session.user.provider !== 'local';
+				// session.user.provider = (token.provider as string) || 'local';
+				// session.user.isOAuth = session.user.provider !== 'local';
 
 				// Опционально прокидываем jwt в сессию, если нужен на клиенте
 				// session.jwt = token.jwt as string;
